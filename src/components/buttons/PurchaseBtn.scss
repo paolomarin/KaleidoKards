@@ -1,0 +1,19 @@
+@import './../styles/colors.scss';
+
+.purchase-button {
+        border-radius: 50px;
+        text-decoration: none;
+        background-color: #202CE0;
+        color: white;
+        font-size: 30px;
+        height: 100px;
+        width: 300px;
+        margin-right: 100px;
+    &:hover {
+        background-color: white;
+        border: 4px solid $color-1;
+        color: $color-1;
+        cursor: pointer;
+    }
+
+}

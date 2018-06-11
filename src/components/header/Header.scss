@@ -1,0 +1,14 @@
+@import './../styles/colors.scss';
+
+.dashboard-header {
+    background-color: $color-1;
+    width: 100%;
+    height: 400px;
+}
+
+.dashboard-text {
+    text-align: center;
+    font-size: 100px;
+    color: white;
+    padding-top: 200px;
+}

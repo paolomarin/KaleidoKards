@@ -1,0 +1,55 @@
+@import './../styles/colors.scss';
+@import './../styles/shapes.scss';
+
+
+*, 
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    boz-sizing: inherit;
+}
+
+.card {
+    width: 150px;
+    height: 300px;
+    border-radius: 12px;
+    margin-left: 100px;
+    // should be dynamic color
+    display: flex;
+    justify-content: center;
+}
+
+.circle {
+    @include shape-1;
+}
+
+.triangle {
+    @include shape-2;
+}
+
+.star {
+    @include shape-3;
+}
+
+.blue {
+    color:$color-1;
+}
+
+.light-blue {
+  color:$color-2;
+}
+
+.orange {
+    color: $color-3;
+}
+
+.pink {
+    color: $color-4;
+}
+
+.green {
+    color: $color-5;
+}
+
+

@@ -1,0 +1,52 @@
+@import './components/styles/colors.scss';
+
+html, body {
+    margin: 0; 
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    font-family: sans-serif;
+}
+
+h2 {
+    margin-top: 20px;
+    text-align: center;
+    color: lighten($color-1, 10%);
+}
+
+.square-container {
+    display: flex;
+    align-items: center;
+    padding-top:50px;
+    padding-right: 200px;
+    padding-bottom:50px;
+    padding-left: 200px;
+}
+
+.other-players-cards {
+    height: 800px;
+    width: 1000px;
+    background-color: white;
+    margin-top: 50px;
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    margin-top:50px;
+    margin-left:20px;
+}
+
+.ether {
+    height: 290px;
+    width:800px;
+    background-color:white;
+}
+
+.my-cards {
+    height: 490px;
+    width: 800px;
+    background-color: white;
+    margin-top: 20px;
+}
