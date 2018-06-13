@@ -43,9 +43,9 @@ contract KaleidoKards {
      * Constructor function
      *
      */
-    constructor(address kardStore) public {
-        require(kardStore != address(0));
-        contractOwner = kardStore;
+    constructor() public {
+        require(msg.sender != address(0));
+        contractOwner = msg.sender;
     }
 
     /**
