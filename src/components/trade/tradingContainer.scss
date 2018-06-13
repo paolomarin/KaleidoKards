@@ -1,0 +1,16 @@
+.trading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: black;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+h3 {
+    text-align: center;
+    margin-top: 38px;
+}
