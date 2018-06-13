@@ -4,8 +4,8 @@ import Header from './components/header/Header';
 import './components/card/Card.scss';
 import './App.scss';
 import Footer from './components/footer/Footer';
-import TradeBtn from './components/buttons/TradeBtn';
-import _ from 'lodash';
+import TradingContainer from './components/trade/tradingContainer';
+
 
 
 class App extends Component {
@@ -19,22 +19,21 @@ class App extends Component {
           <div className = "square-container">
             <div className="other-players-cards">
               <h2> Trade Cards </h2>
-              <TradeBtn/>
+              <TradingContainer/> 
             </div>
             <div className="column-container">
               <div className="ether">
               </div>
               <div className="my-cards">
-                <h2> My Cards </h2>
+                <h2 className="my-cards-title"> My Cards </h2>
+                <div className="my-cards-container">
+                  <Card color="blue" shape="triangle"/>
+                  <Card color="light-blue" shape="circle"/>
+                  <Card color="orange" shape="star"/>
+                </div>
               </div>
             </div>
           </div>
-
-        {/*<div>
-          <Card color="blue" shape="triangle"/>
-          <Card color="light-blue" shape="circle"/>
-          <Card color="orange" shape="star"/>
-        </div>*/}
         </div>
 
         <Footer/>

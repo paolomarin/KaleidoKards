@@ -11,13 +11,14 @@
 }
 
 .card {
-    width: 150px;
+    width: 200px;
     height: 300px;
     border-radius: 12px;
     margin-left: 100px;
     // should be dynamic color
     display: flex;
     justify-content: center;
+    align-items:center;
 }
 
 .circle {
@@ -33,23 +34,23 @@
 }
 
 .blue {
-    color:$color-1;
+    background-color:$color-1;
 }
 
 .light-blue {
-  color:$color-2;
+  background-color:$color-2;
 }
 
 .orange {
-    color: $color-3;
+    background-color: $color-3;
 }
 
 .pink {
-    color: $color-4;
+    background-color: $color-4;
 }
 
 .green {
-    color: $color-5;
+    background-color: $color-5;
 }
 
 

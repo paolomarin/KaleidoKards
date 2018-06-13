@@ -3,11 +3,11 @@ import './Card.scss';
 
 class Card extends Component {
     render() {
-        let {shape, color} = this.props;
+       let { shape, color} = this.props; 
         
         return( 
-            <div className="card">
-            <div className={`${shape} ${color}`}></div>
+            <div className={`card ${color}`}>
+                <div className={`${shape}`}></div> 
             </div> 
         )
     }
