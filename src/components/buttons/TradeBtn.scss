@@ -9,13 +9,15 @@
     font-size: 30px;
     height: 100px;
     width: 300px;
-    margin-left: 240px;
+    margin-right: auto;
+    margin-left: auto;
    
     &:hover {
         background-color: white;
         border: 4px solid $color-1;
         color: $color-1;
         cursor: pointer;
+        transition: all 0.3s ease-out;
     }
 
 }

@@ -20,7 +20,7 @@ contract KaleidoKards {
     uint256 constant public platinumPackPrice = 1 ether;
 
     // Number of Kards in a pack
-    uint8 constant public packSize = 5;
+    uint8 constant public packSize = 3;
 
 
     /*** Ownership ***/

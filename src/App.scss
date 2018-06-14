@@ -21,6 +21,7 @@ h2 {
 
 .my-cards-container {
     display:flex;
+    justify-content: space-around;
 }
 
 .square-container {
@@ -39,6 +40,7 @@ h2 {
     background-color: white;
     margin-top: 50px;
     padding: 200px;
+    margin-left: auto;
 }
 
 .column-container {
@@ -47,7 +49,7 @@ h2 {
     flex-direction: column;
     margin-top: 50px;
     margin-left: 20px;
-    
+    margin-right: auto;
 }
 
 .ether {
