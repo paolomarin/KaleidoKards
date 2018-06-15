@@ -25,7 +25,6 @@ class App extends Component {
 
   componentWillMount () {
 
-    console.log("here");
     getWeb3
     .then(results => {
       this.setState({
@@ -33,7 +32,7 @@ class App extends Component {
       })
 
       // Instantiate contract once web3 provided.
-      this.instantiateContract()
+      this.instantiateContract(web3)
     })
     .catch((err) => {
       console.log(err)
@@ -41,23 +40,65 @@ class App extends Component {
   }
 
 
-  instantiateContract() {
-    
-    const kaleidoKards = new this.state.web3.Contract(KaleidoKardsContract, 'contractAddress')
-    console.log(kaleidoKards, "BANANA");
-  
+  instantiateContract(web3) {
 
+      // const contract = require('truffle-contract');
+
+    const kaleidoKards = new web3.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
+    console.log(kaleidoKards, "BANANA");
+
+    //TODO: remove me
+
+      // kaleidoKards.methods.buyStandardPack().send({from: "0x33F1ba1fa5F83Bc031E54bbBFBd2fF394707864C", gas: 300000000, value: web3.utils.toWei('1', 'ether')}).then(function(receipt){
+      //     console.log(receipt);
+      // // })
+      // // .catch((err) =>{
+      // //     //todo: handle error
+      // });
+
+      kaleidoKards.methods.getOwnedKards("0x33F1ba1fa5F83Bc031E54bbBFBd2fF394707864C").call().then(
+          (response) => {
+            console.log(response);
+          })
+          .catch(
+              (error) => {
+                  console.log(error);
+                  //todo handle error
+          });
+
+      //todo: make this a function
+    var myKards = new Map();
+    kaleidoKards.methods.getKard(kardId).call().then(
+        (response) => {
+            myKards[kardId] = response;
+        })
+        .catch(
+            (error) => {
+                console.log(error);
+                //todo handle error
+            }
+        );
+
+    kaleidoKards.methods.maxColor().call().then(function(response) {
+      console.log(response);
+    })
+    .catch((err) =>{
+      //todo: handle error
+    });
+
+    this.setState({
+        kaleidoKardsInstance: kaleidoKards
+    })
 
     // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-     kaleidoKards.deployed().then((instance) => {
-       instance.getKards().then((x) => console.log(x));
-       this.setState({
-         kaleidoKardsInstance: instance
-      
-       })
-      })
-    })
+    // this.state.web3.eth.getAccounts((error, accounts) => {
+    //  kaleidoKards.deployed().then((instance) => {
+    //    instance.getKards().then((x) => console.log(x));
+    //    this.setState({
+    //      kaleidoKardsInstance: instance
+    //    })
+    //   })
+    // })
 
     
   }

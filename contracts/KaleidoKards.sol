@@ -52,11 +52,11 @@ contract KaleidoKards {
      * 
      *
      */
-    function buyStandardPack() external payable returns (uint256[]) {
+    function buyStandardPack() external payable {
         require(msg.sender != address(0));
         require(msg.value == standardPackPrice, "Not enough ether to buy a standard pack");
         require(issuedStandardKards <= (standardKardAmount - packSize), "No more Standard Kards left to issue");
-        
+
         uint256 randomIndex = 0;
 
         for (uint8 i = 0; i < packSize; i++) {
@@ -64,11 +64,9 @@ contract KaleidoKards {
             issueStandardKard(msg.sender, randomIndex);
             issuedStandardKards++;
         }
-
-        return ownedKards[msg.sender]; //returns all Kards that the sender owns
     }
 
-    function buyPlatinumPack() external payable returns (uint256[]) {
+    function buyPlatinumPack() external payable {
         require(msg.sender != address(0));
         require(msg.value == platinumPackPrice, "Not enough ether to buy a platinum pack");
         require(issuedPlatinumKards < (platinumKardAmount - packSize), "No more Platinum Kards left to issue");
@@ -80,8 +78,6 @@ contract KaleidoKards {
             issuePlatinumKard(msg.sender, randomIndex);
             issuedPlatinumKards++;
         }
-
-        return ownedKards[msg.sender]; //returns all Kards that the sender owns
     }
 
     /**
@@ -109,8 +105,8 @@ contract KaleidoKards {
      * Withdrawal function so the contract owner can withdraw funds from the contract.
      *
      */
-    function withdraw(uint amount) 
-        public 
+    function withdraw(uint amount)
+        public
     {
         require(msg.sender == contractOwner);
         require(amount <= address(this).balance);
@@ -121,8 +117,8 @@ contract KaleidoKards {
      * Internal transfer function
      *
      */
-    function _transfer(address from, address to, uint256 kardId) 
-        internal 
+    function _transfer(address from, address to, uint256 kardId)
+        internal
     {
         require(from != address(0) && from != address(this));
         require(to != address(0) && to != address(this));
@@ -147,18 +143,18 @@ contract KaleidoKards {
     }
 
     /**
-     * Internal function used to issue new Kards from the store. 
-     * 
-     * 
+     * Internal function used to issue new Kards from the store.
+     *
+     *
      */
-    function issueStandardKard(address to, uint256 randomIndex) 
+    function issueStandardKard(address to, uint256 randomIndex)
         internal
         returns (uint256)
     {
         require(randomIndex < standardKardAmount);
         // If no one owns the Kard, then it can be added to a pack
         if (kardOwner[randomIndex] == 0)  {
-            
+
             ownedKards[to].push(randomIndex);
             kardOwner[randomIndex] = to;
             return randomIndex;
@@ -177,15 +173,15 @@ contract KaleidoKards {
         }
     }
 
-    function issuePlatinumKard(address to, uint256 randomIndex) 
-        internal 
+    function issuePlatinumKard(address to, uint256 randomIndex)
+        internal
         returns (uint256)
     {
         require(randomIndex >= standardKardAmount);
         require(randomIndex < (standardKardAmount + platinumKardAmount));
         // If no one owns the Kard, then it can be added to a pack
         if (kardOwner[randomIndex] == 0)  {
-            
+
             ownedKards[to].push(randomIndex);
             kardOwner[randomIndex] = to;
             return randomIndex;
@@ -203,10 +199,10 @@ contract KaleidoKards {
     }
 
     //internal function for checking ownership
-    function owns(address claimant, uint256 kardId) 
-        internal 
-        view 
-        returns (bool) 
+    function owns(address claimant, uint256 kardId)
+        internal
+        view
+        returns (bool)
     {
         return kardOwner[kardId] == claimant;
     }
@@ -214,7 +210,7 @@ contract KaleidoKards {
     // random function adapted from src: https://medium.com/@promentol/lottery-smart-contract-can-we-generate-random-numbers-in-solidity-4f586a152b27
     // This relies on trusting the mining node.
     // While this function is NOT safe for PUBLIC blockchains, in a permissioned blockchain system, malicious miners can have their node removed from the network.
-    
+
     function random(uint256 seed, uint8 max) internal pure returns (uint256) {
         // by default this will return a number between [0, max-1]
         return uint256(keccak256(seed))%uint256(max);
