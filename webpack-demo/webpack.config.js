@@ -1,9 +1,22 @@
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 
     entry: './src/index.js',
+    resolve: {
+        modules: [
+            "node_modules",
+            "src"
+        ],
+        extensions: [
+            '.js',
+            '.jsx',
+            '.json',
+            '.scss'
+        ]
+    },
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -26,15 +39,21 @@ module.exports = {
                     'file-loader'
                 ]
             },
-
-            {test: /\.scss$/,
-            use:['style-loader', 'css-loader', 'sass-loader']
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader']
+                })
             }
         ]
     },
     plugins: [
         new HtmlWebPackPlugin({
-        template: "./webpack-demo/template.html"})
+        template: "./webpack-demo/template.html"}),
+        new ExtractTextPlugin({
+            filename: '[name].style.css'
+        })
        
     ]
 };
