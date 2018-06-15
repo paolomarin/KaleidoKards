@@ -1,5 +1,6 @@
 @import './../styles/colors.scss';
 @import './../styles/shapes.scss';
+@import './../styles/effect.scss';
 
 
 *, 
@@ -11,10 +12,9 @@
 }
 
 .card {
-    width: 200px;
-    height: 300px;
+    width: 150px;
+    height: 200px;
     border-radius: 12px;
-    margin-left: 100px;
     // should be dynamic color
     display: flex;
     justify-content: center;
@@ -51,6 +51,10 @@
 
 .green {
     background-color: $color-5;
+}
+
+.ripple {
+    @include effect-1;
 }
 
 

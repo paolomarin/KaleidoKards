@@ -21,7 +21,7 @@ let getWeb3 = new Promise(function(resolve, reject) {
     } else {
       // Fallback to localhost if no web3 injection. We've configured this to
       // use the development console's port by default.
-      var provider = new Web3.providers.HttpProvider('http://127.0.0.1:9545')
+      var provider = new Web3.providers.WebsocketProvider('wss://u0q2dz2rmh:fZFwLJpjzi7gVoATNmlQAoObaFBSbXTJzFjq8Q0gL9o@u0e1t1r8ll-u0gqc8s2lr-wss.us-east-2.kaleido.io')
 
       web3 = new Web3(provider)
 
