@@ -1,24 +1,32 @@
 import Web3 from 'web3'
 
-let getWeb3 = new Promise(function(resolve, reject) {
-  // Wait for loading completion to avoid race conditions with web3 injection timing.
-  window.addEventListener('load', function() {
-    var results
+let user_node         = 'wss://u0hy7mtdq3:mD29RPL7yEpwZqnqKPHGHbkdMoOAbUMO2JnUGYwO2LI@u0p56k3t54-u0p9sxe7c1-wss.us-east-2.kaleido.io';
+let kard_store_node   = 'wss://u0mxwuin6i:J0zxYgGsGibkQXhT0YEjo2cIlyVzOQrnXfxVX367rg8@u0p56k3t54-u0a26yrksx-wss.us-east-2.kaleido.io';
+let kal_node          = '';
 
-      // var provider = new Web3.providers.WebsocketProvider('wss://u0q2dz2rmh:fZFwLJpjzi7gVoATNmlQAoObaFBSbXTJzFjq8Q0gL9o@u0e1t1r8ll-u0gqc8s2lr-wss.us-east-2.kaleido.io')
-      var provider = new Web3.providers.WebsocketProvider('wss://u0mxwuin6i:J0zxYgGsGibkQXhT0YEjo2cIlyVzOQrnXfxVX367rg8@u0p56k3t54-u0a26yrksx-wss.us-east-2.kaleido.io')
+let getWeb3 = (node) => {
+  new Promise(function(resolve, reject) {
 
-      web3 = new Web3(provider)
+      var websocket;
+      if (node == 'user_node')
+        websocket = user_node;
+      else if (node == 'kaleido_node')
+        websocket = kal_node;
+      else if (node == 'kard_store_node')
+        websocket = kard_store_node;
 
-      results = {
-        web3: web3
-      }
+      window.addEventListener('load', function() {
 
-      console.log('No web3 instance injected, using Local web3.');
+          var provider = new Web3.providers.WebsocketProvider(websocket);
+          web3 = new Web3(provider);
 
-      resolve(results)
-    // }
-  })
-})
+          let results = {
+              web3: web3
+          };
+
+          resolve(results)
+      })
+    })
+};
 
 export default getWeb3

@@ -5,7 +5,7 @@ let web3;
 let kaleidoKardsInstance;
 
 let USER    = 'user_node';
-let KAL     = 'kaleido_node';
+let KAL     = 'kaleido_node'; //todo: consider renaming this globally to kal_node
 let STORE   = 'kard_store_node';
 
 class KaleidoKards {
@@ -17,9 +17,27 @@ class KaleidoKards {
     //TODO: need to switch user/node based on instance of web3
     // consider passing param to getWeb3 to  switch users
 
-    static instantiateContract() {
+    // Functions for switching the node we're talking to
+    // returns this to allow chaining calls to this contract
+    // ex. asUser().getOwnedKards()
+    static asUser(){
+        this.updateNetwork(USER);
+        return this;
+    }
 
-        getWeb3
+    static asKardStore(){
+        this.updateNetwork(STORE);
+        return this;
+    }
+
+    static asKaleido(){
+        this.updateNetwork(KAL);
+        return this;
+    }
+
+    static updateNetwork(provider) {
+
+        getWeb3(provider)
             .then(results => {
                 this.web3 = results.web3;
                 //TODO: get contract address dynamically
@@ -37,11 +55,6 @@ class KaleidoKards {
 // kardId => attribute
 // return usage ex. myKards[13].color, myKards[13].shape, etc
     static getOwnedKards() {
-
-        if (this.kaleidoKardsInstance == null) {
-            this.instantiateContract();
-        }
-
         let ret = new Promise(function (resolve, reject) {
             var myKards = new Map();
             this.kaleidoKardsInstance.methods.getOwnedKards("0x33F1ba1fa5F83Bc031E54bbBFBd2fF394707864C").call().then(
@@ -75,11 +88,6 @@ class KaleidoKards {
     }
 
     static buyStandardPack() {
-
-        if (this.kaleidoKardsInstance == null) {
-            this.instantiateContract();
-        }
-
         let ret = new Promise(function (resolve, reject) {
 
             this.kaleidoKardsInstance.methods.buyStandardPack().send({
