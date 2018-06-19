@@ -49,8 +49,8 @@ contract KaleidoKards {
     }
 
     /**
-     * 
-     *
+     * TODO: consider adding indexed events for buying cards so that frontend can listen for when user buys new kards
+     * same with transfer
      */
     function buyStandardPack() external payable {
         require(msg.sender != address(0));
