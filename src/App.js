@@ -74,8 +74,8 @@ class App extends Component {
     //let cards = this.state.cards;
     return (
       <div>
+        <div>
         <Header/>
-        <div className= "App">
           <div className = "square-container">
             <div className="other-players-cards">
               <h2> Trade Cards </h2>
@@ -83,13 +83,15 @@ class App extends Component {
             </div>
             <div className="column-container">
               <div className="ether">
+              <h1 className="amount-of-ether"> 100</h1>
+              <h2 className="text-style"> Ether </h2>
               </div>
               <div className="my-cards">
                 <h2 className="my-cards-title"> My Cards </h2>
                 <div className="my-cards-container">
-                  <Card color="blue" shape="triangle"/>
-                  <Card color="light-blue" shape="circle"/>
-                  <Card color="orange" shape="star"/>
+                  <Card/>
+                  <Card/>
+                  <Card/>
                 </div>
               </div>
               <div>

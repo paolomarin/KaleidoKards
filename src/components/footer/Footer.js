@@ -8,6 +8,7 @@ class Footer extends Component {
     render() {
         return( 
             <div className="footer">
+            <h1 className="secondary-header"> Store</h1>
                 <div className="footer-cards">
                     <BasicPack/>
                     <PlatinumPack/>

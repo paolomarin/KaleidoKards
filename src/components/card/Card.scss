@@ -19,6 +19,11 @@
     display: flex;
     justify-content: center;
     align-items:center;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
 }
 
 .circle {
