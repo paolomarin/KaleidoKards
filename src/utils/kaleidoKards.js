@@ -1,5 +1,5 @@
-import KaleidoKardsContract from '../build/contracts/KaleidoKards.json';
-import getWeb3 from './utils/getWeb3';
+import KaleidoKardsContract from '../../build/contracts/KaleidoKards.json';
+import getWeb3 from './getWeb3';
 
 let web3;
 let kaleidoKardsInstance;
