@@ -1,5 +1,4 @@
 @import './../styles/colors.scss';
-@import './../styles/shapes.scss';
 
 
 *, 
@@ -12,44 +11,18 @@
 
 .card {
     width: 150px;
-    height: 300px;
+    height: 200px;
     border-radius: 12px;
-    margin-left: 100px;
     // should be dynamic color
     display: flex;
     justify-content: center;
+    align-items:center;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
 }
 
-.circle {
-    @include shape-1;
-}
-
-.triangle {
-    @include shape-2;
-}
-
-.star {
-    @include shape-3;
-}
-
-.blue {
-    color:$color-1;
-}
-
-.light-blue {
-  color:$color-2;
-}
-
-.orange {
-    color: $color-3;
-}
-
-.pink {
-    color: $color-4;
-}
-
-.green {
-    color: $color-5;
-}
 
 

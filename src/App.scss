@@ -1,27 +1,43 @@
 @import './components/styles/colors.scss';
 
 html, body {
+    box-sizing:border-box;
     margin: 0; 
     height: 100%;
+    width: 100%;
     display:flex;
     flex-direction: column;
     background-color: #F5F5F5;
     font-family: sans-serif;
 }
+#root {
+    height: 100%;
+    width: 100%;
+}
 
 h2 {
-    margin-top: 20px;
     text-align: center;
     color: lighten($color-1, 10%);
+    font-size:40px;
+}
+
+.my-cards-title {
+    margin-top: -150px;
+}
+
+.my-cards-container {
+    display:flex;
+    justify-content: space-around;
 }
 
 .square-container {
     display: flex;
     align-items: center;
-    padding-top:50px;
-    padding-right: 200px;
-    padding-bottom:50px;
-    padding-left: 200px;
+    padding-top: 100px;
+    padding-right: 500px;
+    padding-bottom: 200px;
+    padding-left: 500px;
+   
 }
 
 .other-players-cards {
@@ -29,24 +45,40 @@ h2 {
     width: 1000px;
     background-color: white;
     margin-top: 50px;
+    padding: 200px;
+    margin-left: auto;
 }
 
 .column-container {
     display: flex;
+    align-items: stretch;
     flex-direction: column;
-    margin-top:50px;
-    margin-left:20px;
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: auto;
 }
 
 .ether {
     height: 290px;
     width:800px;
     background-color:white;
+    padding-top:200px;
+    margin-bottom:20px;
 }
 
 .my-cards {
     height: 490px;
     width: 800px;
     background-color: white;
-    margin-top: 20px;
+    padding-top:200px;
+}
+
+
+.amount-of-ether {
+    font-size:130px;
+    
+}
+
+.text-style {
+    font-size:40px;
 }

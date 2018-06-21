@@ -1,0 +1,14 @@
+
+.dashboard-card-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow:1;
+    justify-content: center;
+    color: black;
+}
+
+.my-card-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}

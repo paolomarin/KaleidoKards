@@ -1,0 +1,163 @@
+@import './components/styles/colors.scss';
+
+.launch-wrapper {
+	background-image: url('background2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	width: 5740px;
+    height: 4000px;
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.launch-container {
+    background-color: white;
+    border-radius: 50px;
+    width: 3000px;
+    height: 2000px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.launch-button {
+    border-radius: 50px;
+    text-decoration: none;
+    background-color: #202CE0;
+    color: white;
+    font-size: 50px;
+    height: 130px;
+    width: 390px;
+	margin-top: 160px;
+    margin-right: auto;
+    margin-left: auto;
+   
+    &:hover {
+        background-color:white;
+        border: 4px solid $color-1;
+        color: $color-1;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+    }
+
+}
+
+.launch {
+	color: white;
+	text-decoration: none;
+		&:hover {
+			color: $color-1;
+		}
+}
+
+
+
+
+
+.input {
+    background-image: url(background.png);
+	position: relative;
+    /* font-size: 70px; */
+	width: 2065px;
+    height: 300px;
+    background: linear-gradient(21deg, $color-1, $color-2);
+    padding: 4px;
+    display: inline-block;
+    border-radius: 9999em;
+
+	// style of the actual input field
+	*:not(span) {
+        position: relative;
+        display: inherit;
+        width: 2000px;
+        height: 300px;
+        border-radius: inherit;
+        margin: 0;
+        border: none;
+        outline: none;
+        padding: 0 .325em;
+        z-index: 1;
+        font-size: 100px;
+        text-align: center; // needs to be above the :focus span
+        
+       
+		
+		// summon fancy shadow styles when focussed
+		&:focus + span {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+	
+	// we don't animate box-shadow directly as that can't be done on the GPU, only animate opacity and transform for high performance animations.
+	span {
+		
+		transform: scale(.993, .94); // scale it down just a little bit
+		transition: transform .5s, opacity .25s;
+		opacity: 0; // is hidden by default
+		
+		position:absolute;
+		z-index: 0; // needs to be below the field (would block input otherwise)
+		margin:4px; // a bit bigger than .input padding, this prevents background color pixels shining through
+		left:0;
+		top:0;
+		right:0;
+		bottom:0;
+		border-radius: inherit;
+		pointer-events: none; // this allows the user to click through this element, as the shadow is rather wide it might overlap with other fields and we don't want to block those.
+		
+		// fancy shadow styles
+		box-shadow: inset 0 0 0 3px #fff,
+			0 0 0 4px #fff,
+			3px -3px 30px $color-2, 
+			-3px 3px 30px $color-1;
+	}
+	
+}
+
+html {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	line-height:1.5;
+	font-size:1em;
+}
+
+body {
+	text-align: center;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+
+html, body {
+	height:100%;
+}
+
+input {
+	font-family: inherit;
+	line-height:inherit;
+	color:#2e3750;
+	min-width:12em;
+}
+
+::placeholder {
+	color:#cbd0d5;
+}
+
+html::after {
+	content:'';
+	background: linear-gradient(21deg, $color-1,$color-2);
+	height:3px;
+	width:100%;
+	position:absolute;
+	left:0;
+	top:0;
+}
