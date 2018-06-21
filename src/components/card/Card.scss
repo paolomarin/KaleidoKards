@@ -1,6 +1,4 @@
 @import './../styles/colors.scss';
-@import './../styles/shapes.scss';
-@import './../styles/effect.scss';
 
 
 *, 
@@ -19,42 +17,12 @@
     display: flex;
     justify-content: center;
     align-items:center;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
 }
 
-.circle {
-    @include shape-1;
-}
-
-.triangle {
-    @include shape-2;
-}
-
-.star {
-    @include shape-3;
-}
-
-.blue {
-    background-color:$color-1;
-}
-
-.light-blue {
-  background-color:$color-2;
-}
-
-.orange {
-    background-color: $color-3;
-}
-
-.pink {
-    background-color: $color-4;
-}
-
-.green {
-    background-color: $color-5;
-}
-
-.ripple {
-    @include effect-1;
-}
 
 

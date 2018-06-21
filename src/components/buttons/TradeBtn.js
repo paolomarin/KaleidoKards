@@ -5,7 +5,7 @@ class TradeBtn extends Component {
     render() {
         return( 
             <button className="trade-button">
-                Trade
+                Propose Trade
             </button> 
         )
     }

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import './tradingContainer.scss';
-import _ from 'lodash';
 import Card from './../card/Card';
-import TradeBtn from './../buttons/TradeBtn';
 import './../styles/text.scss';
+import './MyCardsContainer.scss';
 
-class tradingContainer extends Component {
+class MyCardsContainer extends Component {
 
       render() {
         // const users = ["Kaleido's Cards", "Joe's Cards"].map((user) => {
@@ -22,26 +20,17 @@ class tradingContainer extends Component {
         // });
         
         return( 
-            <div className="trading-container">
-                <h3 className="header-text"> Kaleido's Cards </h3>
-                    <div className="card-container">
+            <div className="dashboard-card-container">
+                    <div className="my-card-container">
                         <Card/>
                         <Card/>
                         <Card/>
                     </div>
-                    <div className="card-container">
+                    <div className="my-card-container">
                         <Card/>
                         <Card/>
                         <Card/>
                     </div>
-                    <div className="card-container">
-                        <Card/>
-                        <Card/>
-                        <Card/>
-                    </div>
-
-                {/* {users} */}
-                <TradeBtn/>
              
              </div> 
         )
@@ -49,4 +38,4 @@ class tradingContainer extends Component {
 }
 
 
-export default tradingContainer;
+export default MyCardsContainer;
