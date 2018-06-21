@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Card.scss'; 
+import Star from './star.png';
+import Diamond from './diamond.png';
 
 
 class Card extends Component {
@@ -9,8 +11,8 @@ class Card extends Component {
 
     const circle = {
         backgroundColor: 'white',
-        width: '80px',
-        height: '80px',
+        width: '60px',
+        height: '60px',
         borderRadius: '50%'
         }
     
@@ -18,72 +20,33 @@ class Card extends Component {
         color: 'transparent',
         width: '0',
         height: '0',
-        borderRight: '50px solid transparent',
-        borderLeft: '50px solid transparent',
-        borderBottom: '100px solid white'
+        borderRight: '40px solid transparent',
+        borderLeft: '40px solid transparent',
+        borderBottom: '80px solid white'
     }
 
     const square = {
         backgroundColor: 'white',
-        width: '80px',
-        height: '80px'
+        width: '60px',
+        height: '60px'
     }
 
     const star =
     {
+        backgroundImage: `url(${Star})`,
+        width: '80px',
+        height: '80px'
+        
+    }
 
-    margin:'50px 0',
-    position: 'relative',
-    display: 'block',
-    color: 'white',
-    width: '0px',
-    height: '0px',
-    borderRight: '100px solid transparent',
-    borderBottom: '70px solid white',
-    borderLeft: '100px solid transparent',
-    mozTransform: 'rotate(35deg)',
-    webkitTransform: 'rotate(35deg)',
-    msTransform: 'rotate(35deg)',
-    oTransform: 'rotate(35deg)',
-    ':hover': {
-    
-            borderBottom: '80px solid white',
-            borderLeft: '30px solid transparent',
-            borderRight: '30px solid transparent',
-            position: 'absolute',
-            height: '0',
-            width: '0',
-            top: '-45px',
-            left: '-65px',
-            display: 'block',
-            content: '',
-            WebkitTransform: 'rotate(-35deg)',
-            mozTransform: 'rotate(-35deg)',
-            msTransform: 'rotate(-35deg)',
-            oTransform: 'rotate(-35deg)'
-        },
-
-        ':after': {
-            position: 'absolute',
-            display: 'block',
-            color: 'white',
-            top: '3px',
-            left: '-105px',
-            width: '0',
-            height: '0',
-            borderRight: '100px solid transparent',
-            borderBottom: '70px solid white',
-            borderLeft: '100px solid transparent',
-            webkitTransform: 'rotate(-70deg)',
-            mozTransform: 'rotate(-70deg)',
-            msTransform: 'rotate(-70deg)',
-            oTransform: 'rotate(-70deg)',
-            content: ''
-        }
+    const diamond = {
+        backgroundImage: `url(${Diamond})`,
+        width: '80px',
+        height: '80px'
     }
 
         const color= ["#202CE0", "#51C2FA", "#F99243", "#EE34A8", "#00CD79"];
-        const shapes = [circle, triangle, star, square];
+        const shapes = [circle, triangle, star, square, diamond];
 
 
     

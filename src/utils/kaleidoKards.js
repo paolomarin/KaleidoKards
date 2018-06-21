@@ -71,27 +71,34 @@ class KaleidoKards {
     getOwnedKards(node) {
         let myKards = new Map();
         let config = Promise.all(this.getConfig(node));
-        return config.then( response => {
-            let web3 = response[0];
-            let contract = response[1];
+        // return config.then( response => {
+        //     let web3 = response[0];
+        //     let contract = response[1];
 
-            return web3.eth.getAccounts().then(accounts => {
-                return contract.methods.getOwnedKards(accounts[0]).call().then((response) => {
-                        return new Promise((resolve, reject) => {
-                            //for each kard returned, get the values of the kard attributes
-                            response.forEach(function (kardIdString) {
-                                let kardId = parseInt(kardIdString);
-                                contract.methods.getKard(kardId).call().then(
-                                    (kard) => {
-                                        // console.log(kard);
-                                        myKards[kardId] = kard;
-                                    });
-                            });
-                            resolve(myKards);
-                        })
-                    });
-            })
-        })
+        //     return web3.eth.getAccounts().then(accounts => {
+        //         return contract.methods.getOwnedKards(accounts[0]).call().then((response) => {
+        //                 return new Promise((resolve, reject) => {
+        //                     //for each kard returned, get the values of the kard attributes
+        //                     response.forEach(function (kardIdString) {
+        //                         let kardId = parseInt(kardIdString);
+        //                         contract.methods.getKard(kardId).call().then(
+        //                             (kard) => {
+        //                                 // console.log(kard);
+        //                                 myKards[kardId] = kard;
+        //                             });
+        //                     });
+        //                     resolve(myKards);
+        //                 })
+        //             });
+        //     })
+        // })
+        let kard1 = {color: 1, shape: 2, effect: 0};
+        let kard2 = {color: 1, shape: 3, effect: 0};
+        let kard3 = {color: 1, shape: 4, effect: 0};
+        myKards[7] = kard1;
+        myKards[8] = kard2;
+        myKards[9] = kard3;
+        return new Promise((resolve) => resolve(myKards))//mykards[7].color
     }
 
 
@@ -111,14 +118,6 @@ class KaleidoKards {
                     })
                 })
             })
-        }).then(function (txReceipt) {
-            // console.log(txReceipt); //TODO: use this to get tx data for frontend
-            return txReceipt;
-        }).catch((err) => {
-            console.log("buyStandardPack failed");
-            console.log(err);
-            return false;
-            //todo: handle error
         });
     }
 
@@ -137,14 +136,6 @@ class KaleidoKards {
                     })
                 })
             })
-        }).then(function (txReceipt) {
-            console.log(txReceipt); //TODO: use this to get tx data for frontend
-            return true;
-        }).catch((err) => {
-            console.log("buyStandardPack failed");
-            console.log(err);
-            return false;
-            //todo: handle error
         });
     }
 
