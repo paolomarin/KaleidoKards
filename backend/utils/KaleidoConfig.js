@@ -1,5 +1,5 @@
 const request = require("request-promise");
-
+const fs = require("fs");
 
 class KaleidoConfig {
 
@@ -24,6 +24,16 @@ class KaleidoConfig {
         this.nodeKal = "kal_node";
         this.nodeStore = "kard_store_node";
 
+        this.contractAddress = "";
+
+        this.previousInstance = false;
+
+        this.checkKeyFile();
+
+        if (this.previousInstance) {
+            return;
+        }
+
         this.userNodeUrls = {};
         this.userNodeUser = "";
         this.userNodePass ="";
@@ -35,6 +45,36 @@ class KaleidoConfig {
         this.storeNodeUrls = {};
         this.storeNodeUser = "";
         this.storeNodePass = "";
+    }
+
+    checkKeyFile() {
+        let filepath = "./.data/keystore.json";
+        if (!fs.existsSync(filepath)) {
+            this.previousInstance = false;
+            return;
+        }
+
+
+        fs.readFile(filepath, "utf8", (err, data) => {
+            if (err) return;
+           let keyfile = JSON.parse(data);
+
+           this.contractAddress = keyfile.contractAddress;
+
+           this.userNodeUser = keyfile.user_node.username;
+           this.userNodePass = keyfile.user_node.password;
+           this.userNodeUrls = keyfile.user_node.urls;
+
+           this.kalNodeUser = keyfile.kal_node.username;
+           this.kalNodePass = keyfile.kal_node.password;
+           this.kalNodeUrls = keyfile.kal_node.urls;
+
+           this.storeNodeUser = keyfile.kard_store_node.username;
+           this.storeNodePass = keyfile.kard_store_node.password;
+           this.storeNodeUrls = keyfile.kard_store_node.urls;
+
+           this.previousInstance = true;
+        });
     }
 
     // Closely follows https://console.kaleido.io/docs/docs/api101/
@@ -110,7 +150,7 @@ class KaleidoConfig {
                                                 this.storeNodeUser = storeNodeStatus.username;
                                                 this.storeNodePass = storeNodeStatus.password;
 
-                                                this.writeKeyFile();
+                                                // this.writeKeyFile();
                                                 return this;
                                                 // Finally, we have everything created and all the creds we need to make some magic
                                                 // So lets write them to a file for later use
@@ -187,7 +227,8 @@ class KaleidoConfig {
         const fs = require("fs");
         //build keys object
         let keys = {
-            user_node: {urls: this.userNodeUrls ,username: this.userNodeUser, password: this.userNodePass},
+            contractAddress: this.contractAddress,
+            user_node: {urls: this.userNodeUrls, username: this.userNodeUser, password: this.userNodePass},
             kal_node: {urls: this.kalNodeUrls, username: this.kalNodeUser, password: this.kalNodePass},
             kard_store_node: {urls: this.storeNodeUrls, username: this.storeNodeUser, password: this.storeNodePass}
         };
@@ -199,6 +240,7 @@ class KaleidoConfig {
 
         let filepath = dir + "/keystore.json";
         fs.writeFileSync(filepath, data);
+        this.previousInstance = true;
     }
 
 

@@ -8,49 +8,54 @@ class KaleidoKards {
         this.USER  = getWeb3('user_node');
         this.KAL   = getWeb3('kaleido_node');
         this.STORE = getWeb3('kard_store_node');
-        console.log("Before deploy: ", Date.now());
-        this.deploy().then(async (response) => {
-            console.log("After deploy returns: ", Date.now());
-            this.contractAddress = response._address;
-
-            this.UserContract = await this.USER.then(response => {
-                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
-                return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
-            });
-            this.KalContract = await this.KAL.then(response => {
-                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
-                return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
-            });
-            this.StoreContract = await this.STORE.then(response => {
-                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
-                return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
-            });
-        });
     }
 
     // Deploy the KaleidoKards Smart Contract
     deploy() {
-        console.log("inside deploy1: ", Date.now());
+        //
+        if (this.deployed && this.contractAddress) {
+            this.UserContract = this.USER.then(web3 => {
+                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
+                return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
+            });
+            this.KalContract = this.KAL.then(web3 => {
+                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
+                return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
+            });
+            this.StoreContract = this.STORE.then(web3 => {
+                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
+                return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
+            });
+
+            return new Promise((resolve) => {resolve(this.contractAddress)});
+        }
+
+        // else deploy the contract
         return this.STORE.then((web3) => {
-            // return some.then(async (response) => {
-            console.log("inside deploy2: ", Date.now());
-            //     //rename for readability
-            //     //contract compiled with truffle; see https://truffleframework.com/
-            //     let web3 = response;
             let bytecode = KaleidoKardsContract.bytecode;
             let abi = KaleidoKardsContract.abi;
-            // console.log(web3.eth);
+
             let contract = new web3.eth.Contract(abi);
 
-            // console.log(deployResponse);
-            // console.log(deployResponse.address);
             return web3.eth.getAccounts().then((accounts) => {
-                console.log("inside deploy3: ", Date.now());
                 return contract.deploy({data: bytecode}).send({data: bytecode, from: accounts[0], gasPrice: 0, gas: 2000000})
                 .then( (response) => {
-                console.log("inside deploy4: ", Date.now());
-                console.log(response._address);
-                return response;
+                    this.contractAddress = response._address;
+
+                    this.UserContract = this.USER.then(response => {
+                        // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
+                        return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
+                    });
+                    this.KalContract = this.KAL.then(response => {
+                        // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
+                        return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
+                    });
+                    this.StoreContract = this.STORE.then(response => {
+                        // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
+                        return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
+                    });
+                    this.deployed = true;
+                    return response;
                 });
             })
         })

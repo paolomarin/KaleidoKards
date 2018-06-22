@@ -15,7 +15,6 @@ function getWeb3(node) {
         else if (node === 'kard_store_node')
             websocket = kard_store_node;
 
-
         // var provider = new Web3.providers.WebsocketProvider(websocket);
         var provider = new Web3.providers.HttpProvider(websocket);
         let web3 = new Web3(provider);
