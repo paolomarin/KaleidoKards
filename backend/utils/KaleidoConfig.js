@@ -150,7 +150,7 @@ class KaleidoConfig {
                                                 this.storeNodeUser = storeNodeStatus.username;
                                                 this.storeNodePass = storeNodeStatus.password;
 
-                                                // this.writeKeyFile();
+                                                this.writeKeyFile();
                                                 return this;
                                                 // Finally, we have everything created and all the creds we need to make some magic
                                                 // So lets write them to a file for later use

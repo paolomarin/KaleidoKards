@@ -57,6 +57,10 @@ app.post('/launch', (req, res) => {
             res.status(500).send({error: error});
             return;
         });
+    }).catch((error) => {
+        console.log("Here's an error from launching th env ", error);
+
+        res.status(500).send({error: error});
     });
 
 });

@@ -1,5 +1,6 @@
 const Web3 = require('web3');
 
+//TODO: make the read from ../../.data/keystore.json file
 let user_node         = 'https://u0hy7mtdq3:mD29RPL7yEpwZqnqKPHGHbkdMoOAbUMO2JnUGYwO2LI@u0p56k3t54-u0p9sxe7c1-rpc.us-east-2.kaleido.io';
 let kard_store_node   = 'https://u0mxwuin6i:J0zxYgGsGibkQXhT0YEjo2cIlyVzOQrnXfxVX367rg8@u0p56k3t54-u0a26yrksx-rpc.us-east-2.kaleido.io';
 let kal_node          = 'https://u0ai0eltfn:ODtMlsSvBQHT0DfsnCdukecwYYHNkKssChcGCNmQAGg@u0p56k3t54-u0d40lxuwu-rpc.us-east-2.kaleido.io';
