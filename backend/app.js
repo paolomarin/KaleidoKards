@@ -42,7 +42,7 @@ app.post('/launch', (req, res) => {
     // Previous instance does'n exist
     console.log("No previous instance found!");
     console.log("***Creating new kaleidoConfig now");
-    kaleidoKardConfig.launch().then(() => {
+    kaleidoKardConfig.launch().then((response) => {
         console.log("kaleidoconfig.then");
         kaleidoKardsInstance = new KaleidoKards();
         kaleidoKardsInstance.deploy().then(() => {

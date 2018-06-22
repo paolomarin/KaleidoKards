@@ -235,7 +235,7 @@ class KaleidoConfig {
 
         let data = JSON.stringify(keys);
         // If the directory doesn't exist, lets create it
-        let dir = "./.data";
+        let dir = "../../.data";
         !fs.existsSync(dir) && fs.mkdirSync(dir);
 
         let filepath = dir + "/keystore.json";
