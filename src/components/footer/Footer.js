@@ -13,7 +13,7 @@ class Footer extends Component {
                     <PlatinumPack/>
                 </div>
                 <div className="footer-buttons">
-                    <PurchaseBtn/>
+                    <PurchaseBtn click={this.props.purchaseButton}/>
                 </div>
             </div> 
         )

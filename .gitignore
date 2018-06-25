@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /Empty
+/backend/dist
 
 # testing
 /coverage
