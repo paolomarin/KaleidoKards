@@ -1,4 +1,4 @@
-const KaleidoKardsContract = require('../../build/contracts/KaleidoKards.json');
+const KaleidoKardsContract = require('../../contracts/KaleidoKards.json');
 var getWeb3 = require('./getWeb3.js');
 
 class KaleidoKards {
