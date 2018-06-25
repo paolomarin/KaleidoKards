@@ -1,0 +1,86 @@
+
+@mixin keyframes($animationName) {
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin animate($name, $duration, $iteration, $direction) {
+    animation-duration: $duration;
+    animation-iteration-count: $iteration;
+    animation-name: $name;
+    animation-direction: $direction;
+}
+
+@include keyframes(color) {
+
+    0% {
+        background-color: #51C2FA;
+    }
+    5% {
+        background-color:#f99243;
+    }
+    10% {
+        background-color: #ee34A8;
+    }
+    15% {
+        background-color: #00cd79;
+    }
+    25% {
+        background-color: #202CE0;
+    }
+    30% {
+        background-color: #51C2FA;
+    }
+    35% {
+        background-color:#f99243;
+    }
+    40% {
+        background-color: #ee34A8;
+    }
+    45% {
+        background-color: #00cd79;
+    }
+    50% {
+        background-color: #202CE0;
+    }
+    55% {
+        background-color: #51C2FA;
+    }
+    60% {
+        background-color:#f99243;
+    }
+    65% {
+        background-color: #ee34A8;
+    }
+    70% {
+        background-color: #00cd79;
+    }
+    75% {
+        background-color: #202CE0;
+    }
+    80% {
+        background-color: #51C2FA;
+    }
+    85% {
+        background-color:#f99243;
+    }
+    90% {
+        background-color: #ee34A8;
+    }
+    95% {
+        background-color: #00cd79;
+    }
+    100% {
+        background-color: #51C2FA;
+    }
+
+   
+}
+
+@mixin color {
+    @include animate(color, 10s, infinite, alternate);
+}
+
+
+// const color= ["#202CE0", "#51C2FA", "#F99243", "#EE34A8", "#00CD79"];

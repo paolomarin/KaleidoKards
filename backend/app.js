@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const app = express();
 var KaleidoKards = require('./utils/kaleidoKards.js');
 var KaleidoConfig = require('./utils/KaleidoConfig.js');
@@ -7,6 +8,7 @@ var KaleidoConfig = require('./utils/KaleidoConfig.js');
 var kaleidoKardsInstance;
 var kaleidoConfigInstance;
 
+app.use('/public', express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
@@ -14,6 +16,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
+
 
 // only returns contract address for now
 app.post('/launch', (req, res) => {
@@ -66,10 +69,10 @@ app.post('/launch', (req, res) => {
 });
 
 
-
 app.post('/purchase', (req, res) => {
-    console.log(kaleidoKardsInstance.contractAddress);
-    res.status(200).send({name: 'fred'})
+    // console.log(kaleidoKardsInstance.contractAddress);
+    console.log(JSON.stringify(req.body));
+    res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )
 });
 
 app.listen(3001, () => {
