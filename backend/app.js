@@ -8,7 +8,7 @@ var KaleidoConfig = require('./utils/KaleidoConfig.js');
 var kaleidoKardsInstance;
 var kaleidoConfigInstance;
 
-app.use('/public', express.static(__dirname + '/dist'));
+app.use('/', express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {

@@ -221,6 +221,12 @@ h4 {
 
 .closeBtn:hover {
   cursor: pointer; }
+
+.demo-cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 300px; }
 html, body {
   box-sizing: border-box;
   margin: 0;
@@ -391,17 +397,6 @@ input[type=radio]:checked ~ label {
 h3 {
   text-align: center;
   margin-top: 38px; }
-.dashboard-card-container {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  color: black; }
-
-.my-card-container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px; }
 .trade-button {
   border-radius: 50px;
   text-decoration: none;
@@ -419,6 +414,57 @@ h3 {
     color: #202CE0;
     cursor: pointer;
     transition: all 0.3s ease-out; }
+@keyframes color {
+  0% {
+    background-color: #51C2FA; }
+  5% {
+    background-color: #f99243; }
+  10% {
+    background-color: #ee34A8; }
+  15% {
+    background-color: #00cd79; }
+  25% {
+    background-color: #202CE0; }
+  30% {
+    background-color: #51C2FA; }
+  35% {
+    background-color: #f99243; }
+  40% {
+    background-color: #ee34A8; }
+  45% {
+    background-color: #00cd79; }
+  50% {
+    background-color: #202CE0; }
+  55% {
+    background-color: #51C2FA; }
+  60% {
+    background-color: #f99243; }
+  65% {
+    background-color: #ee34A8; }
+  70% {
+    background-color: #00cd79; }
+  75% {
+    background-color: #202CE0; }
+  80% {
+    background-color: #51C2FA; }
+  85% {
+    background-color: #f99243; }
+  90% {
+    background-color: #ee34A8; }
+  95% {
+    background-color: #00cd79; }
+  100% {
+    background-color: #51C2FA; } }
+
+.card-colors {
+  width: 150px;
+  height: 200px;
+  border-radius: 12px;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-name: color;
+  animation-direction: alternate;
+  background-color: #202CE0; }
 .platinum-pack {
   background-color: #202CE0;
   width: 300px;
@@ -486,3 +532,14 @@ input[type=radio]:checked ~ .check::before {
 
 input[type=radio]:checked ~ label {
   color: #202CE0; }
+.dashboard-card-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  color: black; }
+
+.my-card-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px; }
