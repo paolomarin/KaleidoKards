@@ -17,7 +17,9 @@
     "webpack-cli": "^3.0.3"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack-demo/webpack.config.js",
+    "prestart": "npm run build;rm -rf backend/dist; cp -R webpack-demo/dist backend/ ",
+    "start": "node ./backend/app.js",
+    "dev": "webpack-dev-server --config ./webpack-demo/webpack.config.js",
     "build": "webpack --config ./webpack-demo/webpack.config.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

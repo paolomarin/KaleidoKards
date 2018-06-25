@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /Empty
+/backend/dist
 
 # testing
 /coverage
@@ -21,7 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Truffle config file(s) TODO: generate these based on kaleido API's; may be able to keep the .sh and pass params to it
+# Truffle config file(s)
 truffle.js
 truffle-config.js
 truffle_migrate.sh
+
+# Private data directory
+/.data
