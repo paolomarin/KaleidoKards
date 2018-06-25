@@ -15,63 +15,29 @@ import MyCardsContainer from './components/mycards/MyCardsContainer';
 
 
 class App extends Component {
-  // constructor() {
-  //   super();
+  constructor(props) {
+    super(props)
+    this.state = {
+        data: {}
+    };
+}
 
-  //   this.state = {
-  //     web3: null,
-  //     kaleidoKardsInstance: null,
-  //     cards: []
-
-  //   }
-  // }
-
-  // componentWillMount () {
-
-  //   console.log("here");
-  //   getWeb3
-  //   .then(results => {
-  //     this.setState({
-  //       web3: results.web3
-  //     })
-
-  //     // Instantiate contract once web3 provided.
-  //     this.instantiateContract()
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
-
-
-  // instantiateContract() {
+clickPurchaseBtn() {
+    //console.log(KaleidoKards);
+    window.fetch("http://localhost:3000/purchase", {
+        body: JSON.stringify({hello: "world"}), 
+        method: "POST",
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(results => {
+        return results.json();
     
-  //   const kaleidoKards = new this.state.web3.Contract(KaleidoKardsContract, 'contractAddress')
-  //   console.log(kaleidoKards, "BANANA");
-  
-
-
-  //   // Get accounts.
-  //   this.state.web3.eth.getAccounts((error, accounts) => {
-  //    kaleidoKards.deployed().then((instance) => {
-  //      instance.getKards().then((x) => console.log(x));
-  //      this.setState({
-  //        kaleidoKardsInstance: instance
-      
-  //      })
-  //     })
-  //   })
-
-    
-  // }
- 
-  // getCards() {
-  //   let result = getCards;
-  //   this.setState({cards: <Card shape= {result.shape} color={result.color} />})
-  // }
-
-  // clickButton() 
-
+    }).then(resultBody => {
+        console.log('resultBody', resultBody);
+        this.setState({data:resultBody})
+    })
+  }
   render() {
     //let cards = this.state.cards;
     return (
@@ -90,14 +56,14 @@ class App extends Component {
               <div className="my-cards">
                 <h2 className="my-cards-title header-text"> My Cards </h2>
                 <div className="my-cards-container">
-                  <MyCardsContainer/>
+                  <MyCardsContainer data={this.state.data}/>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <Footer/>
+        <Footer purchaseButton={this.clickPurchaseBtn.bind(this)}/>
 
       </div>
     );

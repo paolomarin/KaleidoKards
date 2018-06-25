@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import './Card.scss'; 
+import './CardPopUp.scss'; 
 import Star from './star.png';
 import Diamond from './diamond.png';
 
 
 class Card extends Component {
 
-
-   renderCard() {
-
+renderCardPopUp() {
     const circle = {
         backgroundColor: 'white',
         width: '60px',
@@ -44,22 +42,11 @@ class Card extends Component {
         width: '80px',
         height: '80px'
     }
-
-        const color= ["#202CE0", "#51C2FA", "#F99243", "#EE34A8", "#00CD79"];
         const shapes = [circle, triangle, star, square, diamond];
 
-
-    
-        const styles = {
-        width: '150px',
-        height: '200px',
-        borderRadius: '12px',
-        backgroundColor: color[this.props.color]
-        };
-    
-        return (
-                <div className="card" style={styles}>
-                    <div style= {shapes[this.props.shape]}></div>
+    return (
+                <div className="card-colors">
+                    <div style= {shapes[Math.floor(Math.random) *shapes.length]}></div>
                 </div>
         )
     }
@@ -68,7 +55,7 @@ class Card extends Component {
         
         return( 
             <div>
-                {this.renderCard()}
+                {this.renderCardPopUp()}
             </div>
             // <div className={`card ${color}`}>
             //     <div className={`${shape}`}></div> 

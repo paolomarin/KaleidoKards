@@ -22,11 +22,7 @@ ReactDOM.render(
 
 
 class Main extends Component {
-    constructor() {
-        super();
-
-    
-    }
+   
 
     render() {
         return(
@@ -39,6 +35,5 @@ class Main extends Component {
         );
 }
 }
-
 
 render(Main);

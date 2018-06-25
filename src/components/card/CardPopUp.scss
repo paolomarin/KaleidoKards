@@ -1,0 +1,11 @@
+@import './colorAnimation.scss';
+
+.card-colors {
+width: 150px;
+height: 200px;
+border-radius: 12px;
+@include color;
+background-color: #202CE0;
+}
+
+// const color= ["#202CE0", "#51C2FA", "#F99243", "#EE34A8", "#00CD79"];
