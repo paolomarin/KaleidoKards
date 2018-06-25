@@ -1,11 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
+const app = express();
 var KaleidoKards = require('./utils/kaleidoKards.js');
 var KaleidoConfig = require('./utils/KaleidoConfig.js');
 
 var kaleidoKardsInstance;
 var kaleidoConfigInstance;
-const app = express();
+
 app.use('/public', express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
 
@@ -66,13 +68,6 @@ app.post('/launch', (req, res) => {
 
 });
 
-// app.get("/", function(request, response) {
-//     response.sendFile(__dirname + '/')
-// })
-
-
-
-
 
 app.post('/purchase', (req, res) => {
     // console.log(kaleidoKardsInstance.contractAddress);
@@ -80,6 +75,6 @@ app.post('/purchase', (req, res) => {
     res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
    console.log('listening on port 3000');
 });
