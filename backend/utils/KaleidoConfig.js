@@ -47,50 +47,20 @@ class KaleidoConfig {
         this.storeNodePass = "";
     }
 
-    checkKeyFile() {
-        let filepath = "./.data/keystore.json";
-        if (!fs.existsSync(filepath)) {
-            this.previousInstance = false;
-            return;
-        }
-
-
-        fs.readFile(filepath, "utf8", (err, data) => {
-            if (err) return;
-           let keyfile = JSON.parse(data);
-
-           this.contractAddress = keyfile.contractAddress;
-
-           this.userNodeUser = keyfile.user_node.username;
-           this.userNodePass = keyfile.user_node.password;
-           this.userNodeUrls = keyfile.user_node.urls;
-
-           this.kalNodeUser = keyfile.kal_node.username;
-           this.kalNodePass = keyfile.kal_node.password;
-           this.kalNodeUrls = keyfile.kal_node.urls;
-
-           this.storeNodeUser = keyfile.kard_store_node.username;
-           this.storeNodePass = keyfile.kard_store_node.password;
-           this.storeNodeUrls = keyfile.kard_store_node.urls;
-
-           this.previousInstance = true;
-        });
-    }
-
     // Closely follows https://console.kaleido.io/docs/docs/api101/
     launch() {
         // TODO: check api key length, maybe trim it
         // TODO add comments on logging
         return this.createConsortia().then((response) => {
-            console.log(response);
+            // console.log(response);
             let jsonResponse = JSON.parse(response);
-            console.log(jsonResponse);
+            // console.log(jsonResponse);
             let consortium = jsonResponse._id;
-            console.log(consortium);
+            // console.log(consortium);
             return this.createEnvironment(consortium).then((response) => {
-                console.log(response);
+                // console.log(response);
                 let jsonResponse = JSON.parse(response);
-                console.log(jsonResponse);
+                // console.log(jsonResponse);
                 let environment = jsonResponse._id;
                 // Create the 3 memberships at once
                 return Promise.all([
@@ -209,7 +179,7 @@ class KaleidoConfig {
             jsonResponse = JSON.parse(response);
             state = jsonResponse.state;
             // Wait 3 seconds so we don't spam the API
-            console.log("Waiting on Node initialization");
+            console.log("Waiting on Node initialization: " + node);
             await new Promise((resolve) => setTimeout(resolve, 3000));
         }
 
@@ -235,7 +205,7 @@ class KaleidoConfig {
 
         let data = JSON.stringify(keys);
         // If the directory doesn't exist, lets create it
-        let dir = "../../.data";
+        let dir = __dirname + ".data";
         !fs.existsSync(dir) && fs.mkdirSync(dir);
 
         let filepath = dir + "/keystore.json";
@@ -244,6 +214,35 @@ class KaleidoConfig {
     }
 
 
+    checkKeyFile() {
+        let filepath = __dirname + ".data/keystore.json";
+        if (!fs.existsSync(filepath)) {
+            this.previousInstance = false;
+            return;
+        }
+
+
+        fs.readFile(filepath, "utf8", (err, data) => {
+            if (err) return;
+            let keyfile = JSON.parse(data);
+
+            this.contractAddress = keyfile.contractAddress;
+
+            this.userNodeUser = keyfile.user_node.username;
+            this.userNodePass = keyfile.user_node.password;
+            this.userNodeUrls = keyfile.user_node.urls;
+
+            this.kalNodeUser = keyfile.kal_node.username;
+            this.kalNodePass = keyfile.kal_node.password;
+            this.kalNodeUrls = keyfile.kal_node.urls;
+
+            this.storeNodeUser = keyfile.kard_store_node.username;
+            this.storeNodePass = keyfile.kard_store_node.password;
+            this.storeNodeUrls = keyfile.kard_store_node.urls;
+
+            this.previousInstance = true;
+        });
+    }
 }
 
 module.exports = KaleidoConfig;
