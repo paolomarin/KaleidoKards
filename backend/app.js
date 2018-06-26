@@ -70,13 +70,36 @@ app.post('/launch', (req, res) => {
 app.post('/purchase/standard', (req, res) => {
     // console.log(kaleidoKardsInstance.contractAddress);
     console.log(JSON.stringify(req.body));
-    res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )
+    if (!req.body.purchaser){
+        // purchaser should be, user, joe, or kard_store
+        // joe will be the other kard traders
+        res.status(500).send({error: "Purchaser not specified"});
+        return;
+    }
+
+    let ret = new Map();
+    ret["7"] = {color: 1, shape: 4, effect: 0};
+    ret["8"] = {color: 2, shape: 3, effect: 0};
+    ret["9"] = {color: 3, shape: 2, effect: 0};
+
+    res.status(200).send({kards: ret})
 });
 
 app.post('/purchase/platinum', (req, res) => {
     // console.log(kaleidoKardsInstance.contractAddress);
     console.log(JSON.stringify(req.body));
-    res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )
+    if (!req.body.purchaser){
+        // purchaser should be, user, joe, or kard_store
+        // joe will be the other kard traders
+        res.status(500).send({error: "Purchaser not specified"});
+        return;
+    }
+
+    let ret = new Map();
+    ret["26"] = {color: 1, shape: 3, effect: 1};
+    ret["27"] = {color: 2, shape: 2, effect: 1};
+    ret["28"] = {color: 3, shape: 1, effect: 1};
+    res.status(200).send(res.status(200).send({kards: ret}));
 });
 
 app.listen(3000, () => {

@@ -69,7 +69,7 @@ class KaleidoConfig {
                     this.createMembership(consortium, this.memberStore)])
                     .then((response) => {
                         // Promise.all returns the responses for each call in an array
-                        console.log(response);
+                        // console.log(response);
                         let userResponse  = JSON.parse(response[0]);
                         let kalResponse   = JSON.parse(response[1]);
                         let storeResponse = JSON.parse(response[2]);
