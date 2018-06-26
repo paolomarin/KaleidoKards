@@ -22,11 +22,9 @@ app.use(function(req, res, next) {
 app.post('/launch', (req, res) => {
 
     if (kaleidoKardsInstance && kaleidoKardsInstance.deployed) {
-        res.status(200).send(kaleidoKardsInstance.contractAddress);
+        res.status(200).send({contractAddress: kaleidoKardsInstance.contractAddress});
         return;
     }
-
-    console.log(req);
 
     if (!req.body.apiKey) {
         res.status(500).send({error: "No Api Key in body"});
@@ -38,18 +36,18 @@ app.post('/launch', (req, res) => {
     if (kaleidoKardConfig.previousInstance) {
         kaleidoKardsInstance = new KaleidoKards();
         kaleidoKardsInstance.contractAddress = kaleidoKardConfig.contractAddress;
-        res.status(200).send(kaleidoKardsInstance.contractAddress);
+        res.status(200).send({contractAddress: kaleidoKardsInstance.contractAddress});
         return;
     }
 
     // Previous instance does'n exist
-    console.log("No previous instance found!");
-    console.log("***Creating new kaleidoConfig now");
+    // console.log("No previous instance found!");
+    // console.log("***Creating new kaleidoConfig now");
     kaleidoKardConfig.launch().then((response) => {
-        console.log("kaleidoconfig.then");
+        // console.log("kaleidoconfig.then");
         kaleidoKardsInstance = new KaleidoKards();
         kaleidoKardsInstance.deploy().then(() => {
-            console.log("contractinstance.then");
+            // console.log("contractinstance.then");
             kaleidoKardConfig.contractAddress = kaleidoKardsInstance.contractAddress;
             kaleidoKardConfig.writeKeyFile();
             res.status(200).send({contractAddress: kaleidoKardsInstance.contractAddress});
@@ -69,7 +67,13 @@ app.post('/launch', (req, res) => {
 });
 
 
-app.post('/purchase', (req, res) => {
+app.post('/purchase/standard', (req, res) => {
+    // console.log(kaleidoKardsInstance.contractAddress);
+    console.log(JSON.stringify(req.body));
+    res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )
+});
+
+app.post('/purchase/platinum', (req, res) => {
     // console.log(kaleidoKardsInstance.contractAddress);
     console.log(JSON.stringify(req.body));
     res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )

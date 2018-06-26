@@ -79,7 +79,7 @@
 }
 
 @mixin color {
-    @include animate(color, 10s, infinite, alternate);
+    @include animate(color, 20s, infinite, alternate);
 }
 
 
