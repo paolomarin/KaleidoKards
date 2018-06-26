@@ -13,7 +13,7 @@ class Launch extends Component {
     
     clickLaunchBtn() {
         //console.log(KaleidoKards);
-        window.fetch("http://localhost:3000/launch", {
+        window.fetch("/launch", {
             body: JSON.stringify({apiKey: this.state.apikey}), 
             method: "POST",
             headers: {
