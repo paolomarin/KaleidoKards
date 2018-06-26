@@ -5,26 +5,25 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-	width: 5740px;
-    height: 4000px;
     display: flex;
-    align-items: center;
     margin-right: auto;
-    margin-left: auto;
+	margin-left: auto;
+	padding:210px;
 }
 
 
 .launch-container {
     background-color: white;
     border-radius: 50px;
-    width: 3000px;
+    width: 50%;
     height: 2000px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+	justify-content: center;
+	padding: 50px;
 }
 
 
