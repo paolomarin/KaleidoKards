@@ -2,11 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-var KaleidoKards = require('./utils/kaleidoKards.js');
-var KaleidoConfig = require('./utils/KaleidoConfig.js');
 
-var kaleidoKardsInstance;
-var kaleidoConfigInstance;
+var controller = new (require('./controller.js'))();
+controller.checkKeyFile();
 
 app.use('/', express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
@@ -20,63 +18,63 @@ app.use(function(req, res, next) {
 
 // only returns contract address for now
 app.post('/launch', (req, res) => {
-
-    if (kaleidoKardsInstance && kaleidoKardsInstance.deployed) {
-        res.status(200).send({contractAddress: kaleidoKardsInstance.contractAddress});
-        return;
-    }
-
-    if (!req.body.apiKey) {
-        res.status(500).send({error: "No Api Key in body"});
-        return;
-    }
-
-
-    var kaleidoKardConfig = new KaleidoConfig(req.body.apiKey);
-    if (kaleidoKardConfig.previousInstance) {
-        kaleidoKardsInstance = new KaleidoKards();
-        kaleidoKardsInstance.contractAddress = kaleidoKardConfig.contractAddress;
-        res.status(200).send({contractAddress: kaleidoKardsInstance.contractAddress});
-        return;
-    }
-
-    // Previous instance does'n exist
-    // console.log("No previous instance found!");
-    // console.log("***Creating new kaleidoConfig now");
-    kaleidoKardConfig.launch().then((response) => {
-        // console.log("kaleidoconfig.then");
-        kaleidoKardsInstance = new KaleidoKards();
-        kaleidoKardsInstance.deploy().then(() => {
-            // console.log("contractinstance.then");
-            kaleidoKardConfig.contractAddress = kaleidoKardsInstance.contractAddress;
-            kaleidoKardConfig.writeKeyFile();
-            res.status(200).send({contractAddress: kaleidoKardsInstance.contractAddress});
-            return;
-        }).catch((error) => {
-            console.log("Here's an error ", error);
-
-            res.status(500).send({error: error});
-            return;
-        });
-    }).catch((error) => {
-        console.log("Here's an error from launching th env ", error);
-
-        res.status(500).send({error: error});
+    controller.launchAppEnv(req.body.apiKey).then((response) => {
+        res.status(response.status).send(response.body);
     });
-
 });
 
 
 app.post('/purchase/standard', (req, res) => {
-    // console.log(kaleidoKardsInstance.contractAddress);
-    console.log(JSON.stringify(req.body));
-    res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )
+
+    if (!req.body.purchaser){
+        // purchaser should be, user, joe, or kard_store
+        res.status(400).send({error: "Purchaser not specified"});
+        return;
+    }
+
+    controller.purchaseStandard(req.body.purchaser).then((response) => {
+        res.status(response.status).send(response.body);
+    });
+
 });
 
 app.post('/purchase/platinum', (req, res) => {
-    // console.log(kaleidoKardsInstance.contractAddress);
-    console.log(JSON.stringify(req.body));
-    res.status(200).send([{color:0, shape: 0},{color:1, shape:1}, {color:2, shape:2}, {color:3, shape:3}, {color:4, shape:4} ] )
+    if (!req.body.purchaser){
+        // purchaser should be, user, joe, or kard_store
+        res.status(400).send({error: "Purchaser not specified"});
+        return;
+    }
+
+    controller.purchasePlatinum(req.body.purchaser).then((response) => {
+        res.status(response.status).send(response.body);
+    });
+});
+
+app.get('/kards/:owner', (req, res) =>{
+    if (!req.params.owner){
+        // owner should be, user, joe, or kard_store
+        // owner is the owner of the kards you are wanting
+        res.status(400).send({error: "Owner not specified"});
+        return;
+    }
+
+    controller.getOwnedKards(req.params.owner).then((response) => {
+        res.status(response.status).send(response.body);
+    });
+
+});
+
+app.post('/transfer', (req, res) => {
+    if (!req.body.from || !req.body.from || !req.body.to || !req.body.kardId) {
+        res.status(400).send({error: "Invalid request body"});
+        return;
+    }
+
+    controller.transfer(req.body.from, req.body.to, req.body.kardId).then((response) => {
+        res.status(response.status).send(response.body);
+    })
+
+
 });
 
 app.listen(3000, () => {

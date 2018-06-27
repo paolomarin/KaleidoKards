@@ -6,19 +6,19 @@ class KaleidoKards {
     constructor() {
 
         this.USER  = getWeb3('user_node');
-        this.KAL   = getWeb3('kaleido_node');
+        this.JOE   = getWeb3('joe_node');
         this.STORE = getWeb3('kard_store_node');
     }
 
     // Deploy the KaleidoKards Smart Contract
     deploy() {
-        //
+        console.log("inside deploy");
         if (this.deployed && this.contractAddress) {
             this.UserContract = this.USER.then(web3 => {
                 // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                 return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
             });
-            this.KalContract = this.KAL.then(web3 => {
+            this.JoeContract = this.JOE.then(web3 => {
                 // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                 return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
             });
@@ -32,6 +32,7 @@ class KaleidoKards {
 
         // else deploy the contract
         return this.STORE.then((web3) => {
+            console.log("Inside this.store");
             let bytecode = KaleidoKardsContract.bytecode;
             let abi = KaleidoKardsContract.abi;
 
@@ -40,13 +41,14 @@ class KaleidoKards {
             return web3.eth.getAccounts().then((accounts) => {
                 return contract.deploy({data: bytecode}).send({data: bytecode, from: accounts[0], gasPrice: 0, gas: 2000000})
                 .then( (response) => {
+                    console.log("after contract deploy");
                     this.contractAddress = response._address;
 
                     this.UserContract = this.USER.then(response => {
                         // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                         return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
                     });
-                    this.KalContract = this.KAL.then(response => {
+                    this.JoeContract = this.JOE.then(response => {
                         // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                         return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
                     });
@@ -55,7 +57,7 @@ class KaleidoKards {
                         return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
                     });
                     this.deployed = true;
-                    return response;
+                    return this.contractAddress;
                 });
             })
         })
@@ -103,32 +105,36 @@ class KaleidoKards {
     // kardId => attribute
     // return usage ex. myKards[13].color, myKards[13].shape, etc
     getOwnedKards(node) {
-        let myKards = new Map();
-        let config = Promise.all(this.getConfig(node));
-        return config.then( response => {
-            let web3 = response[0];
-            let contract = response[1];
+        return this.getAddress(node).then((address) => {
+            let config = Promise.all(this.getConfig(node));
+            console.log("After get config");
+            return config.then( response => {
+                console.log("in get config");
+                let web3 = response[0];
+                let contract = response[1];
+                return contract.methods.getOwnedKards(address).call().then((kardArray) => {
+                    console.log("getOwned KArds: " + kardArray);
+                    // Build array of promises so we can wait on all of them to resolve
+                    let promiseArray = [];
+                    kardArray.forEach((kardIdString) => {
+                        let kardId = parseInt(kardIdString);
+                        let promise = contract.methods.getKard(kardId).call();
+                        promiseArray.push(promise);
+                    });
+                    let promises = Promise.all(promiseArray);
 
-            return web3.eth.getAccounts().then(accounts => {
-                return contract.methods.getOwnedKards(accounts[0]).call().then((response) => {
-                    return new Promise((resolve, reject) => {
-                        //for each kard returned, get the values of the kard attributes
-                        response.forEach(function (kardIdString) {
-                            let kardId = parseInt(kardIdString);
-                            contract.methods.getKard(kardId).call().then(
-                                (kard) => {
-                                    // console.log(kard);
-                                    myKards[kardId] = kard;
-                                });
+                    let myKards = {};
+                    return promises.then((kards) => {
+                        kards.forEach((kard, i) => {
+                            myKards[kardArray[i]] = kard;
                         });
-                        resolve(myKards);
-                    })
+                        return myKards;
+                    });
                 });
-            })
-        })
+            });
+        });
+
     }
-
-
 
     buyStandardPack(node) {
         let config = Promise.all(this.getConfig(node));
@@ -137,7 +143,10 @@ class KaleidoKards {
             let web3 = response[0];
             let contract = response[1];
             return web3.eth.getBlock("latest").then( lastBlock => {
+                // console.log("After get last block");
+                // console.log("lastBlock: "+lastBlock);
                 return web3.eth.getAccounts().then(accounts => {
+                    // console.log("accounts: " + accounts);
                     return contract.methods.buyStandardPack().send({
                         from: accounts[0],
                         gas: lastBlock.gasLimit,
@@ -171,10 +180,12 @@ class KaleidoKards {
     getConfig(node){
         if (node === 'user_node') {
             return [this.USER, this.UserContract];
-        } else if (node === 'kaleido_node'){
-            return [this.KAL, this.KalContract];
+        } else if (node === 'joe_node'){
+            return [this.JOE, this.JoeContract];
         } else if (node === 'kard_store_node'){
             return [this.STORE, this.StoreContract];
+        } else {
+            return new Promise((resolve, reject) => reject("Invalid user/node"));
         }
     }
 }
