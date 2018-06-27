@@ -111,10 +111,9 @@ class Controller {
     purchaseStandard(purchaser) {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
-            this.kaleidoKardsInstance.buyStandardPack(purchaser + '_node').then((kards) => {
-                console.log(kards);
+            this.kaleidoKardsInstance.buyStandardPack(purchaser + '_node').then((reciept) => {
                 response.status = 200;
-                response.body.kards = kards;
+                response.body.reciept = reciept;
                 resolve(response);
             }).catch((error) => {
                 console.log(error);
@@ -128,9 +127,9 @@ class Controller {
     purchasePlatinum(purchaser) {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
-            this.kaleidoKardsInstance.buyPlatinumPack(purchaser + '_node').then((kards) => {
+            this.kaleidoKardsInstance.buyPlatinumPack(purchaser + '_node').then((reciept) => {
                 response.status = 200;
-                response.body.kards = kards;
+                response.body.receipt = reciept;
                 resolve(response);
             }).catch((error) => {
                 response.status = 500;
@@ -144,10 +143,23 @@ class Controller {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
             this.kaleidoKardsInstance.getOwnedKards(owner + '_node').then((kards) => {
-                console.log("response: ");
-                console.log(kards);
                 response.status = 200;
                 response.body.kards = kards;
+                resolve(response);
+            }).catch((error) => {
+                response.status = 500;
+                response.body.error = error;
+                resolve(response);
+            });
+        })
+    }
+
+    transfer(from, to, kardId) {
+        let response = {status: 400, body: {}};
+        return new Promise(resolve => {
+            this.kaleidoKardsInstance.transfer(from + '_node', to + '_node', kardId).then((receipt) => {
+                response.status = 200;
+                response.body.receipt = receipt;
                 resolve(response);
             }).catch((error) => {
                 response.status = 500;

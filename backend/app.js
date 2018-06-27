@@ -28,7 +28,7 @@ app.post('/purchase/standard', (req, res) => {
 
     if (!req.body.purchaser){
         // purchaser should be, user, joe, or kard_store
-        res.status(500).send({error: "Purchaser not specified"});
+        res.status(400).send({error: "Purchaser not specified"});
         return;
     }
 
@@ -41,7 +41,7 @@ app.post('/purchase/standard', (req, res) => {
 app.post('/purchase/platinum', (req, res) => {
     if (!req.body.purchaser){
         // purchaser should be, user, joe, or kard_store
-        res.status(500).send({error: "Purchaser not specified"});
+        res.status(400).send({error: "Purchaser not specified"});
         return;
     }
 
@@ -54,13 +54,26 @@ app.get('/kards/:owner', (req, res) =>{
     if (!req.params.owner){
         // owner should be, user, joe, or kard_store
         // owner is the owner of the kards you are wanting
-        res.status(500).send({error: "Purchaser not specified"});
+        res.status(400).send({error: "Owner not specified"});
         return;
     }
 
     controller.getOwnedKards(req.params.owner).then((response) => {
         res.status(response.status).send(response.body);
     });
+
+});
+
+app.post('/transfer', (req, res) => {
+    if (!req.body.from || !req.body.from || !req.body.to || !req.body.kardId) {
+        res.status(400).send({error: "Invalid request body"});
+        return;
+    }
+
+    controller.transfer(req.body.from, req.body.to, req.body.kardId).then((response) => {
+        res.status(response.status).send(response.body);
+    })
+
 
 });
 

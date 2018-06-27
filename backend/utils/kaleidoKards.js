@@ -114,27 +114,22 @@ class KaleidoKards {
                 let contract = response[1];
                 return contract.methods.getOwnedKards(address).call().then((kardArray) => {
                     console.log("getOwned KArds: " + kardArray);
-                    // return new Promise((resolve) => {
-                        let myKards = {};
-                        let promiseArray = [];
-                        kardArray.forEach((kardIdString) => {
-                            let kardId = parseInt(kardIdString);
-                            let promise = contract.methods.getKard(kardId).call();
-                            promiseArray.push(promise);
-                        });
-                        let promises = Promise.all(promiseArray);
+                    // Build array of promises so we can wait on all of them to resolve
+                    let promiseArray = [];
+                    kardArray.forEach((kardIdString) => {
+                        let kardId = parseInt(kardIdString);
+                        let promise = contract.methods.getKard(kardId).call();
+                        promiseArray.push(promise);
+                    });
+                    let promises = Promise.all(promiseArray);
 
-                        return promises.then((kards) => {
-                            kards.forEach((kard, i) => {
-                                myKards[kardArray[i]] = kard;
-                            })
-                            console.log("myKards Map: ");
-                            console.log(myKards);
-                            return myKards;
+                    let myKards = {};
+                    return promises.then((kards) => {
+                        kards.forEach((kard, i) => {
+                            myKards[kardArray[i]] = kard;
                         });
-
-                        // resolve(myKards);
-                    // });
+                        return myKards;
+                    });
                 });
             });
         });
@@ -183,7 +178,6 @@ class KaleidoKards {
     }
 
     getConfig(node){
-        console.log("NODE: " + node);
         if (node === 'user_node') {
             return [this.USER, this.UserContract];
         } else if (node === 'joe_node'){
