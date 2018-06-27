@@ -1,97 +1,20 @@
-.popup {
-  background-color: #202ce0;
-  border-radius: 12px;
-  width: 2220px;
-  height: 1270px;
-  margin: 1040px auto;
-  padding: 30px; }
-
-.close {
-  margin-top: -38px;
-  margin-left: 2000px; }
-
-.closeBtn:hover {
-  cursor: pointer; }
-
-.demo-cards {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-top: 300px; }
-
-.delay {
-  animation-delay: 2s; }
-
-.delay-second {
-  animation-delay: 4s; }
-html, body {
-  box-sizing: border-box;
+*,
+*::after,
+*::before {
   margin: 0;
-  height: 100%;
-  width: 100%;
+  padding: 0;
+  boz-sizing: inherit; }
+
+.card {
+  width: 150px;
+  height: 200px;
+  border-radius: 12px;
   display: flex;
-  flex-direction: column;
-  background-color: #F5F5F5;
-  font-family: sans-serif; }
-
-#root {
-  height: 100%;
-  width: 100%; }
-
-h2 {
-  text-align: center;
-  color: #4d56e6;
-  font-size: 40px; }
-
-.my-cards-title {
-  margin-top: -150px; }
-
-.my-cards-container {
-  display: flex;
-  justify-content: space-around; }
-
-.square-container {
-  display: flex;
-  align-items: center;
-  padding-top: 100px;
-  padding-right: 500px;
-  padding-bottom: 200px;
-  padding-left: 500px; }
-
-.other-players-cards {
-  height: 800px;
-  width: 1000px;
-  background-color: white;
-  margin-top: 50px;
-  padding: 200px;
-  margin-left: auto; }
-
-.column-container {
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  margin-top: 50px;
-  margin-left: 20px;
-  margin-right: auto; }
-
-.ether {
-  height: 290px;
-  width: 800px;
-  background-color: white;
-  padding-top: 200px;
-  margin-bottom: 20px; }
-
-.my-cards {
-  height: 490px;
-  width: 800px;
-  background-color: white;
-  padding-top: 200px; }
-
-.amount-of-ether {
-  font-size: 130px; }
-
-.text-style {
-  font-size: 40px; }
+  justify-content: center;
+  align-items: center; }
+  .card:hover {
+    transform: scale(1.1);
+    cursor: pointer; }
 .launch-wrapper {
   background-image: url(855218a44097c933b01c9e44671e4734.png);
   background-position: center;
@@ -268,6 +191,100 @@ h4 {
   font-size: 100px;
   color: white;
   padding-top: 200px; }
+.popup {
+  background-color: #202ce0;
+  border-radius: 12px;
+  width: 2220px;
+  height: 1270px;
+  margin: 1040px auto;
+  padding: 30px; }
+
+.close {
+  margin-top: -38px;
+  margin-left: 2000px; }
+
+.closeBtn:hover {
+  cursor: pointer; }
+
+.demo-cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 300px; }
+
+.delay {
+  animation-delay: 2s; }
+
+.delay-second {
+  animation-delay: 4s; }
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #F5F5F5;
+  font-family: sans-serif; }
+
+#root {
+  height: 100%;
+  width: 100%; }
+
+h2 {
+  text-align: center;
+  color: #4d56e6;
+  font-size: 40px; }
+
+.my-cards-title {
+  margin-top: -150px; }
+
+.my-cards-container {
+  display: flex;
+  justify-content: space-around; }
+
+.square-container {
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  padding-right: 500px;
+  padding-bottom: 200px;
+  padding-left: 500px; }
+
+.other-players-cards {
+  height: 800px;
+  width: 1000px;
+  background-color: white;
+  margin-top: 50px;
+  padding: 200px;
+  margin-left: auto; }
+
+.column-container {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-left: 20px;
+  margin-right: auto; }
+
+.ether {
+  height: 290px;
+  width: 800px;
+  background-color: white;
+  padding-top: 200px;
+  margin-bottom: 20px; }
+
+.my-cards {
+  height: 490px;
+  width: 800px;
+  background-color: white;
+  padding-top: 200px; }
+
+.amount-of-ether {
+  font-size: 130px; }
+
+.text-style {
+  font-size: 40px; }
 .purchase-button {
   border-radius: 50px;
   text-decoration: none;
@@ -283,23 +300,6 @@ h4 {
     color: #202CE0;
     cursor: pointer;
     transition: all 0.3s ease-out; }
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  boz-sizing: inherit; }
-
-.card {
-  width: 150px;
-  height: 200px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center; }
-  .card:hover {
-    transform: scale(1.1);
-    cursor: pointer; }
 .basic-pack {
   background-color: #202CE0;
   width: 300px;
@@ -520,17 +520,6 @@ input[type=radio]:checked ~ .check::before {
 
 input[type=radio]:checked ~ label {
   color: #202CE0; }
-.dashboard-card-container {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  color: black; }
-
-.my-card-container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px; }
 .trade-button {
   border-radius: 50px;
   text-decoration: none;
@@ -548,3 +537,14 @@ input[type=radio]:checked ~ label {
     color: #202CE0;
     cursor: pointer;
     transition: all 0.3s ease-out; }
+.dashboard-card-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  color: black; }
+
+.my-card-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px; }

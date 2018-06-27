@@ -57,7 +57,7 @@ class KaleidoKards {
                         return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
                     });
                     this.deployed = true;
-                    return response;
+                    return this.contractAddress;
                 });
             })
         })
@@ -114,17 +114,27 @@ class KaleidoKards {
                 let contract = response[1];
                 return contract.methods.getOwnedKards(address).call().then((kardArray) => {
                     console.log("getOwned KArds: " + kardArray);
-                    return new Promise(resolve => {
-                        let myKards = new Map();
+                    // return new Promise((resolve) => {
+                        let myKards = {};
+                        let promiseArray = [];
                         kardArray.forEach((kardIdString) => {
                             let kardId = parseInt(kardIdString);
-                            contract.methods.getKard(kardId).call().then((kard) => {
-                                myKards[kardIdString] = kard;
-                            });
+                            let promise = contract.methods.getKard(kardId).call();
+                            promiseArray.push(promise);
                         });
-                        console.log("myKards Map" + myKards);
-                        resolve(myKards);
-                    });
+                        let promises = Promise.all(promiseArray);
+
+                        return promises.then((kards) => {
+                            kards.forEach((kard, i) => {
+                                myKards[kardArray[i]] = kard;
+                            })
+                            console.log("myKards Map: ");
+                            console.log(myKards);
+                            return myKards;
+                        });
+
+                        // resolve(myKards);
+                    // });
                 });
             });
         });
@@ -138,9 +148,10 @@ class KaleidoKards {
             let web3 = response[0];
             let contract = response[1];
             return web3.eth.getBlock("latest").then( lastBlock => {
-                console.log("After get last block");
+                // console.log("After get last block");
+                // console.log("lastBlock: "+lastBlock);
                 return web3.eth.getAccounts().then(accounts => {
-                    console.log("accounts: "+accounts);
+                    // console.log("accounts: " + accounts);
                     return contract.methods.buyStandardPack().send({
                         from: accounts[0],
                         gas: lastBlock.gasLimit,

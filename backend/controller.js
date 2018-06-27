@@ -144,7 +144,8 @@ class Controller {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
             this.kaleidoKardsInstance.getOwnedKards(owner + '_node').then((kards) => {
-                console.log("response: " + kards);
+                console.log("response: ");
+                console.log(kards);
                 response.status = 200;
                 response.body.kards = kards;
                 resolve(response);
