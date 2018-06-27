@@ -55,6 +55,9 @@ module.exports = {
             filename: '[name].style.css'
         })
        
-    ]
+    ],
+    node: {
+        fs: 'empty'
+    }
 };
 

@@ -7,8 +7,6 @@ import './App.scss';
 import Footer from './components/footer/Footer';
 import TradingContainer from './components/trade/tradingContainer';
 import MyCardsContainer from './components/mycards/MyCardsContainer';
-//import KaleidoKardsContract from '../build/contracts/KaleidoKards.json';
-//import getWeb3 from './utils/getWeb3';
 
 
 
@@ -18,26 +16,13 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        data: {}
+        data: {},
     };
 }
 
-clickPurchaseBtn() {
-    //console.log(KaleidoKards);
-    window.fetch("http://localhost:3000/purchase", {
-        body: JSON.stringify({hello: "world"}), 
-        method: "POST",
-        headers: {
-            'content-type': 'application/json'
-        }
-    }).then(results => {
-        return results.json();
-    
-    }).then(resultBody => {
-        console.log('resultBody', resultBody);
-        this.setState({data:resultBody})
-    })
-  }
+updateParentComponent() {
+  this.setState({data: cardInfo});
+}
   render() {
     //let cards = this.state.cards;
     return (
@@ -63,7 +48,7 @@ clickPurchaseBtn() {
           </div>
         </div>
 
-        <Footer purchaseButton={this.clickPurchaseBtn.bind(this)}/>
+        <Footer updateParent={this.updateParentComponent.bind(this)}/>
 
       </div>
     );
