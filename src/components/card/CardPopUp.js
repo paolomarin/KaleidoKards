@@ -19,9 +19,19 @@ renderCardPopUp() {
     }
 
     return (
-                <div className="card-colors">
+            <div className="animated-cards-container">
+                <div className="card-colors delay-second">
                     <div style= {shapes}></div>
                 </div>
+
+                <div className="card-colors delay">
+                    <div style={shapes}></div>
+                </div>
+
+                <div className="card-colors delay-second">
+                    <div style={shapes}></div>
+                </div>
+            </div>
         )
     }
     render() {

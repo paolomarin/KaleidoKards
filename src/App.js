@@ -7,8 +7,6 @@ import './App.scss';
 import Footer from './components/footer/Footer';
 import TradingContainer from './components/trade/tradingContainer';
 import MyCardsContainer from './components/mycards/MyCardsContainer';
-//import KaleidoKardsContract from '../build/contracts/KaleidoKards.json';
-//import getWeb3 from './utils/getWeb3';
 
 
 
@@ -18,26 +16,19 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        data: {}
-    };
+        data: {},
+        joe: {}
+    };  
 }
 
-clickPurchaseBtn() {
-    //console.log(KaleidoKards);
-    window.fetch("http://localhost:3000/purchase", {
-        body: JSON.stringify({hello: "world"}), 
-        method: "POST",
-        headers: {
-            'content-type': 'application/json'
-        }
-    }).then(results => {
-        return results.json();
-    
-    }).then(resultBody => {
-        console.log('resultBody', resultBody);
-        this.setState({data:resultBody})
-    })
-  }
+
+updateParentComponent(cards) {
+  this.setState({data: cards});
+}
+
+updateParentComp(joesCards) {
+  this.setState({joe: joesCards});
+}
   render() {
     //let cards = this.state.cards;
     return (
@@ -46,7 +37,7 @@ clickPurchaseBtn() {
         <Header/>
           <div className = "square-container">
             <div className="other-players-cards">
-              <TradingContainer/>
+              <TradingContainer moredata={this.state.joe}/>
             </div>
             <div className="column-container">
               <div className="ether">
@@ -55,15 +46,13 @@ clickPurchaseBtn() {
               </div>
               <div className="my-cards">
                 <h2 className="my-cards-title header-text"> My Cards </h2>
-                <div className="my-cards-container">
-                  <MyCardsContainer data={this.state.data}/>
-                </div>
+                   <MyCardsContainer data={this.state.data}/>
               </div>
             </div>
           </div>
         </div>
 
-        <Footer purchaseButton={this.clickPurchaseBtn.bind(this)}/>
+        <Footer updateParent={this.updateParentComponent.bind(this)} otherUpdate={this.updateParentComp.bind(this)}/>
 
       </div>
     );

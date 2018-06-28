@@ -54,7 +54,8 @@ class Card extends Component {
         width: '150px',
         height: '200px',
         borderRadius: '12px',
-        backgroundColor: color[this.props.color]
+        backgroundColor: color[this.props.color],
+        marginBottom: '20px'
         };
     
         return (
