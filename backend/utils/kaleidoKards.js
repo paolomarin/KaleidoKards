@@ -180,8 +180,8 @@ class KaleidoKards {
         return config.then( response => {
             let web3 = response[0];
             let contract = response[1];
-            this.getAddress(node).then((address) => {
-                web3.eth.getBalance(address).then((balanceWei) => {
+            return this.getAddress(node).then((address) => {
+                return web3.eth.getBalance(address).then((balanceWei) => {
                     return web3.utils.fromWei(balanceWei, 'ether');
                 })
             })
