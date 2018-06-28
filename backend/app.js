@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const app = express();
-
 var controller = new (require('./controller.js'))();
 controller.checkKeyFile();
 
@@ -13,7 +11,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 
 // only returns contract address for now
@@ -23,37 +21,26 @@ app.post('/launch', (req, res) => {
     });
 });
 
+// POST call with packType in url and purchaser set in body
+// Returns the tx receipt from the smart contract
+app.post('/purchase/:packType', (req, res) => {
 
-app.post('/purchase/standard', (req, res) => {
-
-    if (!req.body.purchaser){
+    if (!req.params.packType || !req.body.purchaser){
         // purchaser should be, user, joe, or kard_store
-        res.status(400).send({error: "Purchaser not specified"});
+        res.status(400).send({error: "Pack Type or Purchaser not specified"});
         return;
     }
 
-    controller.purchaseStandard(req.body.purchaser).then((response) => {
-        res.status(response.status).send(response.body);
-    });
-
-});
-
-app.post('/purchase/platinum', (req, res) => {
-    if (!req.body.purchaser){
-        // purchaser should be, user, joe, or kard_store
-        res.status(400).send({error: "Purchaser not specified"});
-        return;
-    }
-
-    controller.purchasePlatinum(req.body.purchaser).then((response) => {
+    controller.purchase(req.params.packType, req.body.purchaser).then((response) => {
         res.status(response.status).send(response.body);
     });
 });
 
-app.get('/kards/:owner', (req, res) =>{
+// GET call with owner in the url (user, joe)
+// Returns a 'kards' object in the response body where the key is the
+// kardId and it has values color, shape, and effect
+app.get('/kards/:owner', (req, res) => {
     if (!req.params.owner){
-        // owner should be, user, joe, or kard_store
-        // owner is the owner of the kards you are wanting
         res.status(400).send({error: "Owner not specified"});
         return;
     }
@@ -61,20 +48,32 @@ app.get('/kards/:owner', (req, res) =>{
     controller.getOwnedKards(req.params.owner).then((response) => {
         res.status(response.status).send(response.body);
     });
-
 });
 
+// POST call with from, to, and kardId specified in the body
+// Returns the tx receipt from the smart contract
 app.post('/transfer', (req, res) => {
-    if (!req.body.from || !req.body.from || !req.body.to || !req.body.kardId) {
+    if (!req.body.from || !req.body.to || !req.body.kardId) {
         res.status(400).send({error: "Invalid request body"});
         return;
     }
 
     controller.transfer(req.body.from, req.body.to, req.body.kardId).then((response) => {
         res.status(response.status).send(response.body);
-    })
+    });
+});
 
+// GET call with owner in the url
+// Returns the balance of the user in ether (ETH)
+app.get('/balance/:owner', (req, res) => {
+    if (!req.params.owner){
+        res.status(400).send({error: "Owner not specified"});
+        return;
+    }
 
+    controller.getBalance(req.params.owner).then((response) => {
+        res.status(response.status).send(response.body);
+    });
 });
 
 app.listen(3000, () => {
