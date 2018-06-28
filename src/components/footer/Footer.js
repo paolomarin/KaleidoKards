@@ -10,6 +10,7 @@ const joe= 'joe';
 const kard_store= 'kard_store';
 
 const userGetKards = `/kards/${user}`;
+const joeGetKards = `/kards/${joe}`;
 
 
 class Footer extends Component {
@@ -17,7 +18,8 @@ class Footer extends Component {
         super(props);
         this.state = {
             value: '',
-            cardInfo: {}
+            userCards: {},
+            joeCards: {}
         
         };
 
@@ -43,37 +45,66 @@ class Footer extends Component {
 
     //First Part 
         //console.log(KaleidoKards);
-        window.fetch(this.state.value, {
-            body: JSON.stringify({purchaser: user}), 
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            }
-        }).then(results => {
-            return results.json();
-        
-        }).then(resultBody => {
-            console.log('resultBody', resultBody);
-            return resultBody //checks if clickpurchase is sucessful
-             //resultBody is now a receipt-- need to figure out how to check status
-            // if status is succesful then go on to getownedKards function 
-        })//can I put this here??
-
-        // Second Part if first part is succesful
-
-
-        // window.fetch( userGetKards , {
-        //     // body: JSON.stringify({owner: user}),
-        //     method: "GET",
+        // window.fetch(this.state.value, {
+        //     body: JSON.stringify({purchaser: user}), 
+        //     method: "POST",
         //     headers: {
         //         'content-type': 'application/json'
         //     }
         // }).then(results => {
         //     return results.json();
-        //     console.log('get Kards', results.json());
-        //     this.setState({cardInfo: results.json()});
-    
-        // })
+        
+        // }).then(resultBody => {
+        //     console.log('resultBody', resultBody);
+        //     return resultBody;
+            
+        // }).then(getKards => {
+
+                window.fetch( userGetKards, {
+                    method: "GET",
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                    }).then(results => {
+                        return results.json();
+                        // this.setState({cards: results.json()});
+                        
+                    }).then(resultBody => {
+                        this.setState({userCards: resultBody});
+                        console.log('this state', this.state.userCards);
+                        this.props.updateParent(this.state.userCards);
+                       
+                    }).then(getJoesKards => {
+                         window.fetch( joeGetKards, {
+                        method: "GET",
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                        }).then(results => {
+                            return results.json();
+                            // this.setState({cards: results.json()});
+                            
+                        }).then(resultBody => {
+                            this.setState({joeCards: resultBody});
+                            console.log('this state', this.state.joeCards);
+                            this.props.otherUpdate(this.state.joeCards);
+                           
+                        })
+                    })
+                
+
+            // })
+
+            // if(resultBody.status === 200) {
+            //     //then second part of function
+            // } else {
+            //     console.log('error');
+            // }
+        
+        //can I put this here??
+
+        // Second Part if first part is succesful
+
         // this.props.updateParent;
       }
 

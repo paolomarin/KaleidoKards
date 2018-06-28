@@ -25,7 +25,25 @@ class Launch extends Component {
         
         }).then(resultBody => {
             console.log(this.state.apikey);
-        })
+        // }).then(getKards => {
+
+        //     window.fetch( userGetKards , {
+        //         method: "GET",
+        //         headers: {
+        //             'content-type': 'application/json'
+        //         }
+        //         }).then(results => {
+        //             return results.json();
+        //             // this.setState({cards: results.json()});
+                    
+        //         }).then(resultBody => {
+        //             this.setState({userCards: resultBody});
+        //             console.log('this state', this.state.userCards);
+        //             this.props.updateParent(this.state.userCards);
+                   
+        //         })
+            
+    })
     }
 
     updateApiKey(e) {

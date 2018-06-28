@@ -9,6 +9,10 @@
 
 .my-card-container {
     display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    flex-shrink: 0;
     justify-content: space-around;
-    margin-top: 20px;
+    padding: 110px;
+    margin-top: -90px;
 }

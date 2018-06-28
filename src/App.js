@@ -17,11 +17,17 @@ class App extends Component {
     super(props)
     this.state = {
         data: {},
-    };
+        joe: {}
+    };  
 }
 
-updateParentComponent() {
-  this.setState({data: cardInfo});
+
+updateParentComponent(cards) {
+  this.setState({data: cards});
+}
+
+updateParentComp(joesCards) {
+  this.setState({joe: joesCards});
 }
   render() {
     //let cards = this.state.cards;
@@ -31,7 +37,7 @@ updateParentComponent() {
         <Header/>
           <div className = "square-container">
             <div className="other-players-cards">
-              <TradingContainer/>
+              <TradingContainer moredata={this.state.joe}/>
             </div>
             <div className="column-container">
               <div className="ether">
@@ -40,15 +46,13 @@ updateParentComponent() {
               </div>
               <div className="my-cards">
                 <h2 className="my-cards-title header-text"> My Cards </h2>
-                <div className="my-cards-container">
-                  <MyCardsContainer data={this.state.data}/>
-                </div>
+                   <MyCardsContainer data={this.state.data}/>
               </div>
             </div>
           </div>
         </div>
 
-        <Footer updateParent={this.updateParentComponent.bind(this)}/>
+        <Footer updateParent={this.updateParentComponent.bind(this)} otherUpdate={this.updateParentComp.bind(this)}/>
 
       </div>
     );
