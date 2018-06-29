@@ -16,18 +16,14 @@ class KaleidoKards {
 
     // Deploy the KaleidoKards Smart Contract
     deploy() {
-        console.log("inside deploy");
         if (this.deployed && this.contractAddress) {
             this.UserContract = this.USER.then(web3 => {
-                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                 return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
             });
             this.JoeContract = this.JOE.then(web3 => {
-                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                 return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
             });
             this.StoreContract = this.STORE.then(web3 => {
-                // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                 return new web3.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
             });
 
@@ -36,7 +32,6 @@ class KaleidoKards {
 
         // else deploy the contract
         return this.STORE.then((web3) => {
-            console.log("Inside this.store");
             let bytecode = KaleidoKardsContract.bytecode;
             let abi = KaleidoKardsContract.abi;
 
@@ -45,7 +40,6 @@ class KaleidoKards {
             return web3.eth.getAccounts().then((accounts) => {
                 return contract.deploy({data: bytecode}).send({data: bytecode, from: accounts[0], gasPrice: 0, gas: 2000000})
                 .then( (response) => {
-                    console.log("after contract deploy");
                     this.contractAddress = response._address;
 
                     this.UserContract = this.USER.then(response => {
@@ -111,16 +105,13 @@ class KaleidoKards {
     getOwnedKards(node) {
         return this.getAddress(node).then((address) => {
             let config = Promise.all(this.getConfig(node));
-            console.log("After get config");
             return config.then( response => {
-                console.log("in get config");
                 let web3 = response[0];
                 let contract = response[1];
-                return contract.methods.getOwnedKards(address).call().then((kardArray) => {
-                    console.log("getOwned KArds: " + kardArray);
+                return contract.methods.getOwnedKards(address).call().then((kardIdArray) => {
                     // Build array of promises so we can wait on all of them to resolve
                     let promiseArray = [];
-                    kardArray.forEach((kardIdString) => {
+                    kardIdArray.forEach((kardIdString) => {
                         let kardId = parseInt(kardIdString);
                         let promise = contract.methods.getKard(kardId).call();
                         promiseArray.push(promise);
@@ -130,7 +121,8 @@ class KaleidoKards {
                     let myKards = {};
                     return promises.then((kards) => {
                         kards.forEach((kard, i) => {
-                            myKards[kardArray[i]] = kard;
+                            kard.id = kardIdArray[i];
+                            myKards[kardIdArray[i]] = kard;
                         });
                         return myKards;
                     });
@@ -142,7 +134,6 @@ class KaleidoKards {
 
     buyStandardPack(node) {
         let config = Promise.all(this.getConfig(node));
-
         return config.then( response => {
             let web3 = response[0];
             let contract = response[1];
