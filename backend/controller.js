@@ -2,8 +2,7 @@ const fs = require('fs');
 var KaleidoKards = require('./utils/kaleidoKards.js');
 var KaleidoConfig = require('./utils/KaleidoConfig.js');
 
-
-
+// A class for controlling the state of the application
 class Controller {
 
     constructor() {
@@ -23,10 +22,11 @@ class Controller {
             return;
         }
 
+        // A keystore file exists, lets see if it contains everything we need
         try {
             let data = fs.readFileSync(filepath);
             let keyfile = JSON.parse(data);
-
+            // Address of the previous contract deployed to the
             this.contractAddress = keyfile.contractAddress;
 
             this.kaleidoConfigInstance.userNodeUser = keyfile.user_node.username;
@@ -48,6 +48,8 @@ class Controller {
         }
     }
 
+    // Launches a new Kaleido platform if there is no record of one previously
+    // Returns response object to send to frontend
     async launchAppEnv(apiKey) {
         let response = {status: 400, body: {}};
 
@@ -57,8 +59,6 @@ class Controller {
             return response;
         }
 
-        // var kaleidoKardConfig = new KaleidoConfig(apiKey);
-        console.log(this.previousInstance);
         if (this.previousInstance) {
             this.kaleidoKardsInstance = new KaleidoKards();
             this.kaleidoKardsInstance.contractAddress = this.contractAddress;
@@ -78,9 +78,7 @@ class Controller {
             return response;
         }
 
-        // Previous instance doesn't exist
-        // console.log("No previous instance found!");
-        // console.log("***Creating new kaleidoConfig now");
+        // No record of previous instacne, let's make a new one
         return await this.kaleidoConfigInstance.launch(apiKey).then(() => {
             // console.log("kaleidoconfig.then");
             this.kaleidoKardsInstance = new KaleidoKards();
@@ -108,35 +106,42 @@ class Controller {
         });
     }
 
-    purchaseStandard(purchaser) {
+    purchase(packType, purchaser) {
         let response = {status: 400, body: {}};
-        return new Promise(resolve => {
-            this.kaleidoKardsInstance.buyStandardPack(purchaser + '_node').then((reciept) => {
-                response.status = 200;
-                response.body.reciept = reciept;
-                resolve(response);
-            }).catch((error) => {
-                console.log(error);
-                response.status = 500;
-                response.body.error = error;
-                resolve(response);
-            });
-        })
-    }
 
-    purchasePlatinum(purchaser) {
-        let response = {status: 400, body: {}};
-        return new Promise(resolve => {
-            this.kaleidoKardsInstance.buyPlatinumPack(purchaser + '_node').then((reciept) => {
-                response.status = 200;
-                response.body.receipt = reciept;
-                resolve(response);
-            }).catch((error) => {
-                response.status = 500;
-                response.body.error = error;
-                resolve(response);
+        if (packType === 'standard') {
+            return new Promise(resolve => {
+                this.kaleidoKardsInstance.buyStandardPack(purchaser + '_node').then((receipt) => {
+                    response.status = 200;
+                    response.body.receipt = receipt;
+                    resolve(response);
+                }).catch((error) => {
+                    console.log(error);
+                    response.status = 500;
+                    response.body.error = error;
+                    resolve(response);
+                });
+            })
+        } else if (packType === 'platinum') {
+            return new Promise(resolve => {
+                this.kaleidoKardsInstance.buyPlatinumPack(purchaser + '_node').then((receipt) => {
+                    response.status = 200;
+                    response.body.receipt = receipt;
+                    resolve(response);
+                }).catch((error) => {
+                    response.status = 500;
+                    response.body.error = error;
+                    resolve(response);
+                });
+            })
+        } else {
+            return new Promise(resolve => {
+                response.body.error = "Bad Request";
+                resolve(response)
             });
-        })
+        }
+
+
     }
 
     getOwnedKards(owner){
@@ -169,9 +174,21 @@ class Controller {
         })
     }
 
+    getBalance(owner) {
+        let response = {status: 400, body: {}};
+        return new Promise(resolve => {
+            this.kaleidoKardsInstance.getBalance(owner + '_node').then((balance) => {
+                response.status = 200;
+                response.body.balance = balance;
+                resolve(response);
+            }).catch((error) => {
+                response.status = 500;
+                response.body.error = error;
+                resolve(response);
+            });
+        })
+    }
 
 }
-
-
 
 module.exports = Controller;

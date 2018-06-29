@@ -17,11 +17,11 @@ class KaleidoConfig {
         this.ethAmount = "100";
 
         this.memberUser = "user";
-        this.memberKal = "joe";
+        this.memberJoe = "joe";
         this.memberStore = "kard_store";
 
         this.nodeUser = "user_node";
-        this.nodeKal = "joe_node";
+        this.nodeJoe = "joe_node";
         this.nodeStore = "kard_store_node";
 
         this.contractAddress = "";
@@ -68,7 +68,7 @@ class KaleidoConfig {
                 // Create the 3 memberships at once
                 return Promise.all([
                     this.createMembership(consortium, this.memberUser),
-                    this.createMembership(consortium, this.memberKal),
+                    this.createMembership(consortium, this.memberJoe),
                     this.createMembership(consortium, this.memberStore)])
                     .then((response) => {
                         // Promise.all returns the responses for each call in an array
@@ -83,7 +83,7 @@ class KaleidoConfig {
                         // Create the 3 nodes at once
                         return Promise.all([
                             this.createNode(consortium, environment, userMember, this.nodeUser),
-                            this.createNode(consortium, environment, joeMember, this.nodeKal),
+                            this.createNode(consortium, environment, joeMember, this.nodeJoe),
                             this.createNode(consortium, environment, storeMember, this.nodeStore)])
                             .then((response) => {
                                 let userResponse  = JSON.parse(response[0]);

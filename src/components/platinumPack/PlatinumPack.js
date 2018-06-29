@@ -28,13 +28,13 @@ class PlatinumPack extends Component {
                 A platinum pack gives you 3 random cards that could possibly have a cool effect.
             </Popup>
             
-            <div className="platinumpack-radiobtn">
+            {/* <div className="platinumpack-radiobtn">
                 <input type="radio" id="platinumInput" name="selector"/>
                     <label for="platinumInput"> Platinum Pack</label>
                     <div className="check"></div>
 
             </div>
-                
+                 */}
            </div>
         )
     }

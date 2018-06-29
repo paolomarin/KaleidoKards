@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './PurchaseBtn.scss';
-// import KaleidoKards from './../../utils/kaleidoKards';
 
 class PurchaseBtn extends Component {
 
@@ -30,10 +29,7 @@ class PurchaseBtn extends Component {
 
     render() {
         return( 
-            <button className="purchase-button" onClick={this.props.click}>
-
-                Purchase 
-            </button> 
+            <button className="purchase-button" onClick={this.props.click}>Purchase</button>
         )
     }
 }

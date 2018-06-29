@@ -6,6 +6,21 @@ height: 290px;
 border-radius: 12px;
 @include color;
 background-color: #202CE0;
+margin-right: 80px;
+}
+
+.delay {
+    animation-delay: .5s;
+}
+
+.delay-second {
+    animation-delay: 1s;
+}
+
+.animated-cards-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 // const color= ["#202CE0", "#51C2FA", "#F99243", "#EE34A8", "#00CD79"];

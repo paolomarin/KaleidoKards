@@ -8,6 +8,10 @@ class KaleidoKards {
         this.USER  = getWeb3('user_node');
         this.JOE   = getWeb3('joe_node');
         this.STORE = getWeb3('kard_store_node');
+
+        this.targetGasLimit = 4712388;
+        this.standardPackCost = '1'; // in ether
+        this.platinumPackCost = '1'; // in ether
     }
 
     // Deploy the KaleidoKards Smart Contract
@@ -142,16 +146,11 @@ class KaleidoKards {
         return config.then( response => {
             let web3 = response[0];
             let contract = response[1];
-            return web3.eth.getBlock("latest").then( lastBlock => {
-                // console.log("After get last block");
-                // console.log("lastBlock: "+lastBlock);
-                return web3.eth.getAccounts().then(accounts => {
-                    // console.log("accounts: " + accounts);
-                    return contract.methods.buyStandardPack().send({
-                        from: accounts[0],
-                        gas: lastBlock.gasLimit,
-                        value: web3.utils.toWei('1', 'ether')
-                    })
+            return web3.eth.getAccounts().then(accounts => {
+                return contract.methods.buyStandardPack().send({
+                    from: accounts[0],
+                    gas: this.targetGasLimit,
+                    value: web3.utils.toWei(this.standardPackCost, 'ether')
                 })
             })
         });
@@ -164,17 +163,29 @@ class KaleidoKards {
         return config.then( response => {
             let web3 = response[0];
             let contract = response[1];
-            return web3.eth.getBlock("latest").then( lastBlock => {
-                return web3.eth.getAccounts().then(accounts => {
-                    return contract.methods.buyPlatinumPack().send({
-                        from: accounts[0],
-                        gas: lastBlock.gasLimit,
-                        value: web3.utils.toWei('1', 'ether') //todo: fix this cost somewhere
-                    })
+            return web3.eth.getAccounts().then(accounts => {
+                return contract.methods.buyPlatinumPack().send({
+                    from: accounts[0],
+                    gas: this.targetGasLimit,
+                    value: web3.utils.toWei(this.platinumPackCost, 'ether')
                 })
             })
         });
         //just return the promise so the caller can handle response/errors
+    }
+
+    getBalance(node) {
+        let config = Promise.all(this.getConfig(node));
+
+        return config.then( response => {
+            let web3 = response[0];
+            let contract = response[1];
+            return this.getAddress(node).then((address) => {
+                return web3.eth.getBalance(address).then((balanceWei) => {
+                    return web3.utils.fromWei(balanceWei, 'ether');
+                })
+            })
+        });
     }
 
     getConfig(node){
