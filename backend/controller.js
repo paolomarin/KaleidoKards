@@ -111,9 +111,9 @@ class Controller {
 
         if (packType === 'standard') {
             return new Promise(resolve => {
-                this.kaleidoKardsInstance.buyStandardPack(purchaser + '_node').then((reciept) => {
+                this.kaleidoKardsInstance.buyStandardPack(purchaser + '_node').then((receipt) => {
                     response.status = 200;
-                    response.body.reciept = reciept;
+                    response.body.receipt = receipt;
                     resolve(response);
                 }).catch((error) => {
                     console.log(error);
@@ -124,9 +124,9 @@ class Controller {
             })
         } else if (packType === 'platinum') {
             return new Promise(resolve => {
-                this.kaleidoKardsInstance.buyPlatinumPack(purchaser + '_node').then((reciept) => {
+                this.kaleidoKardsInstance.buyPlatinumPack(purchaser + '_node').then((receipt) => {
                     response.status = 200;
-                    response.body.receipt = reciept;
+                    response.body.receipt = receipt;
                     resolve(response);
                 }).catch((error) => {
                     response.status = 500;

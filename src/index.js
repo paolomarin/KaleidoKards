@@ -4,7 +4,6 @@ import './index.css';
 import Launch from './Launch';
 import App from './App';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-console.log(Launch);
 
 let rootElement = document.getElementById('root');
 
@@ -28,8 +27,8 @@ class Main extends Component {
         return(
             <BrowserRouter>
                 <div>
-                    <Route exact path= "/" component= {Launch}/>
-                    <Route path= "/app" component= {App}/>
+                    <Route exact path="/" component= {Launch}/>
+                    <Route path="/app" component= {App}/>
                 </div>
             </BrowserRouter>
         );

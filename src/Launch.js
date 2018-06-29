@@ -1,30 +1,36 @@
 import React, { Component } from 'react';
 import './Launch.scss';
-import { Link } from 'react-router-dom';
+import App from 'App';
 
 class Launch extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state={
-            apikey: ''
+            apiKey: ''
         };
     }
     
     clickLaunchBtn() {
-        //console.log(KaleidoKards);
+        // TODO: play video while launch is happening
         window.fetch("/launch", {
-            body: JSON.stringify({apiKey: this.state.apikey}), 
+            body: JSON.stringify({apiKey: this.state.apiKey}),
             method: "POST",
             headers: {
                 'content-type': 'application/json'
             }
         }).then(results => {
-            
             return results.json();
-        
         }).then(resultBody => {
-            console.log(this.state.apikey);
+            // right now launch only returns the contract address if the
+            // env creation and deploy were successful
+            if (resultBody.contractAddress && resultBody.contractAddress !== "") {
+                this.props.history.push('/app');
+                console.log(resultBody.contractAddress);
+            } else {
+                // contract address is empty so we need to do something here
+
+            }
         // }).then(getKards => {
 
         //     window.fetch( userGetKards , {
@@ -43,30 +49,29 @@ class Launch extends Component {
                    
         //         })
             
-    })
+    }).catch((error) => {
+        console.log("errorMESSAGE");
+        console.log(error);
+        });
     }
 
     updateApiKey(e) {
        let value= e.target.value;
-        this.setState({apikey: value})
+        this.setState({apiKey: value});
     }
 
     
     render() {
-        return(
-        <div className= 'launch-wrapper'>
-           <div className="launch-container">
-                <span className="input">
-                    <input onChange= {this.updateApiKey.bind(this)} type="text" placeholder="Paste Api key here"/>
-                        <span></span>
-                </span>
-                <button className="launch-button" onClick={this.clickLaunchBtn.bind(this)}> 
-                <Link className=" launch"to="/app">Launch </Link>
-                </button>
-
-           </div>
-        </div>
-        )
+        return (
+            <div className='launch-wrapper'>
+                <div className="launch-container">
+                    <span className="input">
+                        <input onChange={this.updateApiKey.bind(this)} type="text" placeholder="Paste Api key here"/>
+                    </span>
+                    <button className="launch-button" onClick={this.clickLaunchBtn.bind(this)}>Launch</button>
+                </div>
+            </div>
+        );
     }
 }
 
