@@ -9,9 +9,6 @@ const user= 'user';
 const joe= 'joe';
 const kard_store= 'kard_store';
 
-const userGetKards = `/kards/${user}`;
-const joeGetKards = `/kards/${joe}`;
-
 
 class Footer extends Component {
     constructor(props) {
@@ -41,72 +38,33 @@ class Footer extends Component {
         console.log(this.state.value);
     }
 
+    // TODO: consider moving this to parent?? So can be called after trade
+
+
+    buyKards(purchaser) {
+        window.fetch(this.state.value, {
+            body: JSON.stringify({purchaser: purchaser}),
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(results => {
+            return results.json();
+        }).then(resultBody => {
+            if (resultBody && resultBody.receipt && resultBody.receipt.status) {
+                this.props.refreshKards();
+            }
+            console.log('resultBody', resultBody);
+            console.log(resultBody.receipt.status, "status");
+            return resultBody;
+        });
+    }
+
     clickPurchaseBtn() {
-
-    //First Part 
-        //console.log(KaleidoKards);
-        // window.fetch(this.state.value, {
-        //     body: JSON.stringify({purchaser: user}), 
-        //     method: "POST",
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     }
-        // }).then(results => {
-        //     return results.json();
-        
-        // }).then(resultBody => {
-        //     console.log('resultBody', resultBody);
-        //     return resultBody;
-            
-        // }).then(getKards => {
-
-                window.fetch( userGetKards, {
-                    method: "GET",
-                    headers: {
-                        'content-type': 'application/json'
-                    }
-                    }).then(results => {
-                        return results.json();
-                        // this.setState({cards: results.json()});
-                        
-                    }).then(resultBody => {
-                        this.setState({userCards: resultBody});
-                        console.log('this state', this.state.userCards);
-                        this.props.updateParent(this.state.userCards);
-                       
-                    }).then(getJoesKards => {
-                         window.fetch( joeGetKards, {
-                        method: "GET",
-                        headers: {
-                            'content-type': 'application/json'
-                        }
-                        }).then(results => {
-                            return results.json();
-                            // this.setState({cards: results.json()});
-                            
-                        }).then(resultBody => {
-                            this.setState({joeCards: resultBody});
-                            console.log('this state', this.state.joeCards);
-                            this.props.otherUpdate(this.state.joeCards);
-                           
-                        })
-                    })
-                
-
-            // })
-
-            // if(resultBody.status === 200) {
-            //     //then second part of function
-            // } else {
-            //     console.log('error');
-            // }
-        
-        //can I put this here??
-
-        // Second Part if first part is succesful
-
-        // this.props.updateParent;
-      }
+        this.buyKards('user');
+        this.buyKards('joe');
+        // TODO: Need to update shown ether amount
+    }
 
 
     render() {
@@ -118,18 +76,14 @@ class Footer extends Component {
                 </div>
                 <div className="selection">
                     <form onSubmit= {this.handleSubmit}>
-                        <label> 
-                            Pick your pack:
-                        <select value={this.state.value} onChange={this.handleChange}> 
+                        <label for="pack-type">Pick your pack:</label>
+                        <select id="pack-type" value={this.state.value} onChange={this.handleChange}>
                             <option> - - - - </option>
-                            <option value="/purchase/standard"> Basic Pack</option>
-                            <option value="/purchase/platinum"> Platinum Pack </option>
+                            <option value="/purchase/standard">Basic Pack</option>
+                            <option value="/purchase/platinum">Platinum Pack</option>
                         </select>
                         <PurchaseBtn click={this.clickPurchaseBtn.bind(this)} type="submit" value="Submit" />
-                    </label>
-    
                     </form>
-
                 </div>
             </div> 
         )
