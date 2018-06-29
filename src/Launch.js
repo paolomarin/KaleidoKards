@@ -29,31 +29,15 @@ class Launch extends Component {
                 console.log(resultBody.contractAddress);
             } else {
                 // contract address is empty so we need to do something here
-
+                // Highly unlikely edge case but need to discuss handling
+                console.log("There was an error, please restart the app");
             }
-        // }).then(getKards => {
-
-        //     window.fetch( userGetKards , {
-        //         method: "GET",
-        //         headers: {
-        //             'content-type': 'application/json'
-        //         }
-        //         }).then(results => {
-        //             return results.json();
-        //             // this.setState({cards: results.json()});
-                    
-        //         }).then(resultBody => {
-        //             this.setState({userCards: resultBody});
-        //             console.log('this state', this.state.userCards);
-        //             this.props.updateParent(this.state.userCards);
-                   
-        //         })
             
-    }).catch((error) => {
-        console.log("errorMESSAGE");
-        console.log(error);
-        });
-    }
+        }).catch((error) => {
+            console.log("errorMESSAGE");
+            console.log(error);
+            });
+        }
 
     updateApiKey(e) {
        let value= e.target.value;
