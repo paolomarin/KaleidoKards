@@ -8,14 +8,15 @@ The application runs on [Glitch](https://glitch.com/about/), a platform providin
 
 Prior to launching the application, you must visit the [Kaleido console](console.kaleido.io) and acquire an administrative API Key.  The application is configured to automatically provision Kaleido network resources (e.g. environment, nodes, security credentials, etc.) and requires this key in order to authenticate with the backend servers and confine the resources to your Kaleido account.  Note that the Kaleido resource limitations imposes a two consortia per Kaleido Org threshold.  As a result, if your organization is already hosting two consortia, then the application will be unable to successfully provision the network resources.  Ensure that you have one or fewer consortia prior to launching the app.
 
-With your API Key in hand, access the [KaleidoKards Application](https://glitch.com/edit/#!/kaleidokards) on Glitch and follow the below instructions to launch the app.  
-* In the top right corner of the screen, click the **Remix This** tab to build the project.  This will provision a unique namespace for your app and begin downloading the necessary node modules.  You can click the **Logs** tab on the far left of the screen to see the progress.  The entire process should take roughly one minute.
+With your API Key in hand, proceed to build the project by clicking this button - [![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/remix/kaleidokards).  
+* This will provision you your own unique instance of the application, which you can edit and tinker with as you please.
+* Within the Glitch console, you can click the **Logs** tab on the far left of the screen to see the progress of the build.  The entire process should take roughly one minute.
 * Once the build has finished, you will see an output in the logs stating `listening on port 3000`
 * You will also see a green **Live** indicator at the top left of the screen 
 * Click the **Show App** option next to **Live** to start up the app 
 * In the new window, paste your API Key and click the **Launch** button 
 * The trading portion of the application will appear once the internal resource creation calls complete; roughly one minute.
-* From within the trading console, you can elect to purchase either `standard` or `platinum` cards.  This act of purchasing will invoke a function within the solidity smart contract running on the blockchain and update the ledger for our three participants - Card Vendor, Joe and yourself.
+* From within the trading console, you can elect to purchase either `standard` or `platinum` cards.  This act of purchasing will invoke a function in the solidity smart contract running on the blockchain and update the ledger for our three participants - Card Vendor, Joe and yourself.
 * You also have the option to propose trades with your counterparty, Joe.  If the trade is accepted, a transfer function will be invoked on the smart contract and the cards will be updated on the ledger to reflect new ownership.  
 
 ## Data and Resources 
