@@ -25,7 +25,7 @@ class PlatinumPack extends Component {
             </button>
             </div>
             <Popup show={this.state.isOpen} onClose={this.popupModal.bind(this)}>
-                A platinum pack gives you 3 random cards that could possibly have a cool effect.
+                A platinum pack gives you 3 random cards with effects.
             </Popup>
             
             {/* <div className="platinumpack-radiobtn">

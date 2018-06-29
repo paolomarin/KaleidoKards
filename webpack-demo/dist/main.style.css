@@ -361,7 +361,8 @@ h2 {
   background-color: white;
   margin-top: 50px;
   padding: 200px;
-  margin-left: auto; }
+  margin-left: auto;
+  overflow: auto; }
 
 .column-container {
   display: flex;
@@ -394,12 +395,15 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: black; }
+  color: black;
+  overflow: auto;
+  flex-wrap: wrap; }
 
 .card-container {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px; }
+  margin-top: 20px;
+  flex-wrap: wrap; }
 
 h3 {
   text-align: center;
@@ -421,6 +425,11 @@ h3 {
     color: #202CE0;
     cursor: pointer;
     transition: all 0.3s ease-out; }
+
+.trade-container {
+  width: 40%;
+  height: 400px;
+  background-color: white; }
 .platinum-pack {
   background-color: #202CE0;
   width: 300px;

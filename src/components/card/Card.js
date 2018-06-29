@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import './Card.scss'; 
 import Star from './star.png';
 import Diamond from './diamond.png';
-
+import { DragSource } from 'react-dnd';
 
 class Card extends Component {
+    constructor() {
+        super();
+    }
+
 
 
    renderCard() {
@@ -59,7 +63,7 @@ class Card extends Component {
         };
     
         return (
-                <div className="card" style={styles}>
+                <div className="card" draggable="true" style={styles}>
                     <div style= {shapes[this.props.shape]}></div>
                 </div>
         )
@@ -78,4 +82,4 @@ class Card extends Component {
     }
 }
 
-export default Card;
+export default DragSource(type, spec, collect) (Card);

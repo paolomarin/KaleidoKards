@@ -44,7 +44,7 @@ class Popup extends Component {
             backgroundColor: 'transparent',
             color: 'white',
             border: 'none',
-            fontSize: '130px',
+            fontSize: '70px',
         };
 
         return(

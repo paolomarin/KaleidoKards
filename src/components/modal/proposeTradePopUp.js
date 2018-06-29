@@ -7,8 +7,9 @@ import PropTypes from 'prop-types';
 
 
 class Popup extends Component {
-    
-
+    constructor() {
+        super();
+    }
 
     render() {
         if(!this.props.show) {
@@ -17,24 +18,26 @@ class Popup extends Component {
 
         const backgroundStyle = {
             position:'absolute',
-            top: '575px',
+            top: '952px',
             bottom: '0',
-            left: '0',
+            left: '94px',
             right: '0',
-    
-            padding:50
-        };
-
-        const popupStyle = {
+            padding:50,
             backgroundColor: 'white',
-            width:'1080px',
-            height: '1138px',
-            margin: '326px 0px',
-            marginLeft: '148px',
-            padding: '30px',
-            fontSize: '80px'
-
+            width: '22%',
+            height: '1100px'
         };
+
+        // const popupStyle = {
+        //     backgroundColor: 'white',
+        //     width:'1080px',
+        //     height: '1138px',
+        //     margin: '326px 0px',
+        //     marginLeft: '148px',
+        //     padding: '30px',
+        //     fontSize: '80px'
+
+        // };
 
         const closebtnStyle = {
             outline: 'none',
@@ -45,13 +48,17 @@ class Popup extends Component {
         };
 
         return(
-            <div className="propose-background" style={backgroundStyle}>
-                <div className="propose-popup" style={popupStyle}>
+            <div className="propose-background" style={backgroundStyle} >
                 <div className="close-propose">
                     <button className="closeBtn" style={closebtnStyle} onClick={this.props.onClose}>
                         x
                     </button>
                 </div>
+                <div className="trade-btn">
+                    <button> 
+                        Trade
+                    </button> 
+
                 </div>
             </div>
 
