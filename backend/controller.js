@@ -106,6 +106,8 @@ class Controller {
         });
     }
 
+    // Handle's calling the right functions in the contract wrapper to
+    // buy a pack of kards
     purchase(packType, purchaser) {
         let response = {status: 400, body: {}};
 
@@ -140,10 +142,9 @@ class Controller {
                 resolve(response)
             });
         }
-
-
     }
 
+    // Returns a json object of kards
     getOwnedKards(owner){
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
@@ -159,6 +160,7 @@ class Controller {
         })
     }
 
+    // Transfers a kard from one user to another
     transfer(from, to, kardId) {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
@@ -174,6 +176,7 @@ class Controller {
         })
     }
 
+    // Returns the ETH balance of a user
     getBalance(owner) {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
