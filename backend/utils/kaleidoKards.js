@@ -127,7 +127,7 @@ class KaleidoKards {
                     // Build array of promises so we can wait on all of them to resolve
                     // We need to wait on all of the getKard calls to resolve
                     // so that we can build a useful array
-                    // console.log("Got the owned Kard id's");
+                    // console.log("Got the owned Kard id's for: " + node);
                     // console.log(kardIdArray);
                     let promiseArray = [];
                     kardIdArray.forEach((kardIdString) => {

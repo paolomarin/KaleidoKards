@@ -13,8 +13,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-
-// only returns contract address for now
+// POST call with apiKey in body
+// Only returns contract address for now
+// NOTE: this is a long call if setting up new kaleido platform
 app.post('/launch', (req, res) => {
     controller.launchAppEnv(req.body.apiKey).then((response) => {
         res.status(response.status).send(response.body);

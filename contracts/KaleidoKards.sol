@@ -229,7 +229,7 @@ contract KaleidoKards {
     //
 
     /**
-     * Random function adapted from src: https://medium.com/@promentol/lottery-smart-contract-can-we-generate-random-numbers-in-solidity-4f586a152b27
+     * Random function adapted from src: https://medium.com/promentol/lottery-smart-contract-can-we-generate-random-numbers-in-solidity-4f586a152b27
      * This relies on trusting the transaction mining node. While this function is NOT safe
      * for PUBLIC blockchains, in a permissioned blockchain system, malicious miners can have
      * their node removed from the network.
