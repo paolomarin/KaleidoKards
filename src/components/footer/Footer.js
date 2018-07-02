@@ -17,7 +17,6 @@ class Footer extends Component {
             value: '',
             userCards: {},
             joeCards: {}
-        
         };
 
         let url = this.state.value;
@@ -34,12 +33,7 @@ class Footer extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        //change url in purchase button here? 
-        console.log(this.state.value);
     }
-
-    // TODO: consider moving this to parent?? So can be called after trade
-
 
     buyKards(purchaser) {
         window.fetch(this.state.value, {
@@ -54,8 +48,6 @@ class Footer extends Component {
             if (resultBody && resultBody.receipt && resultBody.receipt.status) {
                 this.props.refreshKards();
             }
-            console.log('resultBody', resultBody);
-            console.log(resultBody.receipt.status, "status");
             return resultBody;
         });
     }
