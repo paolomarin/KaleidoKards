@@ -75,8 +75,8 @@ class Card extends Component {
 
     
         const styles = {
-        width: '150px',
-        height: '200px',
+        width: '6rem',
+        height: '8rem',
         borderRadius: '12px',
         backgroundColor: color[this.props.color],
         marginBottom: '20px'
