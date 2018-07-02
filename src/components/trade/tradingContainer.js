@@ -51,8 +51,9 @@ class tradingContainer extends Component {
                     <div className="card-container">
                         {this.generateCards()}
                     </div>
-                
+                {/* <div className="tradeButton"> */}
                 <TradeBtn/>
+                {/* </div> */}
              
              </div> 
         )

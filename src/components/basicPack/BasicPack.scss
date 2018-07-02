@@ -3,12 +3,7 @@
 
 
 .basic-pack {
-    background-color:$color-1;
-    width: 300px;
-    height: 400px;
-    border-radius: 12px;
-	margin-right: 100px;
-	margin-bottom:50px;
+	margin-right: 2rem;
 		&:hover {
 			cursor: pointer;
 			transform: scale(1.1);
@@ -17,8 +12,8 @@
 }
 
 .pack-of-cards {
-	width: 300px;
-	height:400px;
+	width: 8rem;
+	height:10rem;
 }
 
 .button {

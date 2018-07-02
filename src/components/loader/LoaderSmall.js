@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import LoaderImg from './Ripple.svg';
+import Ripple from './Ripple.svg';
 
 
 class LoaderSmall extends Component {
     render() {
+        if(!this.props.show) {
+            return null
+        }
         return(
             <div className="small-loader">
-                <LoaderImg/> 
+                <img className="small" src= {Ripple} />
             </div> 
         )
     }
