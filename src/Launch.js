@@ -42,6 +42,8 @@ class Launch extends Component {
             } else {
                 // contract address is empty so we need to do something here
                 // Highly unlikely edge case but need to discuss handling
+                this.loader();
+                alert("There was an error, please restart the app");
                 console.log("There was an error, please restart the app");
             }
 
