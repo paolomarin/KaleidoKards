@@ -6,6 +6,8 @@ import './App.scss';
 import Footer from './components/footer/Footer';
 import TradingContainer from './components/trade/tradingContainer';
 import MyCardsContainer from './components/mycards/MyCardsContainer';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 
 const userGetKards = `/kards/user`;
 const joeGetKards = `/kards/joe`;
@@ -72,4 +74,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default  DragDropContext(HTML5Backend) (App);

@@ -10,6 +10,18 @@
 
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom:4rem;
+}
+
+.selection {
+    margin-right: auto;
+    margin-bottom: -2rem;
+    margin-left:auto;
+}
+
 .footer-buttons {
     display: flex;
     justify-content: center;

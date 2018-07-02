@@ -1,15 +1,19 @@
 @import './../styles/colors.scss';
+@import './platinumEffect.scss';
 
 .platinum-pack {
-    background-color: $color-1;
-    width: 300px;
-    height: 400px;
-    border-radius: 12px;
     margin-right: 100px;
     &:hover {
         transform: scale(1.1);
         cursor: pointer; 
     }
+}
+
+.pack-of-platinumcards {
+	@include platinumeffect;
+	width: 300px;
+    height: 380px;
+    border-radius: 50px;
 }
 
 
