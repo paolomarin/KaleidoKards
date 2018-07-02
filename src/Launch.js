@@ -8,15 +8,14 @@ class Launch extends Component {
         super(props);
         this.state={
             apiKey: '',
-            visible:false
-            
+            loaderVisible:false
         };
     }
 
  
    loader() {
         this.setState({
-            visible:true
+            loaderVisible: !this.state.loaderVisible
         })
     }
     
@@ -24,31 +23,34 @@ class Launch extends Component {
         // TODO: play video while launch is happening
         //show loader here
         this.loader();
-            window.fetch("/launch", {
-                body: JSON.stringify({apiKey: this.state.apiKey}),
-                method: "POST",
-                headers: {
-                    'content-type': 'application/json'
-                }
-            }).then(results => {
-                return results.json();
-            }).then(resultBody => {
-                // right now launch only returns the contract address if the
-                // env creation and deploy were successful
-                if (resultBody.contractAddress && resultBody.contractAddress !== "") {
-                    //not visible
-                    this.props.history.push('/app');
-                    console.log(resultBody.contractAddress);
-                } else {
-                    // contract address is empty so we need to do something here
-                    // Highly unlikely edge case but need to discuss handling
-                    console.log("There was an error, please restart the app");
-                }
-                
-            }).catch((error) => {
-                console.log("errorMESSAGE");
-                console.log(error);
-            });
+        window.fetch("/launch", {
+            body: JSON.stringify({apiKey: this.state.apiKey}),
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(results => {
+            return results.json();
+        }).then(resultBody => {
+            // right now launch only returns the contract address if the
+            // env creation and deploy were successful
+            if (resultBody.contractAddress && resultBody.contractAddress !== "") {
+                //not visible
+                this.loader();
+                this.props.history.push('/app');
+                console.log(resultBody.contractAddress);
+            } else {
+                // contract address is empty so we need to do something here
+                // Highly unlikely edge case but need to discuss handling
+                this.loader();
+                alert("There was an error, please restart the app");
+                console.log("There was an error, please restart the app");
+            }
+
+        }).catch((error) => {
+            console.log("errorMESSAGE");
+            console.log(error);
+        });
 
     }
 
