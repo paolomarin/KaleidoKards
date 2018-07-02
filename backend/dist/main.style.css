@@ -1,17 +1,359 @@
-.basic-pack {
+.purchase-button {
+  border-radius: 50px;
+  text-decoration: none;
   background-color: #202CE0;
-  width: 300px;
-  height: 400px;
+  color: white;
+  font-size: 1rem;
+  height: 3rem;
+  width: 12rem; }
+  .purchase-button:hover {
+    background-color: white;
+    border: 4px solid #202CE0;
+    color: #202CE0;
+    cursor: pointer;
+    transition: all 0.3s ease-out; }
+.large-loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.25);
+  background-position: center center;
+  background-repeat: no-repeat; }
+
+.ripple-img {
+  width: 28rem;
+  height: 28rem; }
+
+.small-loader {
+  width: 8rem;
+  height: 10rem; }
+
+.small {
+  width: 10rem;
+  height: 10rem; }
+.launch-wrapper {
+  background-image: url(855218a44097c933b01c9e44671e4734.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 210px; }
+
+.launch-container {
+  background-color: white;
+  border-radius: 50px;
+  width: 40rem;
+  height: 32rem;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px; }
+
+.launch-button {
+  border-radius: 50px;
+  text-decoration: none;
+  background-color: #202CE0;
+  color: white;
+  font-size: 2rem;
+  height: 6rem;
+  width: 20rem;
+  margin-top: 80px;
+  margin-right: auto;
+  margin-left: auto; }
+  .launch-button:hover {
+    background-color: white;
+    border: 4px solid #202CE0;
+    color: #202CE0;
+    cursor: pointer;
+    transition: all 0.3s ease-out; }
+
+.launch {
+  color: white;
+  text-decoration: none; }
+  .launch:hover {
+    color: #202CE0; }
+
+.input {
+  position: relative;
+  /* font-size: 70px; */
+  width: 36rem;
+  height: 5rem;
+  background: linear-gradient(21deg, #202CE0, #51C2FA);
+  padding: 4px;
+  display: inline-block;
+  border-radius: 9999em; }
+  .input *:not(span) {
+    position: relative;
+    display: inherit;
+    width: 35rem;
+    height: 5rem;
+    border-radius: inherit;
+    margin: 0;
+    border: none;
+    outline: none;
+    padding: 0 .325em;
+    z-index: 1;
+    font-size: 1rem;
+    text-align: center; }
+    .input *:not(span):focus + span {
+      opacity: 1;
+      transform: scale(1); }
+  .input span {
+    transform: scale(0.993, 0.94);
+    transition: transform .5s, opacity .25s;
+    opacity: 0;
+    position: absolute;
+    z-index: 0;
+    margin: 4px;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 3px #fff, 0 0 0 4px #fff, 3px -3px 30px #51C2FA, -3px 3px 30px #202CE0; }
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.5;
+  font-size: 1em; }
+
+body {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+html, body {
+  height: 100%; }
+
+input {
+  font-family: inherit;
+  line-height: inherit;
+  color: #2e3750;
+  min-width: 12em; }
+
+::placeholder {
+  color: #cbd0d5; }
+
+html::after {
+  content: '';
+  background: linear-gradient(21deg, #202CE0, #51C2FA);
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0; }
+.primary-header {
+  font-family: 'Lato', sans-serif;
+  font-size: 5rem;
+  margin-top: 4rem;
+  color: rgba(255, 255, 255, 0.9); }
+
+.secondary-header {
+  font-family: 'Montserrat', sans-serif;
+  margin: auto;
+  font-size: 1.2vw; }
+
+.header-text {
+  color: #1D3241;
+  font-size: 1.2rem; }
+
+.footer-header {
+  margin-right: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 80px;
+  margin-right: 120px; }
+.dashboard-header {
+  background-color: #202CE0;
+  width: 100%;
+  height: 13rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.dashboard-text {
+  text-align: center;
+  font-size: 100px;
+  color: white;
+  padding-top: 200px; }
+.footer {
+  background-color: white;
+  width: 100%;
+  height: 20rem;
+  flex-shrink: 0;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 7rem;
+  margin-left: -6rem; }
+
+.selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: auto;
+  margin-bottom: -4rem;
+  margin-left: auto; }
+
+.select-options {
+  background-color: #202CE0;
+  color: white;
+  border-radius: 12rem;
+  margin-bottom: .4rem;
+  height: 2rem;
+  width: 12rem; }
+
+.footer-buttons {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding-bottom: 80px; }
+
+.footer-cards {
+  display: flex;
+  background-color: white;
+  padding-top: 30px;
+  margin-bottom: 100px; }
+
+h4 {
+  margin-right: 100px; }
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  boz-sizing: inherit; }
+
+.card {
+  width: 6rem;
+  height: 8rem;
   border-radius: 12px;
-  margin-right: 100px;
-  margin-bottom: 50px; }
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .card:hover {
+    transform: scale(1.1);
+    cursor: pointer; }
+.popup {
+  background-color: #202ce0;
+  border-radius: 12px;
+  width: 2220px;
+  height: 1270px;
+  margin: 1040px auto;
+  padding: 30px; }
+
+.close {
+  margin-top: -38px;
+  margin-left: 2000px; }
+
+.closeBtn:hover {
+  cursor: pointer; }
+
+.demo-cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 300px; }
+
+.delay {
+  animation-delay: 2s; }
+
+.delay-second {
+  animation-delay: 4s; }
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #F5F5F5;
+  font-family: sans-serif; }
+
+#root {
+  height: 100%;
+  width: 100%; }
+
+h2 {
+  text-align: center;
+  color: #4d56e6;
+  font-size: 40px; }
+
+.my-cards-title {
+  margin-top: 2rem; }
+
+.my-cards-container {
+  display: flex;
+  justify-content: space-around; }
+
+.square-container {
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2.1rem;
+  padding-left: .4rem; }
+
+.other-players-cards {
+  height: 20rem;
+  width: 20rem;
+  background-color: white;
+  /* margin-top: -10rem; */
+  padding: 2rem;
+  margin-left: auto;
+  overflow: auto; }
+
+.column-container {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  margin-left: 1rem;
+  margin-right: auto; }
+
+.ether {
+  height: 7rem;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin-bottom: 1rem; }
+
+.my-cards {
+  height: 16rem;
+  width: 31rem;
+  background-color: white;
+  overflow: auto; }
+
+.amount-of-ether {
+  font-size: 2rem; }
+
+.text-style {
+  font-size: .9rem; }
+.basic-pack {
+  margin-right: 2rem; }
   .basic-pack:hover {
     cursor: pointer;
     transform: scale(1.1); }
 
 .pack-of-cards {
-  width: 300px;
-  height: 400px; }
+  width: 8rem;
+  height: 10rem; }
 
 .button {
   text-decoration: none; }
@@ -86,311 +428,6 @@ input[type=radio]:checked ~ label {
   border: none; }
   .popupbtn:hover {
     cursor: pointer; }
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  boz-sizing: inherit; }
-
-.card {
-  width: 150px;
-  height: 200px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center; }
-  .card:hover {
-    transform: scale(1.1);
-    cursor: pointer; }
-.launch-wrapper {
-  background-image: url(855218a44097c933b01c9e44671e4734.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  display: flex;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 210px; }
-
-.launch-container {
-  background-color: white;
-  border-radius: 50px;
-  width: 50%;
-  height: 2000px;
-  margin-right: auto;
-  margin-left: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 50px; }
-
-.launch-button {
-  border-radius: 50px;
-  text-decoration: none;
-  background-color: #202CE0;
-  color: white;
-  font-size: 50px;
-  height: 130px;
-  width: 390px;
-  margin-top: 160px;
-  margin-right: auto;
-  margin-left: auto; }
-  .launch-button:hover {
-    background-color: white;
-    border: 4px solid #202CE0;
-    color: #202CE0;
-    cursor: pointer;
-    transition: all 0.3s ease-out; }
-
-.launch {
-  color: white;
-  text-decoration: none; }
-  .launch:hover {
-    color: #202CE0; }
-
-.input {
-  background-image: url(79c461a9738a16be25da8ff97ea0dd33.png);
-  position: relative;
-  /* font-size: 70px; */
-  width: 2065px;
-  height: 300px;
-  background: linear-gradient(21deg, #202CE0, #51C2FA);
-  padding: 4px;
-  display: inline-block;
-  border-radius: 9999em; }
-  .input *:not(span) {
-    position: relative;
-    display: inherit;
-    width: 2000px;
-    height: 300px;
-    border-radius: inherit;
-    margin: 0;
-    border: none;
-    outline: none;
-    padding: 0 .325em;
-    z-index: 1;
-    font-size: 100px;
-    text-align: center; }
-    .input *:not(span):focus + span {
-      opacity: 1;
-      transform: scale(1); }
-  .input span {
-    transform: scale(0.993, 0.94);
-    transition: transform .5s, opacity .25s;
-    opacity: 0;
-    position: absolute;
-    z-index: 0;
-    margin: 4px;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    box-shadow: inset 0 0 0 3px #fff, 0 0 0 4px #fff, 3px -3px 30px #51C2FA, -3px 3px 30px #202CE0; }
-
-html {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  line-height: 1.5;
-  font-size: 1em; }
-
-body {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-
-html, body {
-  height: 100%; }
-
-input {
-  font-family: inherit;
-  line-height: inherit;
-  color: #2e3750;
-  min-width: 12em; }
-
-::placeholder {
-  color: #cbd0d5; }
-
-html::after {
-  content: '';
-  background: linear-gradient(21deg, #202CE0, #51C2FA);
-  height: 3px;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0; }
-.primary-header {
-  font-family: 'Lato', sans-serif;
-  font-size: 260px;
-  color: rgba(255, 255, 255, 0.9); }
-
-.secondary-header {
-  font-family: 'Montserrat', sans-serif;
-  margin: auto;
-  font-size: 1.2vw; }
-
-.header-text {
-  color: #1D3241;
-  font-size: 40px; }
-
-.footer-header {
-  margin-right: 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 80px;
-  margin-right: 120px; }
-.footer {
-  background-color: white;
-  width: 100%;
-  height: 800px;
-  flex-shrink: 0;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-
-.footer-buttons {
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  padding-bottom: 80px; }
-
-.footer-cards {
-  display: flex;
-  background-color: white;
-  padding-top: 30px;
-  margin-bottom: 100px; }
-
-h4 {
-  margin-right: 100px; }
-.dashboard-header {
-  background-color: #202CE0;
-  width: 100%;
-  height: 800px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-
-.dashboard-text {
-  text-align: center;
-  font-size: 100px;
-  color: white;
-  padding-top: 200px; }
-.popup {
-  background-color: #202ce0;
-  border-radius: 12px;
-  width: 2220px;
-  height: 1270px;
-  margin: 1040px auto;
-  padding: 30px; }
-
-.close {
-  margin-top: -38px;
-  margin-left: 2000px; }
-
-.closeBtn:hover {
-  cursor: pointer; }
-
-.demo-cards {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-top: 300px; }
-
-.delay {
-  animation-delay: 2s; }
-
-.delay-second {
-  animation-delay: 4s; }
-.purchase-button {
-  border-radius: 50px;
-  text-decoration: none;
-  background-color: #202CE0;
-  color: white;
-  font-size: 30px;
-  height: 100px;
-  width: 300px;
-  margin-right: 100px; }
-  .purchase-button:hover {
-    background-color: white;
-    border: 4px solid #202CE0;
-    color: #202CE0;
-    cursor: pointer;
-    transition: all 0.3s ease-out; }
-html, body {
-  box-sizing: border-box;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: #F5F5F5;
-  font-family: sans-serif; }
-
-#root {
-  height: 100%;
-  width: 100%; }
-
-h2 {
-  text-align: center;
-  color: #4d56e6;
-  font-size: 40px; }
-
-.my-cards-title {
-  margin-top: -150px; }
-
-.my-cards-container {
-  display: flex;
-  justify-content: space-around; }
-
-.square-container {
-  display: flex;
-  align-items: center;
-  padding-top: 100px;
-  padding-right: 500px;
-  padding-bottom: 200px;
-  padding-left: 500px; }
-
-.other-players-cards {
-  height: 800px;
-  width: 1000px;
-  background-color: white;
-  margin-top: 50px;
-  padding: 200px;
-  margin-left: auto;
-  overflow: auto; }
-
-.column-container {
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  margin-top: 50px;
-  margin-left: 20px;
-  margin-right: auto; }
-
-.ether {
-  height: 290px;
-  width: 800px;
-  background-color: white;
-  padding-top: 200px;
-  margin-bottom: 20px; }
-
-.my-cards {
-  height: 490px;
-  width: 800px;
-  background-color: white;
-  padding-top: 200px;
-  overflow: auto; }
-
-.amount-of-ether {
-  font-size: 130px; }
-
-.text-style {
-  font-size: 40px; }
 .trading-container {
   display: flex;
   flex-direction: column;
@@ -408,15 +445,19 @@ h2 {
 h3 {
   text-align: center;
   margin-top: 38px; }
+
+.tradeButton {
+  position: absolute;
+  margin-top: 6rem; }
 .trade-button {
   border-radius: 50px;
   text-decoration: none;
   background-color: #202CE0;
   color: white;
-  font-size: 30px;
-  height: 100px;
-  width: 300px;
-  margin-top: 100px;
+  font-size: 1rem;
+  height: 3rem;
+  width: 12rem;
+  margin-top: 12rem;
   margin-right: auto;
   margin-left: auto; }
   .trade-button:hover {
@@ -430,73 +471,6 @@ h3 {
   width: 40%;
   height: 400px;
   background-color: white; }
-.platinum-pack {
-  background-color: #202CE0;
-  width: 300px;
-  height: 400px;
-  border-radius: 12px;
-  margin-right: 100px; }
-  .platinum-pack:hover {
-    transform: scale(1.1);
-    cursor: pointer; }
-
-.platinumpack-radiobtn {
-  display: flex;
-  align-items: center; }
-
-.platinumpack-radiobtn input[type=radio] {
-  position: absolute;
-  visibility: hidden; }
-
-.platinumpack-radiobtn label {
-  display: flex;
-  position: relative;
-  font-weight: 300;
-  font-size: 1.35em;
-  margin: 38px 60px 50px;
-  height: 30px;
-  z-index: 9;
-  cursor: pointer;
-  -webkit-transition: all 0.25s linear; }
-
-.platinumpack-radiobtn:hover label {
-  cursor: pointer; }
-
-.platinumpack-radiobtn .check {
-  display: flex;
-  position: absolute;
-  border: 10px solid #202CE0;
-  border-radius: 100%;
-  height: 35px;
-  width: 35px;
-  z-index: 5;
-  transition: border .25s linear;
-  -webkit-transition: border .25s linear; }
-
-.platinumpack-radiobtn:hover .check {
-  cursor: pointer; }
-
-.platinumpack-radiobtn .check::before {
-  display: flex;
-  position: absolute;
-  top: -6px;
-  left: -6px;
-  content: "";
-  height: 40px;
-  width: 40px;
-  margin-top: 4px;
-  margin-left: 4px;
-  transition: background 0.25s linear;
-  -webkit-transition: background 0.25s linear; }
-
-input[type=radio]:checked ~ .check {
-  border: 10px solid #202CE0; }
-
-input[type=radio]:checked ~ .check::before {
-  background: #202CE0; }
-
-input[type=radio]:checked ~ label {
-  color: #202CE0; }
 @keyframes color {
   0% {
     background-color: #51C2FA; }
@@ -560,6 +534,120 @@ input[type=radio]:checked ~ label {
   display: flex;
   align-items: center;
   justify-content: space-around; }
+@keyframes platinumeffect {
+  0% {
+    background-color: #51C2FA; }
+  5% {
+    background-color: #f99243; }
+  10% {
+    background-color: #ee34A8; }
+  15% {
+    background-color: #00cd79; }
+  25% {
+    background-color: #202CE0; }
+  30% {
+    background-color: #51C2FA; }
+  35% {
+    background-color: #f99243; }
+  40% {
+    background-color: #ee34A8; }
+  45% {
+    background-color: #00cd79; }
+  50% {
+    background-color: #202CE0; }
+  55% {
+    background-color: #51C2FA; }
+  60% {
+    background-color: #f99243; }
+  65% {
+    background-color: #ee34A8; }
+  70% {
+    background-color: #00cd79; }
+  75% {
+    background-color: #202CE0; }
+  80% {
+    background-color: #51C2FA; }
+  85% {
+    background-color: #f99243; }
+  90% {
+    background-color: #ee34A8; }
+  95% {
+    background-color: #00cd79; }
+  100% {
+    background-color: #51C2FA; } }
+
+.platinum-pack {
+  margin-right: 100px; }
+  .platinum-pack:hover {
+    transform: scale(1.1);
+    cursor: pointer; }
+
+.pack-of-platinumcards {
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-name: platinumeffect;
+  animation-direction: alternate;
+  width: 8rem;
+  height: 10rem;
+  border-radius: 2rem; }
+
+.platinumpack-radiobtn {
+  display: flex;
+  align-items: center; }
+
+.platinumpack-radiobtn input[type=radio] {
+  position: absolute;
+  visibility: hidden; }
+
+.platinumpack-radiobtn label {
+  display: flex;
+  position: relative;
+  font-weight: 300;
+  font-size: 1.35em;
+  margin: 38px 60px 50px;
+  height: 30px;
+  z-index: 9;
+  cursor: pointer;
+  -webkit-transition: all 0.25s linear; }
+
+.platinumpack-radiobtn:hover label {
+  cursor: pointer; }
+
+.platinumpack-radiobtn .check {
+  display: flex;
+  position: absolute;
+  border: 10px solid #202CE0;
+  border-radius: 100%;
+  height: 35px;
+  width: 35px;
+  z-index: 5;
+  transition: border .25s linear;
+  -webkit-transition: border .25s linear; }
+
+.platinumpack-radiobtn:hover .check {
+  cursor: pointer; }
+
+.platinumpack-radiobtn .check::before {
+  display: flex;
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  content: "";
+  height: 40px;
+  width: 40px;
+  margin-top: 4px;
+  margin-left: 4px;
+  transition: background 0.25s linear;
+  -webkit-transition: background 0.25s linear; }
+
+input[type=radio]:checked ~ .check {
+  border: 10px solid #202CE0; }
+
+input[type=radio]:checked ~ .check::before {
+  background: #202CE0; }
+
+input[type=radio]:checked ~ label {
+  color: #202CE0; }
 .close-propose {
   margin-left: 980px; }
 .dashboard-card-container {
@@ -574,6 +662,4 @@ input[type=radio]:checked ~ label {
   flex-wrap: wrap;
   overflow: auto;
   flex-shrink: 0;
-  justify-content: space-around;
-  padding: 110px;
-  margin-top: -90px; }
+  justify-content: space-around; }
