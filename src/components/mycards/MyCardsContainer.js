@@ -16,32 +16,27 @@ class MyCardsContainer extends Component {
 
         let Kards = this.props.data.kards; // data is from clickPurchaseBtn function- contains resultBody. Passed in through App.js.
         if(Kards) {
-        
+
             let keysArray = Object.keys(Kards) // way to use an object in a map function. 
             let cardsArray = keysArray.map((key) => {
                 let Kard = Kards[key]; // this grabs the object from the key. 
-            let card = (<Card id={Kard.id} color={Kard.color} shape={Kard.shape} effect={Kard.effect}/>)
+                let card = (<Card id={Kard.id} color={Kard.color} shape={Kard.shape} effect={Kard.effect}/>)
                 return card // returns card component in map function
             });
             return cardsArray // returns cardArray in the generateCards function so as it shows up in browser.
-}
-
-    else{
-       console.log("error");
+        } else {
+           // console.log("error");
+            //TODO: not really an error here but there may jsut not be any kards yet
+        }
     }
-}
 
-
-
-      render() {
-           
-        return( 
-                    <div className="my-card-container">
-                        {this.generateCards()}
-                    </div>
+    render() {
+        return(
+            <div className="my-card-container">
+                {this.generateCards()}
+            </div>
         )
     }
 }
-
 
 export default MyCardsContainer;

@@ -19,7 +19,6 @@ class Footer extends Component {
             userCards: {},
             joeCards: {},
             visible:false
-        
         };
 
         let url = this.state.value;
@@ -36,8 +35,6 @@ class Footer extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        //change url in purchase button here? 
-        console.log(this.state.value);
     }
 
     smallLoader() {
@@ -51,9 +48,6 @@ class Footer extends Component {
             visible:false
         })
     }
-
-    // TODO: consider moving this to parent?? So can be called after trade
-
 
     buyKards(purchaser) {
 
@@ -71,8 +65,6 @@ class Footer extends Component {
                 this.disappear();
                 this.props.refreshKards();
             }
-            console.log('resultBody', resultBody);
-            console.log(resultBody.receipt.status, "status");
             return resultBody;
         });
     }

@@ -50,17 +50,17 @@ class KaleidoConfig {
         this.baseUrl = "https://console.kaleido.io/api/v1";
         this.headers = {"Authorization":"Bearer " + apiKey, "Content-Type":"application/json"};
         // TODO: check api key length, maybe trim it
-        // console.log("Creating Consortia");
+        console.log("Creating Consortia");
         return this.createConsortia().then((response) => {
             let jsonResponse = JSON.parse(response);
             let consortium = jsonResponse._id;
-            // console.log("Created consortium with ID: " + consortium);
-            // console.log("Creating Environment");
+            console.log("Created consortium with ID: " + consortium);
+            console.log("Creating Environment");
             return this.createEnvironment(consortium).then((response) => {
                 let jsonResponse = JSON.parse(response);
                 let environment = jsonResponse._id;
-                // console.log("Created environment with ID: " + environment);
-                // console.log("Creating Memberships");
+                console.log("Created environment with ID: " + environment);
+                console.log("Creating Memberships");
                 // Create the 3 memberships at once
                 return Promise.all([
                     this.createMembership(consortium, this.memberUser),
@@ -68,7 +68,7 @@ class KaleidoConfig {
                     this.createMembership(consortium, this.memberStore)])
                     .then((response) => {
                         // Promise.all returns the responses for each call in an array
-                        // // console.log(response);
+                        // console.log(response);
                         let userResponse  = JSON.parse(response[0]);
                         let joeResponse   = JSON.parse(response[1]);
                         let storeResponse = JSON.parse(response[2]);
@@ -76,8 +76,8 @@ class KaleidoConfig {
                         let userMember = userResponse._id;
                         let joeMember = joeResponse._id;
                         let storeMember = storeResponse._id;
-                        // console.log("Created all memberships");
-                        // console.log("Creating nodes");
+                        console.log("Created all memberships");
+                        console.log("Creating nodes");
                         // Create the 3 nodes at once
                         return Promise.all([
                             this.createNode(consortium, environment, userMember, this.nodeUser),
@@ -102,8 +102,8 @@ class KaleidoConfig {
                                         this.userNodeUrls  = userNodeStatus.urls;
                                         this.joeNodeUrls   = joeNodeStatus.urls;
                                         this.storeNodeUrls = storeNodeStatus.urls;
-                                        // console.log("Created and Initialized Nodes");
-                                        // console.log("Generating app credentials");
+                                        console.log("Created and Initialized Nodes");
+                                        console.log("Generating app credentials");
                                         return Promise.all([
                                             this.generateAppCredentials(consortium, environment, userMember),
                                             this.generateAppCredentials(consortium, environment, joeMember),
@@ -121,8 +121,8 @@ class KaleidoConfig {
 
                                                 this.storeNodeUser = storeNodeStatus.username;
                                                 this.storeNodePass = storeNodeStatus.password;
-                                                // console.log("App Credentials generated");
-                                                // console.log("Getting Node account addresses for funding");
+                                                console.log("App Credentials generated");
+                                                console.log("Getting Node account addresses for funding");
 
                                                 return Promise.all([
                                                     this.getNodeStatus(consortium, environment, userResponse._id),
@@ -133,14 +133,14 @@ class KaleidoConfig {
 
                                                     let userAddress = userNodeStatus.user_accounts[0];
                                                     let joeAddress = joeNodeStatus.user_accounts[0];
-                                                    // console.log("Received account addresses");
-                                                    // console.log("Funding accounts");
+                                                    console.log("Received account addresses");
+                                                    console.log("Funding accounts");
                                                     return Promise.all([
                                                         this.fundAccount(consortium, environment, userAddress),
                                                         this.fundAccount(consortium, environment, joeAddress)])
                                                         .then((receipts) => {
                                                             // receipts is the transaction receipts from funding the accounts
-                                                            // console.log("Accounts funded, Writing keyfile");
+                                                            console.log("Accounts funded, Writing keyfile");
                                                             // Finally, we have everything created and all the creds we need to make some magic
                                                             // So lets write them to a file for later use
                                                             this.writeKeyFile();
@@ -204,7 +204,7 @@ class KaleidoConfig {
             jsonResponse = JSON.parse(response);
             state = jsonResponse.state;
             // Wait 3 seconds so we don't spam the API
-            // console.log("Waiting on Node initialization: " + node);
+            console.log("Waiting on Node initialization: " + node);
             await new Promise((resolve) => setTimeout(resolve, 3000));
         }
         return jsonResponse;
