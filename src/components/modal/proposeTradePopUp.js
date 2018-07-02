@@ -3,18 +3,29 @@ import './proposeTradePopUp.scss';
 import './../styles/text.scss';
 import './../styles/colors.scss';
 import PropTypes from 'prop-types';
+import {ItemTypes } from './../card/Constant';
+import { findDOMNode } from 'react-dom';
+
 
 
 
 class Popup extends Component {
+
     constructor() {
         super();
-    }
 
-    render() {
-        if(!this.props.show) {
-            return null;
-        }
+    //     this.state = {
+    //         cards: []
+    //     }
+    // }
+
+    // render() {
+    //     const {x, y } = this.props;
+
+    //     const {connectDropTarget, item } = this.props;
+    //     if(!this.props.show) {
+    //         return null;
+    //     }
 
         const backgroundStyle = {
             position:'absolute',
@@ -46,9 +57,11 @@ class Popup extends Component {
             border: 'none',
             fontSize: '100px',
         };
-
-        return(
+        return (
             <div className="propose-background" style={backgroundStyle} >
+                {/* { this.state.cards && this.state.cards.map(c => {
+                    <span>{c.id.shape}, {c.id.color}, {c.id.effect}</span>
+                })} */}
                 <div className="close-propose">
                     <button className="closeBtn" style={closebtnStyle} onClick={this.props.onClose}>
                         x

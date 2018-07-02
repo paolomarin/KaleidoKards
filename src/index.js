@@ -35,4 +35,4 @@ class Main extends Component {
 }
 }
 
-render(Main);
+render (Main);

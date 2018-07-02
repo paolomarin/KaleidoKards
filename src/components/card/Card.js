@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
 import './Card.scss'; 
+import PropTypes from 'prop-types';
+import { ItemTypes } from './Constant';
 import Star from './star.png';
 import Diamond from './diamond.png';
 import { DragSource } from 'react-dnd';
+
+
+const cardSource = {
+
+beginDrag(props) {
+    // const item = props;
+    // console.log('item', item);
+    // return item;
+    return props;
+}
+};
+
+function collect(connect, monitor) {
+    return{
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+    };
+}
 
 class Card extends Component {
     constructor() {
@@ -64,16 +84,19 @@ class Card extends Component {
     
         return (
                 <div className="card" draggable="true" style={styles}>
-                    <div style= {shapes[this.props.shape]}></div>
+                    <div style= {shapes[this.props.shape]}
+                ></div>
                 </div>
         )
     }
     render() {
-    //    let { shape, color} = this.props; 
+        const {connectDragSource, isDragging } = this.props;
+   
         
-        return( 
+        return connectDragSource( 
             <div>
                 {this.renderCard()}
+                {isDragging}
             </div>
             // <div className={`card ${color}`}>
             //     <div className={`${shape}`}></div> 
@@ -82,4 +105,9 @@ class Card extends Component {
     }
 }
 
-export default DragSource(type, spec, collect) (Card);
+Card.propTypes = {
+    connectDragSource: PropTypes.func.isRequired,
+    isDragging: PropTypes.bool.isRequired
+};
+
+export default DragSource(ItemTypes.CARD, cardSource, collect) (Card);
