@@ -21,11 +21,11 @@ class PlatinumPack extends Component {
            <div>
             <div className="platinum-pack">
             <button className="popupbtn" onClick={this.popupModal.bind(this)}>  
-                <img src= {PlatinumPackImg} className="pack-of-cards" alt="Pack-of-Cards"/>
+                <img src= {PlatinumPackImg} className="pack-of-platinumcards" alt="Pack-of-Cards"/>
             </button>
             </div>
             <Popup show={this.state.isOpen} onClose={this.popupModal.bind(this)}>
-                A platinum pack gives you 3 random cards that could possibly have a cool effect.
+                A platinum pack gives you 3 random cards with effects.
             </Popup>
             
             {/* <div className="platinumpack-radiobtn">

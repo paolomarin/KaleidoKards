@@ -5,6 +5,7 @@ let user_node         = 'user_node';
 let joe_node          = 'joe_node';
 let kard_store_node   = 'kard_store_node';
 
+// Function for reading the app credentials from the keystore file
 function getCredentials(node) {
 
     // If no keystore file found, we can't connect to any node
@@ -36,16 +37,14 @@ function getWeb3(node) {
         }
         // URL format "https://<username>:<password>@xxxxxxxxxx-xxxxxxxxxx-rpc.us-east-2.kaleido.io"
         let url = 'https://' + credentials.username + ':' + credentials.password + '@'
-            + credentials.urls.rpc.substring(8);
+            + credentials.urls.rpc.substring(8); // substring removes "https://"
 
-        console.log(url);
-
-        // var provider = new Web3.providers.WebsocketProvider(websocket);
+        // Set the httpProvider with the rpc endpoint
+        // for websocket (wss) use WebsocketProvider
         let provider = new Web3.providers.HttpProvider(url);
         let web3 = new Web3(provider);
         resolve(web3);
-
-    })
+    });
 }
 
 module.exports = getWeb3;

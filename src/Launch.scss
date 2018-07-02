@@ -14,17 +14,17 @@
 
 
 .launch-container {
-    background-color: white;
+	background-color: white;
     border-radius: 50px;
-    width: 50%;
-    height: 2000px;
+    width: 40rem;
+    height: 32rem;
     margin-right: auto;
     margin-left: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-	justify-content: center;
-	padding: 50px;
+    justify-content: center;
+    padding: 50px;
 }
 
 
@@ -34,10 +34,10 @@
     text-decoration: none;
     background-color: #202CE0;
     color: white;
-    font-size: 50px;
-    height: 130px;
-    width: 390px;
-	margin-top: 160px;
+    font-size: 2rem;
+    height: 6rem;
+    width: 20rem;
+	margin-top: 80px;
     margin-right: auto;
     margin-left: auto;
    
@@ -64,11 +64,11 @@
 
 
 .input {
-    background-image: url(background.png);
+    // background-image: url(background.png);
 	position: relative;
     /* font-size: 70px; */
-	width: 2065px;
-    height: 300px;
+	width: 36rem;
+    height: 5rem;
     background: linear-gradient(21deg, $color-1, $color-2);
     padding: 4px;
     display: inline-block;
@@ -78,15 +78,15 @@
 	*:not(span) {
         position: relative;
         display: inherit;
-        width: 2000px;
-        height: 300px;
+		width: 35rem;
+		height: 5rem;
         border-radius: inherit;
         margin: 0;
         border: none;
         outline: none;
         padding: 0 .325em;
         z-index: 1;
-        font-size: 100px;
+        font-size: 1rem;
         text-align: center; // needs to be above the :focus span
         
        

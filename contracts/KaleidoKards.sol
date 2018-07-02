@@ -15,6 +15,7 @@ contract KaleidoKards {
     uint8 constant public maxShape  = 4;
     uint8 constant public maxEffect = 4;
 
+    // TODO: change this after development
     // Prices for buying a pack of Kards from the contract
     uint256 constant public standardPackPrice = 1 ether;
     uint256 constant public platinumPackPrice = 1 ether;
@@ -49,8 +50,9 @@ contract KaleidoKards {
     }
 
     /**
-     * TODO: consider adding indexed events for buying cards so that frontend can listen for when user buys new kards
-     * same with transfer
+     * Function for buying a standard pack of kards (kards with no effect)
+     * Checks that there is enough kards left to buy, randomly selects the number
+     * of kards in a pack, and assigns them to the buyer.
      */
     function buyStandardPack() external payable {
         require(msg.sender != address(0));
@@ -60,12 +62,18 @@ contract KaleidoKards {
         uint256 randomIndex = 0;
 
         for (uint8 i = 0; i < packSize; i++) {
+            // see documentation on random function
             randomIndex = random(block.timestamp + randomIndex, standardKardAmount);
             issueStandardKard(msg.sender, randomIndex);
             issuedStandardKards++;
         }
     }
 
+    /**
+     * Function for buying a platinum pack of kards (kards with an effect)
+     * Checks that there is enough kards left to buy, randomly selects the number
+     * of kards in a pack, and assigns them to the buyer.
+     */
     function buyPlatinumPack() external payable {
         require(msg.sender != address(0));
         require(msg.value == platinumPackPrice, "Not enough ether to buy a platinum pack");
@@ -82,7 +90,6 @@ contract KaleidoKards {
 
     /**
      *  External transfer function, used for trading amongst users
-     *
      */
     function transfer(address to, uint256 kardId) external {
         _transfer(msg.sender, to, kardId);
@@ -97,13 +104,17 @@ contract KaleidoKards {
         return (color, shape, effect);
     }
 
+    /**
+     * Returns an array of kardId's that the owner owns
+     */
     function getOwnedKards(address owner) public view returns (uint256[] cards){
         return ownedKards[owner];
     }
 
     /**
      * Withdrawal function so the contract owner can withdraw funds from the contract.
-     *
+     * This is here to show that the contract holds the ether used to buy the kards
+     * until the contract owner withdrawals the ether.
      */
     function withdraw(uint amount)
         public
@@ -114,8 +125,9 @@ contract KaleidoKards {
     }
 
     /**
-     * Internal transfer function
-     *
+     * Internal transfer function. Checks the ownership of the kardId, removes the
+     * kard from the current owners array of owned kardId's, and assigns the kard
+     * to it's new owner.
      */
     function _transfer(address from, address to, uint256 kardId)
         internal
@@ -144,8 +156,9 @@ contract KaleidoKards {
 
     /**
      * Internal function used to issue new Kards from the store.
-     *
-     *
+     * Given a randomIndex (or kardId), this will check if the kardId is already owned
+     * If it is, then it will go to the next kard in the list, and repeat until
+     * there is a kard with no owner
      */
     function issueStandardKard(address to, uint256 randomIndex)
         internal
@@ -169,10 +182,12 @@ contract KaleidoKards {
                 randomIndex = 0;
             }
             return issueStandardKard(to, randomIndex);
-            // TODO: someone double check this logic
         }
     }
 
+    /**
+     * Same functionality as above function, just with different bounds for platinum.
+     */
     function issuePlatinumKard(address to, uint256 randomIndex)
         internal
         returns (uint256)
@@ -194,11 +209,13 @@ contract KaleidoKards {
                 randomIndex = standardKardAmount;
             }
             return issuePlatinumKard(to, randomIndex);
-            // TODO: someone double check this logic
         }
     }
 
-    //internal function for checking ownership
+    /**
+     * Internal function for checking ownership.
+     * Returns true if the address at the kardId index is the same as the address passed in
+     */
     function owns(address claimant, uint256 kardId)
         internal
         view
@@ -207,10 +224,16 @@ contract KaleidoKards {
         return kardOwner[kardId] == claimant;
     }
 
-    // random function adapted from src: https://medium.com/@promentol/lottery-smart-contract-can-we-generate-random-numbers-in-solidity-4f586a152b27
+    //
     // This relies on trusting the mining node.
-    // While this function is NOT safe for PUBLIC blockchains, in a permissioned blockchain system, malicious miners can have their node removed from the network.
+    //
 
+    /**
+     * Random function adapted from src: https://medium.com/promentol/lottery-smart-contract-can-we-generate-random-numbers-in-solidity-4f586a152b27
+     * This relies on trusting the transaction mining node. While this function is NOT safe
+     * for PUBLIC blockchains, in a permissioned blockchain system, malicious miners can have
+     * their node removed from the network.
+     */
     function random(uint256 seed, uint8 max) internal pure returns (uint256) {
         // by default this will return a number between [0, max-1]
         return uint256(keccak256(seed))%uint256(max);

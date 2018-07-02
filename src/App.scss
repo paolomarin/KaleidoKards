@@ -22,7 +22,7 @@ h2 {
 }
 
 .my-cards-title {
-    margin-top: -150px;
+    margin-top: 2rem;
 }
 
 .my-cards-container {
@@ -33,53 +33,51 @@ h2 {
 .square-container {
     display: flex;
     align-items: center;
-    padding-top: 100px;
-    padding-right: 500px;
-    padding-bottom: 200px;
-    padding-left: 500px;
+    padding-top:2rem;
+    padding-bottom: 2.1rem;
+    padding-left: .4rem;
    
 }
 
 .other-players-cards {
-    height: 800px;
-    width: 1000px;
+    height: 20rem;
+    width: 20rem;
     background-color: white;
-    margin-top: 50px;
-    padding: 200px;
+    /* margin-top: -10rem; */
+    padding: 2rem;
     margin-left: auto;
+    overflow: auto;
 }
 
 .column-container {
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    margin-top: 50px;
-    margin-left: 20px;
+    margin-left: 1rem;
     margin-right: auto;
 }
 
 .ether {
-    height: 290px;
-    width:800px;
+    height: 7rem;
+    display: flex;
+    flex-direction:column;
     background-color:white;
-    padding-top:200px;
-    margin-bottom:20px;
+    margin-bottom:1rem;
 }
 
 .my-cards {
-    height: 490px;
-    width: 800px;
+    height: 16rem;
+    width: 31rem;
     background-color: white;
-    padding-top:200px;
     overflow:auto;
 }
 
 
 .amount-of-ether {
-    font-size:130px;
+    font-size:2rem;
     
 }
 
 .text-style {
-    font-size:40px;
+    font-size:.9rem;
 }

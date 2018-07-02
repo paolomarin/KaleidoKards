@@ -39,7 +39,7 @@ class BasicPack extends Component {
                      </button>
                 </div>
                 <Popup show={this.state.isOpen} onClose={this.popupModal.bind(this)}>
-                A basic pack gives you 3 random cards.
+                        A basic pack gives you 3 random cards.
                 </Popup>
 
                 {/* <div className="basicpack-radiobtn"> */}

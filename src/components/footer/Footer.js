@@ -75,12 +75,11 @@ class Footer extends Component {
                     <PlatinumPack/>
                 </div>
                 <div className="selection">
-                    <form onSubmit= {this.handleSubmit}>
-                        <label for="pack-type">Pick your pack:</label>
+                    <form className="form" onSubmit= {this.handleSubmit}>
                         <select id="pack-type" value={this.state.value} onChange={this.handleChange}>
-                            <option> - - - - </option>
-                            <option value="/purchase/standard">Basic Pack</option>
-                            <option value="/purchase/platinum">Platinum Pack</option>
+                            <option> Pick your pack: </option>
+                            <option value="/purchase/standard"> Basic Pack </option>
+                            <option value="/purchase/platinum"> Platinum Pack </option>
                         </select>
                         <PurchaseBtn click={this.clickPurchaseBtn.bind(this)} type="submit" value="Submit" />
                     </form>

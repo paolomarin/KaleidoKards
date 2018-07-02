@@ -8,6 +8,8 @@
     "hoek": "^4.2.1",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
+    "react-dnd": "^5.0.0",
+    "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
