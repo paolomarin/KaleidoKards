@@ -73,7 +73,7 @@ class Controller {
         apiKey = apiKey.trim();
         if (!apiKey && !this.previousInstance) {
             //TODO: this shouldnt be 500
-            response.status = 500;
+            response.status = 400;
             response.body.error = "No Api Key in body";
             return response;
         }
@@ -98,9 +98,19 @@ class Controller {
                 return response;
             });
         }).catch((error) => {
-            console.log("Here's an error from launching the env ", error);
-
             response.status = 500;
+            console.log("Here's an error from launching the env: ", error);
+
+            if (error.statusCode === 401) {
+                response.status = error.statusCode;
+                error = error.error;
+            } else if (error.statusCode) {
+                // if the error contains a status code than this is an error
+                // from the kaleido api, otherwise its an internal server error
+                response.status = error.statusCode;
+                error = JSON.parse(error.error).errorMessage;
+            }
+
             response.body.error = error;
             return response;
         });
@@ -169,6 +179,8 @@ class Controller {
                 response.body.receipt = receipt;
                 resolve(response);
             }).catch((error) => {
+                console.log("ERROR TRANSFER");
+                console.log(error);
                 response.status = 500;
                 response.body.error = error;
                 resolve(response);
