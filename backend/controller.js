@@ -73,14 +73,13 @@ class Controller {
         apiKey = apiKey.trim();
         if (!apiKey && !this.previousInstance) {
             //TODO: this shouldnt be 500
-            response.status = 500;
+            response.status = 400;
             response.body.error = "No Api Key in body";
             return response;
         }
 
         // No record of previous instacne, let's make a new one
         return await this.kaleidoConfigInstance.launch(apiKey).then(() => {
-            // console.log("kaleidoconfig.then");
             this.kaleidoKardsInstance = new KaleidoKards();
             return this.kaleidoKardsInstance.deploy().then(() => {
                 this.kaleidoConfigInstance.contractAddress = this.kaleidoKardsInstance.contractAddress;
@@ -98,9 +97,19 @@ class Controller {
                 return response;
             });
         }).catch((error) => {
-            console.log("Here's an error from launching the env ", error);
-
             response.status = 500;
+            console.log("Here's an error from launching the env: ", error);
+
+            if (error.statusCode === 401) {
+                response.status = error.statusCode;
+                error = error.error;
+            } else if (error.statusCode) {
+                // if the error contains a status code than this is an error
+                // from the kaleido api, otherwise its an internal server error
+                response.status = error.statusCode;
+                error = JSON.parse(error.error).errorMessage;
+            }
+
             response.body.error = error;
             return response;
         });
@@ -118,7 +127,6 @@ class Controller {
                     response.body.receipt = receipt;
                     resolve(response);
                 }).catch((error) => {
-                    console.log(error);
                     response.status = 500;
                     response.body.error = error;
                     resolve(response);
@@ -169,6 +177,11 @@ class Controller {
                 response.body.receipt = receipt;
                 resolve(response);
             }).catch((error) => {
+                // There's a chance that this returns an "Out of gas" error
+                // Not due to actually running out of gas but because a require()
+                // function on the contract returns an error.
+                // Usually meaning that the sender does not own the kard they
+                // are trying to transfer.
                 response.status = 500;
                 response.body.error = error;
                 resolve(response);
