@@ -4,6 +4,7 @@
 /node_modules
 /Empty
 backend/dist
+webpack-demo/dist
 
 # testing
 /coverage
