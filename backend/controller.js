@@ -80,7 +80,6 @@ class Controller {
 
         // No record of previous instacne, let's make a new one
         return await this.kaleidoConfigInstance.launch(apiKey).then(() => {
-            // console.log("kaleidoconfig.then");
             this.kaleidoKardsInstance = new KaleidoKards();
             return this.kaleidoKardsInstance.deploy().then(() => {
                 this.kaleidoConfigInstance.contractAddress = this.kaleidoKardsInstance.contractAddress;
@@ -128,7 +127,6 @@ class Controller {
                     response.body.receipt = receipt;
                     resolve(response);
                 }).catch((error) => {
-                    console.log(error);
                     response.status = 500;
                     response.body.error = error;
                     resolve(response);
@@ -179,8 +177,11 @@ class Controller {
                 response.body.receipt = receipt;
                 resolve(response);
             }).catch((error) => {
-                console.log("ERROR TRANSFER");
-                console.log(error);
+                // There's a chance that this returns an "Out of gas" error
+                // Not due to actually running out of gas but because a require()
+                // function on the contract returns an error.
+                // Usually meaning that the sender does not own the kard they
+                // are trying to transfer.
                 response.status = 500;
                 response.body.error = error;
                 resolve(response);
