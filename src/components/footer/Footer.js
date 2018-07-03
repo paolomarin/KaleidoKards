@@ -3,7 +3,7 @@ import './Footer.scss';
 import PurchaseBtn from './../buttons/PurchaseBtn';
 import BasicPack from './../basicPack/BasicPack';
 import PlatinumPack from './../platinumPack/PlatinumPack';
-// import LoaderSmall from './../loader/LoaderSmall';
+import LoaderSmall from './../loader/LoaderSmall';
 
 
 const user= 'user';
@@ -18,7 +18,7 @@ class Footer extends Component {
             value: '',
             userCards: {},
             joeCards: {},
-            // visible:false
+            visible:false
         };
 
         let url = this.state.value;
@@ -37,21 +37,21 @@ class Footer extends Component {
         event.preventDefault();
     }
 
-    // smallLoader() {
-    //     this.setState({
-    //         visible:true
-    //     })
-    // }
+    smallLoader() {
+        this.setState({
+            visible:true
+        })
+    }
 
-    // dissapear() {
-    //     this.setState({
-    //         visible:false
-    //     })
-    // }
+    disappear() {
+        this.setState({
+            visible:!this.state.visible
+        })
+    }
 
     buyKards(purchaser) {
 
-        // this.smallLoader();
+        this.smallLoader();
         window.fetch(this.state.value, {
             body: JSON.stringify({purchaser: purchaser}),
             method: "POST",
@@ -83,7 +83,7 @@ class Footer extends Component {
                 <div className="footer-cards">
                     <BasicPack/>
                     <PlatinumPack/>
-                    {/* <LoaderSmall show={this.state.visible}/> */}
+                    <LoaderSmall show={this.state.visible}/>
                 </div>
                 <div className="selection">
                     <form className="form" onSubmit= {this.handleSubmit}>

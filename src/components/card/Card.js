@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Card.scss'; 
-import PropTypes from 'prop-types';
 import { ItemTypes } from './Constant';
+import PropTypes from 'prop-types';
 import Star from './star.png';
 import Diamond from './diamond.png';
 import { DragSource } from 'react-dnd';
@@ -10,15 +10,16 @@ import { DragSource } from 'react-dnd';
 const cardSource = {
 
 beginDrag(props) {
-    // const item = props;
-    // console.log('item', item);
-    // return item;
-    return props;
+    console.log('cardId', props);
+   
+    return {cardId: props}
+
+ 
 }
 };
 
 function collect(connect, monitor) {
-    return{
+    return {
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging()
     };
@@ -83,7 +84,7 @@ class Card extends Component {
         };
     
         return (
-                <div className="card" draggable="true" style={styles}>
+                <div className="card" style={styles}>
                     <div style= {shapes[this.props.shape]}
                 ></div>
                 </div>
@@ -94,9 +95,10 @@ class Card extends Component {
    
         
         return connectDragSource( 
-            <div>
+            <div style={{
+                opacity: isDragging ? 0.5 : 1,
+                cursor: 'move'}}>
                 {this.renderCard()}
-                {isDragging}
             </div>
             // <div className={`card ${color}`}>
             //     <div className={`${shape}`}></div> 

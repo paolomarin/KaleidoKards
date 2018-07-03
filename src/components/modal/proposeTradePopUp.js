@@ -2,41 +2,51 @@ import React, { Component } from 'react';
 import './proposeTradePopUp.scss';
 import './../styles/text.scss';
 import './../styles/colors.scss';
-import PropTypes from 'prop-types';
 import {ItemTypes } from './../card/Constant';
 import { findDOMNode } from 'react-dom';
+import {moveCards} from './function';
+import { DropTarget } from 'react-dnd';
+import PropTypes from 'prop-types';
+
+
+const cardTarget = {
+   drop(props) {
+       moveCards(props.x, props.y);
+   }
+}
+
+function collect(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver(),
+        itemType: monitor.getItemType()
+    };
+}
 
 
 
-
-class Popup extends Component {
+class ProposePopup extends Component {
 
     constructor() {
         super();
 
-    //     this.state = {
-    //         cards: []
-    //     }
-    // }
+        this.state = {
+            cards: []
+        }
+    }
 
-    // render() {
-    //     const {x, y } = this.props;
+    render() {
 
-    //     const {connectDropTarget, item } = this.props;
-    //     if(!this.props.show) {
-    //         return null;
-    //     }
+        const { isOver, connectDropTarget, x, y } = this.props;
 
         const backgroundStyle = {
             position:'absolute',
-            top: '952px',
-            bottom: '0',
-            left: '94px',
-            right: '0',
-            padding:50,
+            top: '8rem',
+            left: '4rem',
+            padding: '2rem',
             backgroundColor: 'white',
-            width: '22%',
-            height: '1100px'
+            width: '15rem',
+            height: '20rem'
         };
 
         // const popupStyle = {
@@ -55,24 +65,13 @@ class Popup extends Component {
             backgroundColor: 'transparent',
             color: 'grey',
             border: 'none',
-            fontSize: '100px',
+            fontSize: '1rem',
         };
-        return (
+        return connectDropTarget(
             <div className="propose-background" style={backgroundStyle} >
-                {/* { this.state.cards && this.state.cards.map(c => {
-                    <span>{c.id.shape}, {c.id.color}, {c.id.effect}</span>
-                })} */}
-                <div className="close-propose">
-                    <button className="closeBtn" style={closebtnStyle} onClick={this.props.onClose}>
-                        x
-                    </button>
-                </div>
-                <div className="trade-btn">
-                    <button> 
-                        Trade
-                    </button> 
-
-                </div>
+                {isOver &&  <div style= {{ backgroundColor:'aliceblue', height: '100%',
+            width: '100%'}}/>}
+                
             </div>
 
             
@@ -82,10 +81,12 @@ class Popup extends Component {
 
 }
 
-Popup.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    show: PropTypes.bool,
-    children: PropTypes.node
+ProposePopup.propTypes = {
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
+    isOver: PropTypes.bool.isRequired
 };
 
-export default Popup; 
+
+export default DropTarget(ItemTypes.CARD, cardTarget, collect) (ProposePopup); 

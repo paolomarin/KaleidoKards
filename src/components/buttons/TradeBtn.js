@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './TradeBtn.scss';
-import Popup from './../modal/proposeTradePopUp';
+import ProposePopup from './../modal/proposeTradePopUp';
 
 class TradeBtn extends Component {
     constructor(props) {
@@ -21,9 +21,9 @@ class TradeBtn extends Component {
             <button className="trade-button" onClick={this.sidePopUpModal.bind(this)}>
                 Propose Trade
             </button> 
-            {/* <Popup show={this.state.isOpen} onClose={this.sidePopUpModal.bind(this)}>
+            <ProposePopup show={this.state.isOpen} onClose={this.sidePopUpModal.bind(this)}>
             Trade Here
-            </Popup> */}
+            </ProposePopup>
             </div>
         )
     }
