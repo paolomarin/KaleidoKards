@@ -9,7 +9,7 @@ class LoaderSmall extends Component {
         }
         return(
             <div className="small-loader">
-                <img className="small" src= {Ripple} />
+                <img className="small" src={Ripple} />
             </div> 
         )
     }

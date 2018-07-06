@@ -3,7 +3,7 @@ import './Footer.scss';
 import PurchaseBtn from './../buttons/PurchaseBtn';
 import BasicPack from './../basicPack/BasicPack';
 import PlatinumPack from './../platinumPack/PlatinumPack';
-// import LoaderSmall from './../loader/LoaderSmall';
+import LoaderSmall from './../loader/LoaderSmall';
 
 
 const user= 'user';
@@ -18,7 +18,7 @@ class Footer extends Component {
             value: '',
             userCards: {},
             joeCards: {},
-            // visible:false
+            visible:false
         };
 
         let url = this.state.value;
@@ -43,9 +43,9 @@ class Footer extends Component {
     //     })
     // }
 
-    // dissapear() {
+    // disappear() {
     //     this.setState({
-    //         visible:false
+    //         visible:!this.state.visible
     //     })
     // }
 
@@ -62,7 +62,7 @@ class Footer extends Component {
             return results.json();
         }).then(resultBody => {
             if (resultBody && resultBody.receipt && resultBody.receipt.status) {
-                this.disappear();
+                // this.disappear();
                 this.props.refreshKards();
             }
             return resultBody;
@@ -83,7 +83,7 @@ class Footer extends Component {
                 <div className="footer-cards">
                     <BasicPack/>
                     <PlatinumPack/>
-                    {/* <LoaderSmall show={this.state.visible}/> */}
+                    <LoaderSmall show={this.state.visible}/>
                 </div>
                 <div className="selection">
                     <form className="form" onSubmit= {this.handleSubmit}>
