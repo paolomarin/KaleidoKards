@@ -11,6 +11,7 @@ import { DragDropContext } from 'react-dnd';
 
 const userGetKards = `/kards/user`;
 const joeGetKards = `/kards/joe`;
+const getBalance = `/balance/user`; // joe balance should always be the same as the user's
 
 class App extends Component {
     constructor(props) {
@@ -44,6 +45,17 @@ class App extends Component {
         }).then(resultBody => {
             this.setState({joeKards: resultBody});
         });
+
+        window.fetch( getBalance, {
+            method: "GET",
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(results => {
+            return results.json();
+        }).then(resultBody => {
+            document.getElementById("etherAmount").innerText = resultBody.balance;
+        });
     }
 
     render() {
@@ -58,8 +70,8 @@ class App extends Component {
                 </div>
                 <div className="column-container">
                   <div className="ether">
-                  <h1 className="amount-of-ether">100</h1>
-                  <h2 className="text-style">Ether</h2>
+                  <p id="etherAmount" className="amount-of-ether"/>
+                  <p className="text-style">Ether</p>
                   </div>
                   <div className="my-cards">
                     <h2 className="my-cards-title header-text">My Cards</h2>
