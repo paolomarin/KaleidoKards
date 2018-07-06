@@ -1,7 +1,7 @@
 const request = require("request-promise");
 const fs = require("fs");
 
-class KaleidoConfig {
+class kaleidoConfig {
 
     // Declare some constants that we need to create kaleido platform
     constructor() {
@@ -259,4 +259,4 @@ class KaleidoConfig {
 
 }
 
-module.exports = KaleidoConfig;
+module.exports = kaleidoConfig;
