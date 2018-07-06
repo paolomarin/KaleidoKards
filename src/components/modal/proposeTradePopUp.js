@@ -4,22 +4,23 @@ import './../styles/text.scss';
 import './../styles/colors.scss';
 import {ItemTypes } from './../card/Constant';
 import { findDOMNode } from 'react-dom';
-import {moveCards} from './function';
 import { DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
+import Card from './../card/Card';
+import TradeBtn from './../buttons/TradeBtn';
 
 
-const cardTarget = {
-   drop(props) {
-       moveCards(props.x, props.y);
-   }
+const targetSource= {
+    drop(props, monitor, component) {
+        monitor.didDrop()
+    }
 }
+
 
 function collect(connect, monitor) {
     return {
         connectDropTarget: connect.dropTarget(),
-        isOver: monitor.isOver(),
-        itemType: monitor.getItemType()
+        item: monitor.getItem(),
     };
 }
 
@@ -27,66 +28,59 @@ function collect(connect, monitor) {
 
 class ProposePopup extends Component {
 
-    constructor() {
-        super();
-
-        this.state = {
-            cards: []
-        }
+    constructor(props) {
+        super(props);
+    
     }
 
-    render() {
 
-        const { isOver, connectDropTarget, x, y } = this.props;
+    showMyCard() {
+        const margin = {
+            marginRight: '1rem'
+        }
+        let myOwnKard= this.props.myKards;
+        let joesOwnKard= this.props.joeKards;
+        return(
+            <div className="show-card"> 
+                    <Card color={myOwnKard.color} shape={myOwnKard.shape} effect={myOwnKard.effect} style={margin}/>
+                    <Card color={joesOwnKard.color} shape={joesOwnKard.shape} effect={joesOwnKard.effect}/>
+            </div>
+        )
+    }
+
+
+
+    render() {
+        console.log('my trade props', this.props);
+
+        const { connectDropTarget } = this.props;
 
         const backgroundStyle = {
             position:'absolute',
             top: '8rem',
-            left: '4rem',
+            left: '1rem',
             padding: '2rem',
-            backgroundColor: 'white',
+            background:'white',
             width: '15rem',
-            height: '20rem'
+            height: '20rem',
+            display: 'flex',
+            alignItems: 'center'
         };
 
-        // const popupStyle = {
-        //     backgroundColor: 'white',
-        //     width:'1080px',
-        //     height: '1138px',
-        //     margin: '326px 0px',
-        //     marginLeft: '148px',
-        //     padding: '30px',
-        //     fontSize: '80px'
-
-        // };
-
-        const closebtnStyle = {
-            outline: 'none',
-            backgroundColor: 'transparent',
-            color: 'grey',
-            border: 'none',
-            fontSize: '1rem',
-        };
         return connectDropTarget(
-            <div className="propose-background" style={backgroundStyle} >
-                {isOver &&  <div style= {{ backgroundColor:'aliceblue', height: '100%',
-            width: '100%'}}/>}
-                
+            <div className="propose-background" style={backgroundStyle} kard={this.props.myKards} card={this.props.joeKards}>
+              {this.showMyCard()}
+                <button className="button"> Propose Trade </button>
             </div>
-
-            
         )
 
     }
 
 }
 
-ProposePopup.propTypes = {
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    connectDropTarget: PropTypes.func.isRequired,
-    isOver: PropTypes.bool.isRequired
-};
+// ProposePopup.propTypes = {
+//     connectDropTarget: PropTypes.func.isRequired
+// };
 
 
-export default DropTarget(ItemTypes.CARD, cardTarget, collect) (ProposePopup); 
+export default DropTarget(ItemTypes.CARD, targetSource, collect) (ProposePopup); 

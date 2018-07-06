@@ -9,35 +9,43 @@ import { DragSource } from 'react-dnd';
 
 const cardSource = {
 
-beginDrag(props) {
-    console.log('cardId', props);
-   
-    return {cardId: props}
+    beginDrag(props) {
+        console.log('cardId', props);
+    
+        return {props}
+    },
 
- 
+    endDrag(props, monitor, component) {
+        if(!monitor.didDrop()) {
+            return;
+        }
+        console.log("HERE", props);
+        return props.tradeCards(props);
+    }
 }
-};
+
 
 function collect(connect, monitor) {
     return {
         connectDragSource: connect.dragSource(),
+        connectDragPreview: connect.dragPreview(),
         isDragging: monitor.isDragging()
-    };
+    }
 }
 
 class Card extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
+        console.log(this.props);
     }
-
-
 
    renderCard() {
 
     const circle = {
         backgroundColor: 'white',
-        width: '60px',
-        height: '60px',
+        width: '2rem',
+        height: '2rem',
         borderRadius: '50%'
         }
     
@@ -45,29 +53,33 @@ class Card extends Component {
         color: 'transparent',
         width: '0',
         height: '0',
-        borderRight: '40px solid transparent',
-        borderLeft: '40px solid transparent',
-        borderBottom: '80px solid white'
+        borderRight: '1rem solid transparent',
+        borderLeft: '1rem solid transparent',
+        borderBottom: '2rem solid white'
     }
 
     const square = {
         backgroundColor: 'white',
-        width: '60px',
-        height: '60px'
+        width: '2rem',
+        height: '2rem'
     }
 
     const star =
     {
         backgroundImage: `url(${Star})`,
-        width: '80px',
-        height: '80px'
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        width: '12rem',
+        height: '12rem'
         
     }
 
     const diamond = {
         backgroundImage: `url(${Diamond})`,
-        width: '80px',
-        height: '80px'
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        width: '12rem',
+        height: '12rem'
     }
 
         const color= ["#202CE0", "#51C2FA", "#F99243", "#EE34A8", "#00CD79"];
@@ -76,8 +88,8 @@ class Card extends Component {
 
     
         const styles = {
-        width: '6rem',
-        height: '8rem',
+        width: '4rem',
+        height: '6rem',
         borderRadius: '12px',
         backgroundColor: color[this.props.color],
         marginBottom: '20px'
@@ -91,13 +103,13 @@ class Card extends Component {
         )
     }
     render() {
-        const {connectDragSource, isDragging } = this.props;
+        console.log("render props", this.props);
+        const {connectDragSource, isDragging} = this.props;
+        const opacity = isDragging ? 0 : 1;
    
         
         return connectDragSource( 
-            <div style={{
-                opacity: isDragging ? 0.5 : 1,
-                cursor: 'move'}}>
+            <div style={{ opacity }}>
                 {this.renderCard()}
             </div>
             // <div className={`card ${color}`}>
@@ -107,9 +119,9 @@ class Card extends Component {
     }
 }
 
-Card.propTypes = {
-    connectDragSource: PropTypes.func.isRequired,
-    isDragging: PropTypes.bool.isRequired
-};
+// Card.propTypes = {
+//     connectDragSource: PropTypes.func.isRequired,
+//     isDragging: PropTypes.bool.isRequired
+// };
 
 export default DragSource(ItemTypes.CARD, cardSource, collect) (Card);

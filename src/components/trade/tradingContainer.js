@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './tradingContainer.scss';
 import _ from 'lodash';
 import Card from './../card/Card';
-import TradeBtn from './../buttons/TradeBtn';
 import './../styles/text.scss';
 
 class tradingContainer extends Component {
@@ -19,7 +18,7 @@ class tradingContainer extends Component {
             let keysArray = Object.keys(Kards) // way to use an object in a map function. 
             let cardsArray = keysArray.map((key) => {
                 let Kard = Kards[key]; // this grabs the object from the key. 
-                let card = (<Card color={Kard.color} shape={Kard.shape} effect={Kard.effect}/>)
+                let card = (<Card id= {Kard.id} color={Kard.color} shape={Kard.shape} effect={Kard.effect} tradeCards={(card)=> this.props.trade(card)}/>)
                 return card // returns card component in map function
             });
             return cardsArray // returns cardArray in the generateCards function so as it shows up in browser.
@@ -52,7 +51,6 @@ class tradingContainer extends Component {
                         {this.generateCards()}
                     </div>
                 {/* <div className="tradeButton"> */}
-                <TradeBtn/>
                 {/* </div> */}
              
              </div> 
