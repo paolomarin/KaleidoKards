@@ -1,6 +1,6 @@
 const fs = require('fs');
 var KaleidoKards = require('./utils/kaleidoKards.js');
-var KaleidoConfig = require('./utils/KaleidoConfig.js');
+var KaleidoConfig = require('./utils/kaleidoConfig.js');
 
 // A class for controlling the state of the application
 class Controller {
