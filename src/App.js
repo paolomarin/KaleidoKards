@@ -26,13 +26,8 @@ class App extends Component {
     }
 
     collectCards(card) {
-        console.log('kard',card);
         let cardId= parseInt(card.id);
-       console.log('this card has been dropped');
       
-       console.log(this.state.myKards);
-        console.log('my Cards', this.state.myKards.kards[cardId]);
-        console.log('joes Cards', this.state.joeKards.kards[cardId]);
 
         if(this.state.myKards.kards[cardId]) {
             this.setState({
@@ -42,7 +37,6 @@ class App extends Component {
             this.setState(prevState=> {
                 let myCardsNow= prevState.myKards;
                 delete this.state.myKards.kards[cardId];
-                console.log("removed from my cards");
                 return this.state.myKards;
             })
 
@@ -55,22 +49,21 @@ class App extends Component {
             this.setState(prevState=> {
                 let joeCardsNow= prevState.joeKards;
                 delete this.state.joeKards.kards[cardId];
-                console.log("removed from my cards");
                 return this.state.joeKards;
             })
         }
-        console.log('put into trading container', this.state.myProposedCard);
-        console.log('joes card put into trading container', this.state.joeProposedCard);
-        console.log('this has been removed from its state', this.state.joeKards.kards[cardId]);
-        console.log('this has been removed from my cards state');
      
      }
 
-    //  showCards() {
-    //      if(this.state.myProposedCard) {
-    //        console.log('color', this.state.myProposedCard.color);
-    //      }
-    //  }
+  emptyTradeCards() {
+      this.setState({
+        myProposedCard: [],
+        joeProposedCard:[]
+      })
+    
+  }
+
+
 
 
     
@@ -104,7 +97,10 @@ class App extends Component {
           <div>
             <div>
             <Header/>
-            <ProposePopup myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard}/>
+            <ProposePopup 
+            myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
+            empty={this.emptyTradeCards.bind(this)}
+            />
               <div className="square-container">
                 <div className="other-players-cards">
                   <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>

@@ -10,7 +10,6 @@ import { DragSource } from 'react-dnd';
 const cardSource = {
 
     beginDrag(props) {
-        console.log('cardId', props);
     
         return {props}
     },
@@ -19,7 +18,6 @@ const cardSource = {
         if(!monitor.didDrop()) {
             return;
         }
-        console.log("HERE", props);
         return props.tradeCards(props);
     }
 }
@@ -36,8 +34,6 @@ function collect(connect, monitor) {
 class Card extends Component {
     constructor(props) {
         super(props);
-
-        console.log(this.props);
     }
 
    renderCard() {
@@ -103,7 +99,7 @@ class Card extends Component {
         )
     }
     render() {
-        console.log("render props", this.props);
+
         const {connectDragSource, isDragging} = this.props;
         const opacity = isDragging ? 0 : 1;
    
@@ -112,16 +108,8 @@ class Card extends Component {
             <div style={{ opacity }}>
                 {this.renderCard()}
             </div>
-            // <div className={`card ${color}`}>
-            //     <div className={`${shape}`}></div> 
-            // </div> 
         )
     }
 }
-
-// Card.propTypes = {
-//     connectDragSource: PropTypes.func.isRequired,
-//     isDragging: PropTypes.bool.isRequired
-// };
 
 export default DragSource(ItemTypes.CARD, cardSource, collect) (Card);
