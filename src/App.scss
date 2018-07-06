@@ -35,7 +35,7 @@ h2 {
     align-items: center;
     padding-top:2rem;
     padding-bottom: 2.1rem;
-    padding-left: .4rem;
+    padding-left: 20rem
    
 }
 
@@ -61,6 +61,7 @@ h2 {
     height: 7rem;
     display: flex;
     flex-direction:column;
+    font-weight: bold;
     background-color:white;
     margin-bottom:1rem;
 }
@@ -79,5 +80,5 @@ h2 {
 }
 
 .text-style {
-    font-size:.9rem;
+    font-size:1.5rem;
 }

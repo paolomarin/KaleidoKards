@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
 
@@ -53,7 +54,8 @@ module.exports = {
         template: "./webpack-demo/template.html"}),
         new ExtractTextPlugin({
             filename: '[name].style.css'
-        })
+        }),
+        new FaviconsWebpackPlugin('./favicon.ico')
        
     ],
     node: {

@@ -4,8 +4,9 @@ import './../styles/text.scss';
 import './MyCardsContainer.scss';
 
 class MyCardsContainer extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
     }
     generateCards() {
         // The data is structured:
@@ -20,7 +21,7 @@ class MyCardsContainer extends Component {
             let keysArray = Object.keys(Kards) // way to use an object in a map function. 
             let cardsArray = keysArray.map((key) => {
                 let Kard = Kards[key]; // this grabs the object from the key. 
-                let card = (<Card id={Kard.id} color={Kard.color} shape={Kard.shape} effect={Kard.effect}/>)
+                let card = (<Card kard={Kard} id={Kard.id} color={Kard.color} shape={Kard.shape} effect={Kard.effect} tradeCards={(card)=> this.props.trade(card)}/>)
                 return card // returns card component in map function
             });
             return cardsArray // returns cardArray in the generateCards function so as it shows up in browser.

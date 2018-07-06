@@ -1,4 +1,4 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.24;
 
 
 contract KaleidoKards {
@@ -236,7 +236,7 @@ contract KaleidoKards {
      */
     function random(uint256 seed, uint8 max) internal pure returns (uint256) {
         // by default this will return a number between [0, max-1]
-        return uint256(keccak256(seed))%uint256(max);
+        return uint256(keccak256(abi.encodePacked(seed)))%uint256(max);
     }
 
 }
