@@ -7,7 +7,6 @@ class MyCardsContainer extends Component {
     constructor(props) {
         super(props);
 
-        console.log('cards props', this.props);
     }
     generateCards() {
         // The data is structured:

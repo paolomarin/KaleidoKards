@@ -24,9 +24,9 @@ class tradingContainer extends Component {
             return cardsArray // returns cardArray in the generateCards function so as it shows up in browser.
 }
 
-    else{
-       console.log("error");
-    }
+    // else{
+    //  console.log("error");
+    // }
 }
 
 

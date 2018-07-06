@@ -126,13 +126,11 @@ class ProposePopup extends Component {
     acceptorDeny() {
         let randomFunction = this.random();
         if(randomFunction === 1) {
-            console.log('Trade denied');
             alert('Trade denied');
             //return cards to their former spots
         }
 
         if(randomFunction === 2) {
-            console.log('Trade accepted');
             this.trade();
             alert('Trade accepted');
             //trade function commences 
