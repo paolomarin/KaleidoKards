@@ -6,6 +6,7 @@ class kaleidoConfig {
     // Declare some constants that we need to create kaleido platform
     constructor() {
         //TODO: determine locale?? console-eu/ap
+        this.baseUrl = "https://console-ap.kaleido.io/api/v1";
 
         this.consortiumName = "KaleidoKards-SampleApp";
         this.consortiumDescription = "Sample application for Blockchain 101";
@@ -47,11 +48,13 @@ class kaleidoConfig {
     // Should only be called if a keyfile for an existing KaleidoKards environment does not exist
     launch(apiKey) {
 
-        this.baseUrl = "https://console.kaleido.io/api/v1";
-        this.headers = {"Authorization":"Bearer " + apiKey, "Content-Type":"application/json"};
-        // TODO: check api key length, maybe trim it
-        console.log("Creating Consortia");
-        return this.createConsortia().then((response) => {
+        return this.getJWTToken(apiKey).then((response) => {
+            let JWTtoken = JSON.parse(response).token;
+
+            this.headers = {"Authorization":"Bearer " + JWTtoken, "Content-Type":"application/json"};
+            // TODO: check api key length, maybe trim it
+            console.log("Creating Consortia");
+            return this.createConsortia().then((response) => {
             let jsonResponse = JSON.parse(response);
             let consortium = jsonResponse._id;
             console.log("Created consortium with ID: " + consortium);
@@ -153,6 +156,19 @@ class kaleidoConfig {
                     });
             });
         });
+        })
+    }
+
+    // Gets a JWT token for auth to use instead of the API key for every call
+    // Internally, we swap the API key for a JWT token for internal calls and this
+    // can cause longer wait times if every call uses an API key instead of a JWT token
+    // Returns a promise object containing a JWT token good for an hour
+    getJWTToken(apiKey){
+        let headers = {"Authorization":"Bearer " + apiKey, "Content-Type":"application/json"};
+        let body = JSON.stringify({apikey: apiKey});
+        let uri = this.baseUrl + "/authtoken";
+        let options = {method: 'POST', uri: uri, headers: headers, body: body};
+        return request(options);
     }
 
     // Creates a new Consortium on Kaleido

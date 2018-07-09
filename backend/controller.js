@@ -93,7 +93,7 @@ class Controller {
                 console.log("Here's an error ", error);
 
                 response.status = 500;
-                response.body.error = error;
+                response.body.error = JSON.stringify(error);
                 return response;
             });
         }).catch((error) => {
