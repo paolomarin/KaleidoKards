@@ -11,8 +11,8 @@ class KaleidoKards {
 
         this.targetGasLimit = 4712388; // hardcoded from targetGasLimit set when creating chain
         // TODO: change these after development
-        this.standardPackCost = '1'; // in ether
-        this.platinumPackCost = '1'; // in ether
+        this.standardPackCost = '25'; // in ether
+        this.platinumPackCost = '50'; // in ether
     }
 
     // Deploy the KaleidoKards Smart Contract
