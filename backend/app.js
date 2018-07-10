@@ -22,6 +22,12 @@ app.post('/launch', (req, res) => {
     });
 });
 
+app.get('/launch/status', (req, res) => {
+    // TODO: make new controller function for getting status
+    let response = controller.getLaunchStatus();
+    res.status(response.status).send(response.body);
+});
+
 // POST call with packType in url and purchaser set in body
 // Returns the tx receipt from the smart contract
 app.post('/purchase/:packType', (req, res) => {

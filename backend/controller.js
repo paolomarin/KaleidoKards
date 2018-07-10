@@ -2,6 +2,10 @@ const fs = require('fs');
 var KaleidoKards = require('./utils/kaleidoKards.js');
 var KaleidoConfig = require('./utils/kaleidoConfig.js');
 
+const CREATING = "Creating Kaleido Platform";
+const DEPLOYING = "Deploying Solidity Contract";
+const READY = "Ready";
+
 // A class for controlling the state of the application
 class Controller {
 
@@ -9,7 +13,8 @@ class Controller {
         this.kaleidoKardsInstance = {};
         this.kaleidoConfigInstance = new KaleidoConfig();
         this.previousInstance = false;
-        this.contractAddress = '';
+        this.contractAddress = "";
+        this.launchStatus = "";
     }
 
     // Checks for a keyfile from a previous instance
@@ -48,11 +53,8 @@ class Controller {
         }
     }
 
-    // Launches a new Kaleido platform if there is no record of one previously
-    // Returns response object to send to frontend
-    async launchAppEnv(apiKey) {
+    async tempName(apiKey) {
         let response = {status: 400, body: {}};
-
         if (this.kaleidoKardsInstance && this.kaleidoKardsInstance.deployed) {
             response.status = 200;
             response.body.contractAddress = this.kaleidoKardsInstance.contractAddress;
@@ -72,47 +74,76 @@ class Controller {
 
         apiKey = apiKey.trim();
         if (!apiKey && !this.previousInstance) {
-            //TODO: this shouldnt be 500
             response.status = 400;
             response.body.error = "No Api Key in body";
             return response;
         }
 
-        // No record of previous instacne, let's make a new one
-        return await this.kaleidoConfigInstance.launch(apiKey).then(() => {
+        try {
+            let response = await this.kaleidoConfigInstance.getJWTToken(apiKey);
+            if (response && response.token) {
+                this.kaleidoConfigInstance.token = response.token;
+            }
+        } catch (error) {
+            console.log(error);
+            response.body.error = JSON.stringify(error);
+        }
+
+        // TODO: get JWT token. and create consortia first?
+        // No previous instance and api key seems OK lets kick off the env creation
+        console.log("Calling Launchappenv");
+        this.launchAppEnv();
+        console.log("after calling launch");
+        response.status = 202;
+        return response;
+    }
+
+    // Launches a new Kaleido platform if there is no record of one previously
+    // Returns response object to send to frontend
+    async launchAppEnv() {
+        console.log("inside launch");
+
+        this.launchStatus = CREATING;
+        // No record of previous instance, let's make a new one
+        return await this.kaleidoConfigInstance.launch().then(() => {
             this.kaleidoKardsInstance = new KaleidoKards();
+            this.launchStatus = DEPLOYING;
             return this.kaleidoKardsInstance.deploy().then(() => {
                 this.kaleidoConfigInstance.contractAddress = this.kaleidoKardsInstance.contractAddress;
                 this.contractAddress = this.kaleidoConfigInstance.contractAddress;
                 this.kaleidoConfigInstance.writeKeyFile();
-
-                response.status = 200;
-                response.body.contractAddress = this.kaleidoKardsInstance.contractAddress;
-                return response;
+                this.launchStatus = READY;
             }).catch((error) => {
                 console.log("Here's an error ", error);
 
-                response.status = 500;
-                response.body.error = JSON.stringify(error);
-                return response;
+                this.launchStatus = "Error during contract deployment: " + JSON.stringify(error);
             });
         }).catch((error) => {
-            response.status = 500;
             console.log("Here's an error from launching the env: ", error);
 
             if (error.statusCode === 401) {
-                response.status = error.statusCode;
                 error = error.error;
             } else if (error.statusCode) {
-                // if the error contains a status code than this is an error
+                // if the error contains a status code then this is an error
                 // from the kaleido api, otherwise its an internal server error
-                response.status = error.statusCode;
                 error = JSON.parse(error.error).errorMessage;
             }
 
-            response.body.error = error;
-            return response;
+            this.launchStatus = "Error during platform creation: " + JSON.stringify(error);
         });
+    }
+
+    getLaunchStatus() {
+        let response = {status: 200, body: {}};
+
+        if (this.launchStatus !== CREATING || this.launchStatus !== DEPLOYING || this.launchStatus !== READY) {
+            response.status = 500;
+            response.body.error = this.launchStatus;
+        } else {
+            response.body.status = this.launchStatus;
+        }
+
+        return response;
     }
 
     // Handle's calling the right functions in the contract wrapper to
