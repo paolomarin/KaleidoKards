@@ -18,7 +18,7 @@ contract KaleidoKards {
     // TODO: change this after development
     // Prices for buying a pack of Kards from the contract
     uint256 constant public standardPackPrice = 25 ether;
-    uint256 constant public platinumPackPrice = 100 ether;
+    uint256 constant public platinumPackPrice = 50 ether;
 
     // Number of Kards in a pack
     uint8 constant public packSize = 3;
