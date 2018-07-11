@@ -163,7 +163,7 @@ class kaleidoConfig {
     // Internally, we swap the API key for a JWT token for internal calls and this
     // can cause longer wait times if every call uses an API key instead of a JWT token
     // Returns a promise object containing a JWT token good for an hour
-    getJWTToken(apiKey){git chec
+    getJWTToken(apiKey){
         let headers = {"Authorization":"Bearer " + apiKey, "Content-Type":"application/json"};
         let body = JSON.stringify({apikey: apiKey});
         let uri = this.baseUrl + "/authtoken";
