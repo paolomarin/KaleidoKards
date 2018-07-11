@@ -12,8 +12,8 @@ class kaleidoConfig {
         this.consortiumDescription = "Sample application for Blockchain 101";
 
         this.environmentName = "KaleidoKards Environment";
-        this.environmentProvider = "geth";
-        this.environmentConsensusType = "poa";
+        this.environmentProvider = "quorum";
+        this.environmentConsensusType = "raft";
 
         this.ethAmount = "100";
 
@@ -31,7 +31,7 @@ class kaleidoConfig {
 
         this.userNodeUrls = {};
         this.userNodeUser = "";
-        this.userNodePass ="";
+        this.userNodePass = "";
 
         this.joeNodeUrls = {};
         this.joeNodeUser = "";
@@ -163,7 +163,7 @@ class kaleidoConfig {
     // Internally, we swap the API key for a JWT token for internal calls and this
     // can cause longer wait times if every call uses an API key instead of a JWT token
     // Returns a promise object containing a JWT token good for an hour
-    getJWTToken(apiKey){
+    getJWTToken(apiKey){git chec
         let headers = {"Authorization":"Bearer " + apiKey, "Content-Type":"application/json"};
         let body = JSON.stringify({apikey: apiKey});
         let uri = this.baseUrl + "/authtoken";

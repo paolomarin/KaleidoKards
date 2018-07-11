@@ -182,8 +182,9 @@ class Controller {
                 // function on the contract returns an error.
                 // Usually meaning that the sender does not own the kard they
                 // are trying to transfer.
+                console.log(error);
                 response.status = 500;
-                response.body.error = error;
+                response.body.error = JSON.stringify(error);
                 resolve(response);
             });
         })

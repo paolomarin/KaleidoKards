@@ -85,7 +85,7 @@ class KaleidoKards {
         console.log("Transferring kard: (" + kardId + "), from: " + fromNode + ", to: " + toNode);
         return this.getAddress(toNode).then((toAddress) => {
             return this.getAddress(fromNode).then((fromAddress) => {
-                return this.getLastBlock(fromNode).then(lastBlock => {
+                // return this.getLastBlock(fromNode).then(lastBlock => {
                     console.log("Transferring kard: (" + kardId + "), from: " + fromAddress + ", to: " + toAddress);
                     let config = Promise.all(this.getConfig(fromNode));
                     return config.then( response => {
@@ -95,9 +95,9 @@ class KaleidoKards {
                         // This relies on specifying the from address so that the node we're
                         // talking to can check that it owns the address and sign the tx
                         console.log("Calling transfer function on solidity contract");
-                        return contract.methods.transfer(toAddress, kardId).send({ from: fromAddress, gas: lastBlock.gasLimit });
+                        return contract.methods.transfer(toAddress, kardId).send({ from: fromAddress, gas: this.targetGasLimit });
                     });
-                })
+                // })
             })
         });
     }
