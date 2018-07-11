@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
 import './Launch.scss';
-import LoaderLarge from './components/loader/LoaderLarge';
+require("babel-polyfill");
 
 class Launch extends Component {
 
     constructor(props) {
         super(props);
         this.state={
-            apiKey: '',
-            loaderVisible:false
+            apiKey: ''
         };
     }
 
- 
-   loader() {
-        this.setState({
-            loaderVisible: !this.state.loaderVisible
-        })
+    goToDashboard() {
+        this.props.history.push('/app');
     }
     
     clickLaunchBtn() {
-        // TODO: play video while launch is happening
-        //show loader here
-        this.loader();
         window.fetch("/launch", {
             body: JSON.stringify({apiKey: this.state.apiKey}),
             method: "POST",
@@ -31,27 +24,57 @@ class Launch extends Component {
             }
         }).then(results => {
             return results.json();
-        }).then(resultBody => {
+        }).then(async (resultBody) => {
+            // TODO: play video here
+            let status = "";
+            let count = 0; // counter to prevent infinite loop
+            while (count < 30 && status !== "Ready") {
+                await this.pollLaunchStatus().then(async (response) => {
+                    console.log(response);
+                    if (response.status) {
+                        status = response.status;
+                        if (status === "Ready") {
+                            return;
+                        }
+                        await new Promise((resolve) => setTimeout(resolve, 3000));
+                    }
+                }).catch((error) => {
+                    //TODO: handle error here
+                    console.log("Error while polling");
+                    console.log(error);
+                });
+
+                count++;
+            }
+            // TODO: make this a function to call after video or on a button
+            this.goToDashboard();
+
             // right now launch only returns the contract address if the
             // env creation and deploy were successful
-            if (resultBody.contractAddress && resultBody.contractAddress !== "") {
-                //not visible
-                this.loader();
-                this.props.history.push('/app');
-                console.log(resultBody.contractAddress);
-            } else {
-                // contract address is empty so we need to do something here
-                // Highly unlikely edge case but need to discuss handling
-                this.loader();
-                alert("There was an error, please restart the app");
-                console.log("There was an error, please restart the app");
-            }
+            // if (resultBody.contractAddress && resultBody.contractAddress !== "") {
+            //
+            //     this.props.history.push('/app');
+            //     console.log(resultBody.contractAddress);
+            // } else {
+            //     // contract address is empty so we need to do something here
+            //     // Highly unlikely edge case but need to discuss handling
+            //     alert("There was an error, please restart the app");
+            //     console.log("There was an error, please restart the app");
+            // }
 
         }).catch((error) => {
             console.log("errorMESSAGE");
             console.log(error);
         });
 
+    }
+
+    async pollLaunchStatus() {
+        return await window.fetch("/launch/status", {
+            method: "GET"
+        }).then(async (results) => {
+            return await results.json();
+        })
     }
 
     updateApiKey(e) {
@@ -68,7 +91,6 @@ class Launch extends Component {
                         <input onChange={this.updateApiKey.bind(this)} type="text" placeholder="Paste Api key here"/>
                     </span>
                     <button className="launch-button" onClick={this.clickLaunchBtn.bind(this)}>Launch</button>
-                    <LoaderLarge onShow={this.state.visible}/>
                 </div>
             </div>
         );

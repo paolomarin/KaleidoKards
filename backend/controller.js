@@ -93,8 +93,6 @@ class Controller {
             return response;
         }
 
-        // TODO: get JWT token. and create consortia first?
-
         // No previous instance and api key seems OK lets kick off the env creation
         console.log("Calling Launchappenv");
         this.launchAppEnv();

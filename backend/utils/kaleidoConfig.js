@@ -48,8 +48,8 @@ class kaleidoConfig {
     // Flow is: Create Consortia > Environment > Memberships > Nodes > Generate AppCreds > Fund Accounts
     // Should only be called if a keyfile for an existing KaleidoKards environment does not exist
     launch() {
+        // Depends on a valid JWT token being set on this.token by calling getJWTtoken and setting field
         this.headers = {"Authorization":"Bearer " + this.token, "Content-Type":"application/json"};
-        // TODO: check api key length, maybe trim it
         console.log("Creating Consortia");
         return this.createConsortia().then((response) => {
         let jsonResponse = JSON.parse(response);
@@ -156,7 +156,7 @@ class kaleidoConfig {
     }
 
     // Gets a JWT token for auth to use instead of the API key for every call
-    // Internally, we swap the API key for a JWT token for internal calls and this
+    // Internally, we swap the API key for a JWT token and this
     // can cause longer wait times if every call uses an API key instead of a JWT token
     // Returns a promise object containing a JWT token good for an hour
     getJWTToken(apiKey){

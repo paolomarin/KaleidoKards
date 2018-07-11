@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.5.0",
+    "babel-polyfill": "^6.26.0",
     "fs": "0.0.1-security",
     "hoek": "^4.2.1",
     "lodash": "^4.17.10",
