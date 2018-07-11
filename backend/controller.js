@@ -53,11 +53,12 @@ class Controller {
         }
     }
 
-    async tempName(apiKey) {
+    async startLaunch(apiKey) {
         let response = {status: 400, body: {}};
         if (this.kaleidoKardsInstance && this.kaleidoKardsInstance.deployed) {
             response.status = 200;
             response.body.contractAddress = this.kaleidoKardsInstance.contractAddress;
+            this.launchStatus = READY;
             return response;
         }
 
@@ -68,6 +69,7 @@ class Controller {
             return await this.kaleidoKardsInstance.deploy().then((contractAddress) => {
                 response.status = 200;
                 response.body.contractAddress = contractAddress;
+                this.launchStatus = READY;
                 return response;
             });
         }
@@ -81,15 +83,18 @@ class Controller {
 
         try {
             let response = await this.kaleidoConfigInstance.getJWTToken(apiKey);
-            if (response && response.token) {
-                this.kaleidoConfigInstance.token = response.token;
+            let parsedResponse = JSON.parse(response);
+            if (parsedResponse && parsedResponse.token) {
+                this.kaleidoConfigInstance.token = parsedResponse.token;
             }
         } catch (error) {
             console.log(error);
             response.body.error = JSON.stringify(error);
+            return response;
         }
 
         // TODO: get JWT token. and create consortia first?
+
         // No previous instance and api key seems OK lets kick off the env creation
         console.log("Calling Launchappenv");
         this.launchAppEnv();
@@ -106,6 +111,7 @@ class Controller {
         this.launchStatus = CREATING;
         // No record of previous instance, let's make a new one
         return await this.kaleidoConfigInstance.launch().then(() => {
+            console.log("after calling launch");
             this.kaleidoKardsInstance = new KaleidoKards();
             this.launchStatus = DEPLOYING;
             return this.kaleidoKardsInstance.deploy().then(() => {
@@ -136,7 +142,7 @@ class Controller {
     getLaunchStatus() {
         let response = {status: 200, body: {}};
 
-        if (this.launchStatus !== CREATING || this.launchStatus !== DEPLOYING || this.launchStatus !== READY) {
+        if (this.launchStatus !== CREATING && this.launchStatus !== DEPLOYING && this.launchStatus !== READY) {
             response.status = 500;
             response.body.error = this.launchStatus;
         } else {
