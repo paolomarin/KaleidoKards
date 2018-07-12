@@ -37,12 +37,26 @@ function getWeb3(node) {
         }
         // URL format "https://<username>:<password>@xxxxxxxxxx-xxxxxxxxxx-rpc.us-east-2.kaleido.io"
         let url = 'https://' + credentials.username + ':' + credentials.password + '@'
-            + credentials.urls.rpc.substring(8); // substring removes "https://"
+            + credentials.urls.wss.substring(6); // substring removes "https://"
 
         // Set the httpProvider with the rpc endpoint
         // for websocket (wss) use WebsocketProvider
-        let provider = new Web3.providers.HttpProvider(url);
+        let provider = new Web3.providers.WebsocketProvider(url);
         let web3 = new Web3(provider);
+
+        provider.on('error', e => console.log('WS Error', e));
+        provider.on('end', e => {
+            console.log('WS closed');
+            console.log('Attempting to reconnect...');
+            provider = new Web3.providers.WebsocketProvider(url);
+
+            provider.on('connect', function () {
+                console.log('WSS Reconnected');
+            });
+
+            web3.setProvider(provider);
+        });
+
         resolve(web3);
     });
 }
