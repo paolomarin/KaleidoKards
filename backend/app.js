@@ -17,9 +17,15 @@ app.use(function(req, res, next) {
 // Only returns contract address for now
 // NOTE: this is a long call if setting up new kaleido platform
 app.post('/launch', (req, res) => {
-    controller.launchAppEnv(req.body.apiKey).then((response) => {
+    controller.startLaunch(req.body.apiKey).then((response) => {
         res.status(response.status).send(response.body);
     });
+});
+
+app.get('/launch/status', (req, res) => {
+    // TODO: make new controller function for getting status
+    let response = controller.getLaunchStatus();
+    res.status(response.status).send(response.body);
 });
 
 // POST call with packType in url and purchaser set in body

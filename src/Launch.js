@@ -3,29 +3,27 @@ import './Launch.scss';
 import LoaderLarge from './components/loader/LoaderLarge';
 import LaunchDesign from './components/launch/LaunchDesign';
 import Region from './components/regions/Region.js';
+require("babel-polyfill");
 
+let STATUS = "";
+let READY = "Ready";
 
 class Launch extends Component {
 
     constructor(props) {
         super(props);
         this.state={
-            apiKey: '',
-            loaderVisible:false
+            apiKey: ''
         };
     }
 
- 
-   loader() {
-        this.setState({
-            loaderVisible: !this.state.loaderVisible
-        })
+    goToDashboard() {
+        if (STATUS === READY) {
+            this.props.history.push('/app');
+        }
     }
     
     clickLaunchBtn() {
-        // TODO: play video while launch is happening
-        //show loader here
-        this.loader();
         window.fetch("/launch", {
             body: JSON.stringify({apiKey: this.state.apiKey}),
             method: "POST",
@@ -34,27 +32,48 @@ class Launch extends Component {
             }
         }).then(results => {
             return results.json();
-        }).then(resultBody => {
-            // right now launch only returns the contract address if the
-            // env creation and deploy were successful
-            if (resultBody.contractAddress && resultBody.contractAddress !== "") {
-                //not visible
-                this.loader();
-                this.props.history.push('/app');
-                console.log(resultBody.contractAddress);
-            } else {
-                // contract address is empty so we need to do something here
-                // Highly unlikely edge case but need to discuss handling
-                this.loader();
-                alert("There was an error, please restart the app");
-                console.log("There was an error, please restart the app");
+        }).then(async (resultBody) => {
+            if (resultBody.error) {
+                throw new Error(resultBody.error.toString())
             }
+            // TODO: show video here
+            // Successful response means that the backend is launching Kaleido Platform
+            // and deploying smart contract for Kards
+            let count = 0; // counter to prevent infinite loop
+            while (count < 30 && STATUS !== READY) {
+                await this.pollLaunchStatus().then(async (response) => {
+                    if (response.status) {
+                        // TODO: check if status changed and show/update something on ui
+                        STATUS = response.status;
+                        if (STATUS === READY) {
+                            return;
+                        }
+                        await new Promise((resolve) => setTimeout(resolve, 3000));
+                    }
+                }).catch((error) => {
+                    //TODO: handle error here
+                    console.log("Error while polling");
+                    console.log("error: ", error);
+                });
+
+                count++;
+            }
+            // TODO: make this a function to call after video and/or on a button
+            this.goToDashboard();
 
         }).catch((error) => {
-            console.log("errorMESSAGE");
             console.log(error);
+            alert(error.message);
         });
 
+    }
+
+    async pollLaunchStatus() {
+        return await window.fetch("/launch/status", {
+            method: "GET"
+        }).then(async (results) => {
+            return await results.json();
+        })
     }
 
     updateApiKey(e) {

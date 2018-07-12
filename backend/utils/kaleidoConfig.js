@@ -25,6 +25,7 @@ class kaleidoConfig {
         this.nodeJoe = "joe_node";
         this.nodeStore = "kard_store_node";
 
+        this.token = "";
         this.contractAddress = "";
 
         this.previousInstance = false;
@@ -46,121 +47,116 @@ class kaleidoConfig {
     // This may seem like a big and scary function but it's really just nested promises
     // Flow is: Create Consortia > Environment > Memberships > Nodes > Generate AppCreds > Fund Accounts
     // Should only be called if a keyfile for an existing KaleidoKards environment does not exist
-    launch(apiKey) {
-
-        return this.getJWTToken(apiKey).then((response) => {
-            let JWTtoken = JSON.parse(response).token;
-
-            this.headers = {"Authorization":"Bearer " + JWTtoken, "Content-Type":"application/json"};
-            // TODO: check api key length, maybe trim it
-            console.log("Creating Consortia");
-            return this.createConsortia().then((response) => {
+    launch() {
+        // Depends on a valid JWT token being set on this.token by calling getJWTtoken and setting field
+        this.headers = {"Authorization":"Bearer " + this.token, "Content-Type":"application/json"};
+        console.log("Creating Consortia");
+        return this.createConsortia().then((response) => {
+        let jsonResponse = JSON.parse(response);
+        let consortium = jsonResponse._id;
+        console.log("Created consortium with ID: " + consortium);
+        console.log("Creating Environment");
+        return this.createEnvironment(consortium).then((response) => {
             let jsonResponse = JSON.parse(response);
-            let consortium = jsonResponse._id;
-            console.log("Created consortium with ID: " + consortium);
-            console.log("Creating Environment");
-            return this.createEnvironment(consortium).then((response) => {
-                let jsonResponse = JSON.parse(response);
-                let environment = jsonResponse._id;
-                console.log("Created environment with ID: " + environment);
-                console.log("Creating Memberships");
-                // Create the 3 memberships at once
-                return Promise.all([
-                    this.createMembership(consortium, this.memberUser),
-                    this.createMembership(consortium, this.memberJoe),
-                    this.createMembership(consortium, this.memberStore)])
-                    .then((response) => {
-                        // Promise.all returns the responses for each call in an array
-                        // console.log(response);
-                        let userResponse  = JSON.parse(response[0]);
-                        let joeResponse   = JSON.parse(response[1]);
-                        let storeResponse = JSON.parse(response[2]);
+            let environment = jsonResponse._id;
+            console.log("Created environment with ID: " + environment);
+            console.log("Creating Memberships");
+            // Create the 3 memberships at once
+            return Promise.all([
+                this.createMembership(consortium, this.memberUser),
+                this.createMembership(consortium, this.memberJoe),
+                this.createMembership(consortium, this.memberStore)])
+                .then((response) => {
+                    // Promise.all returns the responses for each call in an array
+                    // console.log(response);
+                    let userResponse  = JSON.parse(response[0]);
+                    let joeResponse   = JSON.parse(response[1]);
+                    let storeResponse = JSON.parse(response[2]);
 
-                        let userMember = userResponse._id;
-                        let joeMember = joeResponse._id;
-                        let storeMember = storeResponse._id;
-                        console.log("Created all memberships");
-                        console.log("Creating nodes");
-                        // Create the 3 nodes at once
-                        return Promise.all([
-                            this.createNode(consortium, environment, userMember, this.nodeUser),
-                            this.createNode(consortium, environment, joeMember, this.nodeJoe),
-                            this.createNode(consortium, environment, storeMember, this.nodeStore)])
-                            .then((response) => {
-                                let userResponse  = JSON.parse(response[0]);
-                                let joeResponse   = JSON.parse(response[1]);
-                                let storeResponse = JSON.parse(response[2]);
+                    let userMember = userResponse._id;
+                    let joeMember = joeResponse._id;
+                    let storeMember = storeResponse._id;
+                    console.log("Created all memberships");
+                    console.log("Creating nodes");
+                    // Create the 3 nodes at once
+                    return Promise.all([
+                        this.createNode(consortium, environment, userMember, this.nodeUser),
+                        this.createNode(consortium, environment, joeMember, this.nodeJoe),
+                        this.createNode(consortium, environment, storeMember, this.nodeStore)])
+                        .then((response) => {
+                            let userResponse  = JSON.parse(response[0]);
+                            let joeResponse   = JSON.parse(response[1]);
+                            let storeResponse = JSON.parse(response[2]);
 
-                                //Wait on all the nodes to be initialized then get their status
-                                return Promise.all([
-                                    this.waitForNodeInitialization(consortium, environment, userResponse._id),
-                                    this.waitForNodeInitialization(consortium, environment, joeResponse._id),
-                                    this.waitForNodeInitialization(consortium, environment, storeResponse._id)])
-                                    .then((response) => {
-                                        let userNodeStatus  = response[0];
-                                        let joeNodeStatus   = response[1];
-                                        let storeNodeStatus = response[2];
+                            //Wait on all the nodes to be initialized then get their status
+                            return Promise.all([
+                                this.waitForNodeInitialization(consortium, environment, userResponse._id),
+                                this.waitForNodeInitialization(consortium, environment, joeResponse._id),
+                                this.waitForNodeInitialization(consortium, environment, storeResponse._id)])
+                                .then((response) => {
+                                    let userNodeStatus  = response[0];
+                                    let joeNodeStatus   = response[1];
+                                    let storeNodeStatus = response[2];
 
-                                        // Get the urls to communicate with the nodes
-                                        this.userNodeUrls  = userNodeStatus.urls;
-                                        this.joeNodeUrls   = joeNodeStatus.urls;
-                                        this.storeNodeUrls = storeNodeStatus.urls;
-                                        console.log("Created and Initialized Nodes");
-                                        console.log("Generating app credentials");
-                                        return Promise.all([
-                                            this.generateAppCredentials(consortium, environment, userMember),
-                                            this.generateAppCredentials(consortium, environment, joeMember),
-                                            this.generateAppCredentials(consortium, environment, storeMember)])
-                                            .then((response) => {
-                                                let userNodeStatus  = JSON.parse(response[0]);
-                                                let joeNodeStatus   = JSON.parse(response[1]);
-                                                let storeNodeStatus = JSON.parse(response[2]);
+                                    // Get the urls to communicate with the nodes
+                                    this.userNodeUrls  = userNodeStatus.urls;
+                                    this.joeNodeUrls   = joeNodeStatus.urls;
+                                    this.storeNodeUrls = storeNodeStatus.urls;
+                                    console.log("Created and Initialized Nodes");
+                                    console.log("Generating app credentials");
+                                    return Promise.all([
+                                        this.generateAppCredentials(consortium, environment, userMember),
+                                        this.generateAppCredentials(consortium, environment, joeMember),
+                                        this.generateAppCredentials(consortium, environment, storeMember)])
+                                        .then((response) => {
+                                            let userNodeStatus  = JSON.parse(response[0]);
+                                            let joeNodeStatus   = JSON.parse(response[1]);
+                                            let storeNodeStatus = JSON.parse(response[2]);
 
-                                                this.userNodeUser = userNodeStatus.username;
-                                                this.userNodePass = userNodeStatus.password;
+                                            this.userNodeUser = userNodeStatus.username;
+                                            this.userNodePass = userNodeStatus.password;
 
-                                                this.joeNodeUser = joeNodeStatus.username;
-                                                this.joeNodePass = joeNodeStatus.password;
+                                            this.joeNodeUser = joeNodeStatus.username;
+                                            this.joeNodePass = joeNodeStatus.password;
 
-                                                this.storeNodeUser = storeNodeStatus.username;
-                                                this.storeNodePass = storeNodeStatus.password;
-                                                console.log("App Credentials generated");
-                                                console.log("Getting Node account addresses for funding");
+                                            this.storeNodeUser = storeNodeStatus.username;
+                                            this.storeNodePass = storeNodeStatus.password;
+                                            console.log("App Credentials generated");
+                                            console.log("Getting Node account addresses for funding");
 
+                                            return Promise.all([
+                                                this.getNodeStatus(consortium, environment, userResponse._id),
+                                                this.getNodeStatus(consortium, environment, joeResponse._id)
+                                            ]).then((response) => {
+                                                userNodeStatus = JSON.parse(response[0]);
+                                                joeNodeStatus = JSON.parse(response[1]);
+
+                                                let userAddress = userNodeStatus.user_accounts[0];
+                                                let joeAddress = joeNodeStatus.user_accounts[0];
+                                                console.log("Received account addresses");
+                                                console.log("Funding accounts");
                                                 return Promise.all([
-                                                    this.getNodeStatus(consortium, environment, userResponse._id),
-                                                    this.getNodeStatus(consortium, environment, joeResponse._id)
-                                                ]).then((response) => {
-                                                    userNodeStatus = JSON.parse(response[0]);
-                                                    joeNodeStatus = JSON.parse(response[1]);
-
-                                                    let userAddress = userNodeStatus.user_accounts[0];
-                                                    let joeAddress = joeNodeStatus.user_accounts[0];
-                                                    console.log("Received account addresses");
-                                                    console.log("Funding accounts");
-                                                    return Promise.all([
-                                                        this.fundAccount(consortium, environment, userAddress),
-                                                        this.fundAccount(consortium, environment, joeAddress)])
-                                                        .then((receipts) => {
-                                                            // receipts is the transaction receipts from funding the accounts
-                                                            console.log("Accounts funded, Writing keyfile");
-                                                            // Finally, we have everything created and all the creds we need to make some magic
-                                                            // So lets write them to a file for later use
-                                                            this.writeKeyFile();
-                                                            return this;
-                                                        })
-                                                });
+                                                    this.fundAccount(consortium, environment, userAddress),
+                                                    this.fundAccount(consortium, environment, joeAddress)])
+                                                    .then((receipts) => {
+                                                        // receipts is the transaction receipts from funding the accounts
+                                                        console.log("Accounts funded, Writing keyfile");
+                                                        // Finally, we have everything created and all the creds we need to make some magic
+                                                        // So lets write them to a file for later use
+                                                        this.writeKeyFile();
+                                                        return this;
+                                                    })
                                             });
-                                    });
-                            });
-                    });
+                                        });
+                                });
+                        });
+                });
             });
         });
-        })
     }
 
     // Gets a JWT token for auth to use instead of the API key for every call
-    // Internally, we swap the API key for a JWT token for internal calls and this
+    // Internally, we swap the API key for a JWT token and this
     // can cause longer wait times if every call uses an API key instead of a JWT token
     // Returns a promise object containing a JWT token good for an hour
     getJWTToken(apiKey){
