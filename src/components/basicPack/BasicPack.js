@@ -8,17 +8,17 @@ class BasicPack extends Component {
     constructor(props) {
         super(props);
         
-        this.state = {
-            isOpen: false,
-            // check: false
-        };
+        // this.state = {
+        //     isOpen: false,
+        //     // check: false
+        // };
     }
 
-    popupModal() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
+    // popupModal() {
+    //     this.setState({
+    //         isOpen: !this.state.isOpen
+    //     });
+    // }
 
     // basicPack() {
 
@@ -33,14 +33,14 @@ class BasicPack extends Component {
     render() {
         return( 
             <div>
-                <div className="basic-pack" >
-                     <button className="popupbtn" onClick={this.popupModal.bind(this)}>   
+                <div className="basic-pack">
+                     <button className="popupbtn">   
                    <img src= {BasicPackImg} className="pack-of-cards" alt="Pack-of-Cards"/>
                      </button>
                 </div>
-                <Popup show={this.state.isOpen} onClose={this.popupModal.bind(this)}>
+                {/* <Popup show={this.state.isOpen} onClose={this.popupModal.bind(this)}>
                         A basic pack gives you 3 random cards.
-                </Popup>
+                </Popup> */}
                 
            </div>
         )

@@ -21,7 +21,8 @@ class App extends Component {
             myKards: {},
             joeKards: {},
             myProposedCard: [],
-            joeProposedCard:[]
+            joeProposedCard:[],
+            ether: ''
         };
         this.refreshKards();
     }
@@ -99,7 +100,8 @@ class App extends Component {
         }).then(results => {
             return results.json();
         }).then(resultBody => {
-            document.getElementById("etherAmount").innerText = resultBody.balance;
+            // document.getElementById("etherAmount").innerText = resultBody.balance;
+            this.setState({ether: resultBody.balance})
         });
     }
 
@@ -108,24 +110,30 @@ class App extends Component {
         return (
           <div>
             <div>
-            <Header/>
-            <ProposePopup 
-            myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
-            empty={this.emptyTradeCards.bind(this)}
-            />
+            <Header etherAmount={this.state.ether}/>
               <div className="square-container">
-                <div className="other-players-cards">
+                {/* <div className="other-players-cards">
+                <h2>Joe's Cards</h2>
                   <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>
-                </div>
-                <div className="column-container">
-                  <div className="ether">
-                  <p id="etherAmount" className="amount-of-ether"/>
-                  <p className="text-style">Ether</p>
-                  </div>
-                  <div className="my-cards">
-                    <h2 className="my-cards-title header-text">My Cards</h2>
+                </div> */}  
+                <div className="my-cards">
+                    <h2>My Cards</h2>
                        <MyCardsContainer data={this.state.myKards} trade={(card)=>this.collectCards(card)}/>
                   </div>
+
+                <div classname="middle-container">
+                    <ProposePopup 
+                        myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
+                        empty={this.emptyTradeCards.bind(this)}
+                    />
+                </div>
+                  {/* <div className="my-cards">
+                    <h2>My Cards</h2>
+                       <MyCardsContainer data={this.state.myKards} trade={(card)=>this.collectCards(card)}/>
+                  </div> */}
+                  <div className="other-players-cards">
+                <h2>Joe's Cards</h2>
+                  <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>
                 </div>
               </div>
             </div>

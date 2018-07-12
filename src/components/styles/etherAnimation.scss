@@ -1,0 +1,83 @@
+
+@mixin keyframes($animationName) {
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin animate($name, $duration, $iteration, $direction) {
+    animation-duration: $duration;
+    animation-iteration-count: $iteration;
+    animation-name: $name;
+    animation-direction: $direction;
+}
+
+@include keyframes(ether) {
+
+    0% {
+       color:linear-gradient(to bottom right, #51C2FA, #202CE0);
+    }
+    5% {
+       color: #202CE0;
+    }
+    10% {
+       color: linear-gradient(to top left, #202CE0, #51C2FA);
+    }
+    15% {
+       color: #51C2FA;
+    }
+    25% {
+       color:linear-gradient(to bottom right, #51C2FA, #202CE0);
+    }
+    30% {
+       color:  #202CE0;
+    }
+    35% {
+       color: linear-gradient(to top left, #202CE0, #51C2FA);
+    }
+    40% {
+       color:  #51C2FA;
+    }
+    45% {
+       color: linear-gradient(to bottom right, #51C2FA, #202CE0);
+    }
+    50% {
+       color: #202CE0;
+    }
+    55% {
+       color:linear-gradient(to top left, #202CE0, #51C2FA);
+    }
+    60% {
+       color:  #51C2FA;
+    }
+    65% {
+       color: linear-gradient(to bottom right, #51C2FA, #202CE0);
+    }
+    70% {
+       color: #202CE0;
+    }
+    75% {
+       color:linear-gradient(to top left, #202CE0, #51C2FA);
+    }
+    80% {
+       color: #51C2FA;
+    }
+    85% {
+       color: linear-gradient(to bottom right, #51C2FA, #202CE0);
+    }
+    90% {
+       color: #202CE0;
+    }
+    95% {
+       color:linear-gradient(to top left, #202CE0, #51C2FA);
+    }
+    100% {
+       color: #51C2FA;
+    }
+
+   
+}
+
+@mixin ether {
+    @include animate(ether, 160s, infinite, alternate);
+}

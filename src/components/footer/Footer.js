@@ -23,14 +23,15 @@ class Footer extends Component {
 
         let url = this.state.value;
 
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
+        
         this.setState({
-            value: event.target.value
+            value: event.currentTarget.dataset.id
         });
+        console.log(this.state.value);
     }
 
     handleSubmit(event) {
@@ -78,24 +79,46 @@ class Footer extends Component {
 
 
     render() {
+
         return( 
             <div className="footer">
-                <div className="footer-cards">
-                    <BasicPack/>
-                    <PlatinumPack/>
-                    <LoaderSmall show={this.state.visible}/>
-                </div>
+                <h2 className="store"> Store </h2>
+                {/* <div className="footer-cards">
+                    <BasicPack onClick={this.handleChange} value={standard}/>
+                    <PlatinumPack onClick={this.handleChange} value={platinum}/>
+                    {/* <LoaderSmall show={this.state.visible}/> 
+                </div> */}
                 <div className="selection">
                     <form className="form" onSubmit= {this.handleSubmit}>
-                        <select className="select-options" id="pack-type" value={this.state.value} onChange={this.handleChange}>
+                        {/* <select className="select-options" id="pack-type" value={this.state.value} onChange={this.handleChange}>
                             <option> Pick your pack: </option>
-                            <option value="/purchase/standard"> Basic Pack </option>
-                            <option value="/purchase/platinum"> Platinum Pack </option>
-                        </select>
-                        <PurchaseBtn click={this.clickPurchaseBtn.bind(this)} type="submit" value="Submit" />
+                            <option className="basic-pack-option" value="/purchase/standard"> 
+                                <div>
+                                <BasicPack/>
+                                </div>
+                            </option>
+                            <option className="platinum-pack-option" value="/purchase/platinum">
+                                <PlatinumPack/>
+                            </option>
+                        </select> */}
+                       
+                    
+                       <div>
+                           <ul className="unordered-list-style">
+                                <li onClick={this.handleChange.bind(this)} data-id="/purchase/standard">
+                                    <BasicPack/>
+                                </li>
+                                <li onClick={this.handleChange.bind(this)} data-id="/purchase/platinum">
+                                    <PlatinumPack/>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <PurchaseBtn click={this.clickPurchaseBtn.bind(this)} type="submit" value="Submit" onSubmit= {this.handleSubmit} />
                     </form>
                 </div>
             </div> 
+            // </div>
         )
     }
 }
