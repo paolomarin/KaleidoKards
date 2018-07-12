@@ -151,15 +151,14 @@ class ProposePopup extends Component {
         const { connectDropTarget } = this.props;
 
         const backgroundStyle = {
-            position:'absolute',
             top: '8rem',
-            left: '1rem',
             padding: '2rem',
             background:'white',
             width: '15rem',
             height: '20rem',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginLeft: '1rem'
         };
 
         return connectDropTarget(

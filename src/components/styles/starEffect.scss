@@ -1,0 +1,62 @@
+.star {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background: #F6f6f6;
+    overflow: hidden;
+    z-index: 2;
+    animation: glitter 4.5s linear 0s infinite normal;
+}
+
+
+
+@keyframes glitter {
+    0% {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+    25% {
+        transform: scale(0.5);
+        opacity:0;
+    }
+    50% {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+    75% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+}
+
+@keyframes glitter {
+    0% {
+        transform: scale(1.0);
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    25%{
+        transform: scale(0.5);
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+    50%{
+        transform: scale(1.0);
+        transform: rotate(180deg);
+        opacity: 1;
+    }
+    75%{
+        transform: scale(0.5);
+        transform: rotate(360);
+        opacity: 0;
+    }
+    100%{
+        transform: scale(1.0);
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+}
