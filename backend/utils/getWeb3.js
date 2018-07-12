@@ -36,9 +36,10 @@ function getWeb3(node) {
             reject("Invalid keystore file!");
         }
         // URL format "https://<username>:<password>@xxxxxxxxxx-xxxxxxxxxx-rpc.us-east-2.kaleido.io"
-        let url = 'https://' + credentials.username + ':' + credentials.password + '@'
+        let url = 'wss://' + credentials.username + ':' + credentials.password + '@'
             + credentials.urls.wss.substring(6); // substring removes "https://"
 
+        console.log(url);
         // Set the httpProvider with the rpc endpoint
         // for websocket (wss) use WebsocketProvider
         let provider = new Web3.providers.WebsocketProvider(url);
