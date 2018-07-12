@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './Launch.scss';
+import LoaderLarge from './components/loader/LoaderLarge';
+import LaunchDesign from './components/launch/LaunchDesign';
+import Region from './components/regions/Region.js';
 require("babel-polyfill");
 
 let STATUS = "";
@@ -82,11 +85,14 @@ class Launch extends Component {
     render() {
         return (
             <div className='launch-wrapper'>
+                <LaunchDesign/>
                 <div className="launch-container">
-                    <span className="input">
-                        <input onChange={this.updateApiKey.bind(this)} type="text" placeholder="Paste Api key here"/>
-                    </span>
-                    <button className="launch-button" onClick={this.clickLaunchBtn.bind(this)}>Launch</button>
+                    <label className="launch-button-form">
+                        <input className="api-key" onChange={this.updateApiKey.bind(this)} type="text" required="" placeholder="Paste Api Key Here"/>
+                        <button className="launch-button" onClick={this.clickLaunchBtn.bind(this)}>Launch</button>
+                    </label>
+                    <Region/>
+                    {/* <LoaderLarge onShow={this.state.visible}/> */}
                 </div>
             </div>
         );

@@ -1,0 +1,131 @@
+@import './../styles/launchAnimation.scss';
+
+
+.star-shape-design {
+    animation: glitter 4.5s linear 0s infinite normal;
+    margin-left: 21rem;
+}
+.star-shape-image {
+    width: 1rem;
+    height: 1rem;
+}
+
+.star-shape-two {
+    width: 1rem;
+    height: 1rem;
+}
+
+.star-three {
+    animation: glitter 5s linear 0s infinite normal;
+    margin-right: 2rem;
+}
+
+.square-shape-one {
+    margin-right: 16rem;
+    opacity:.8;
+}
+
+.square-shape-two {
+    margin-right: -16rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.square-shape-three {
+    margin-right: -6rem;
+    width: 6rem;
+    height: 6rem;
+    opacity:.3;
+}
+
+.diamond-shape-one {
+    animation: glitter 10s linear 0s infinite normal;
+    margin-left: 8rem;
+}
+
+.circle-shape-three {
+    margin-right: 20rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.circle-shape-four {
+    margin-right: 14rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+.circle-shape-two {
+    margin-left: 24rem;
+    width: 4rem;
+    height: 4rem;
+}
+
+.circle-shape-one {
+    margin-right: 8rem;
+}
+
+.triangle-shape-one {
+    margin-left: -18rem;
+    width:1rem;
+    height:1rem;
+    animation: glitter 8s linear 0s infinite normal;
+}
+
+.triangle-shape-two {
+    margin-left: -10rem;
+    width:2rem;
+    height:2rem;
+}
+
+
+@keyframes glitter {
+    0% {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+    25% {
+        transform: scale(0.5);
+        opacity:0;
+    }
+    50% {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+    75% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+}
+
+@keyframes glitter {
+    0% {
+        transform: scale(1.0);
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    25%{
+        transform: scale(0.5);
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+    50%{
+        transform: scale(1.0);
+        transform: rotate(180deg);
+        opacity: 1;
+    }
+    75%{
+        transform: scale(0.5);
+        transform: rotate(360);
+        opacity: 0;
+    }
+    100%{
+        transform: scale(1.0);
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+}

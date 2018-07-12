@@ -46,7 +46,6 @@ class tradingContainer extends Component {
         
         return( 
             <div className="trading-container">
-                <h3 className="header-text"> Joe's Cards </h3>
                     <div className="card-container">
                         {this.generateCards()}
                     </div>

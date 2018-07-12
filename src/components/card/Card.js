@@ -80,6 +80,7 @@ class Card extends Component {
 
         const color= ["#202CE0", "#51C2FA", "#F99243", "#EE34A8", "#00CD79"];
         const shapes = [circle, triangle, star, square, diamond];
+        // const effect = [sparkle]
 
 
     
