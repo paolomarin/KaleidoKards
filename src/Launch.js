@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './Launch.scss';
 require("babel-polyfill");
 
+let STATUS = "";
+let READY = "Ready";
+
 class Launch extends Component {
 
     constructor(props) {
@@ -12,7 +15,9 @@ class Launch extends Component {
     }
 
     goToDashboard() {
-        this.props.history.push('/app');
+        if (STATUS === READY) {
+            this.props.history.push('/app');
+        }
     }
     
     clickLaunchBtn() {
@@ -25,15 +30,19 @@ class Launch extends Component {
         }).then(results => {
             return results.json();
         }).then(async (resultBody) => {
-            // TODO: play video here
-            let status = "";
+            if (resultBody.error) {
+                throw new Error(resultBody.error.toString())
+            }
+            // TODO: show video here
+            // Successful response means that the backend is launching Kaleido Platform
+            // and deploying smart contract for Kards
             let count = 0; // counter to prevent infinite loop
-            while (count < 30 && status !== "Ready") {
+            while (count < 30 && STATUS !== READY) {
                 await this.pollLaunchStatus().then(async (response) => {
-                    console.log(response);
                     if (response.status) {
-                        status = response.status;
-                        if (status === "Ready") {
+                        // TODO: check if status changed and show/update something on ui
+                        STATUS = response.status;
+                        if (STATUS === READY) {
                             return;
                         }
                         await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -41,30 +50,17 @@ class Launch extends Component {
                 }).catch((error) => {
                     //TODO: handle error here
                     console.log("Error while polling");
-                    console.log(error);
+                    console.log("error: ", error);
                 });
 
                 count++;
             }
-            // TODO: make this a function to call after video or on a button
+            // TODO: make this a function to call after video and/or on a button
             this.goToDashboard();
 
-            // right now launch only returns the contract address if the
-            // env creation and deploy were successful
-            // if (resultBody.contractAddress && resultBody.contractAddress !== "") {
-            //
-            //     this.props.history.push('/app');
-            //     console.log(resultBody.contractAddress);
-            // } else {
-            //     // contract address is empty so we need to do something here
-            //     // Highly unlikely edge case but need to discuss handling
-            //     alert("There was an error, please restart the app");
-            //     console.log("There was an error, please restart the app");
-            // }
-
         }).catch((error) => {
-            console.log("errorMESSAGE");
             console.log(error);
+            alert(error.message);
         });
 
     }
