@@ -4,7 +4,7 @@ $color-input:#202CE0;
 
 .radio{
     position: fixed;
-    left: -100px;
+    left: -10rem;
 }
 
 //labels disappear
@@ -20,9 +20,9 @@ $color-input:#202CE0;
     margin: 0;
     padding: 0 10px;
     overflow: hidden;
-    width: 250px;
+    width: 28rem;
     opacity: 0;
-    font-size: 16px;
+    font-size: 1rem;
     text-align: center;
     outline: 0;
 }
@@ -32,11 +32,13 @@ $color-input:#202CE0;
 [id="sign-in"]:checked ~ div.sign-in,
 [id="sign-up"]:checked ~ div.sign-up,
 [id="reset"]:checked ~ div.reset {
-    max-height: 40px;
-    padding: 10px;
-    margin: 10px 0;
+    max-height: 2rem;
+    padding: 1rem;
+    margin: .8rem 0;
     opacity:1;
     border:none;
+    display: flex;
+    align-items:center;
     background-color: $color-accent;
 }
 
@@ -52,27 +54,26 @@ label {
     font-weight: 700;
     cursor: pointer;
     color: $color-accent;
-    transition: 300ms ease;
+    transition: 100ms ease;
     width: 6rem;
 
     //pointer arrow
 
-    &:after {
-        content: '';
-        border: 10px solid transparent;
-        position: absolute;
-        bottom: -10px;
-        right: 1.8rem;
-        left: calc(50% -10px);
-        transition: inherit;
-    }
+    // &:after {
+    //     content: '';
+    //     border: 1rem solid transparent;
+    //     position: absolute;
+    //     bottom: -1rem;
+    //     right: 1.8rem;
+    //     transition: inherit;
+    // }
 }
 
 // set active label marker
 
-[id="sign-in"]:checked ~ [for="sign-in"],
-[id="sign-up"]:checked ~ [for="sign-up"],
-[id="reset"]:checked ~ [for="reset"] {
+[id="sign-in"]:checked ~ [htmlFor="sign-in"],
+[id="sign-up"]:checked ~ [htmlFor="sign-up"],
+[id="reset"]:checked ~ [htmlFor="reset"] {
     color: lighten($color-accent, 10%);
     &:after {
         border-bottom-color: $color-accent;
@@ -85,14 +86,14 @@ label {
     display: flex;
     margin-top:2rem;
     margin-right: auto;
-    margin-left:5rem;
+    margin-left:auto;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    height: 300px;
+    height: 20rem;
     text-align:center;
     background-color: $color-body;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .region-text {
@@ -105,11 +106,9 @@ label {
 
 fieldset {
     border:none;
-    width: 300px;
-    size:300px;
 }
 form {
-    width: 100%;
+    width: 28rem;
     height: 100%;
 }
 
