@@ -50,8 +50,14 @@ class ProposePopup extends Component {
         let joesOwnKard= this.props.joeKards;
         return(
             <div className="show-card"> 
-                    <Card color={myOwnKard.color} shape={myOwnKard.shape} effect={myOwnKard.effect} style={margin}/>
-                    <Card color={joesOwnKard.color} shape={joesOwnKard.shape} effect={joesOwnKard.effect}/>
+                    <div className="dashed-card-border">
+                        <h4 className="card-name"> My Card </h4> 
+                        <Card color={myOwnKard.color} shape={myOwnKard.shape} effect={myOwnKard.effect} style={margin}/>
+                    </div>
+                    <div className="dashed-card-border">
+                        <h4 className="card-name"> Joe's Card </h4>
+                        <Card color={joesOwnKard.color} shape={joesOwnKard.shape} effect={joesOwnKard.effect}/>
+                    </div>
             </div>
         )
     }
@@ -151,10 +157,11 @@ class ProposePopup extends Component {
         const { connectDropTarget } = this.props;
 
         const backgroundStyle = {
-            top: '8rem',
-            padding: '2rem',
+            position:'relative',
+            paddingTop: '2rem',
+            paddingBottom: '2rem',
             background:'white',
-            width: '15rem',
+            width: '20rem',
             height: '20rem',
             display: 'flex',
             alignItems: 'center',
@@ -163,8 +170,8 @@ class ProposePopup extends Component {
 
         return connectDropTarget(
             <div className="propose-background" style={backgroundStyle} kard={this.props.myKards} card={this.props.joeKards}>
-              {this.showMyCard()}
-                <button className="button" onClick={this.proposeThisTrade.bind(this)}> Propose Trade </button>
+                {this.showMyCard()}
+                <button className="propose-button" onClick={this.proposeThisTrade.bind(this)}> Propose Trade </button>
             </div>
         )
 

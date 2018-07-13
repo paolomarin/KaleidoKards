@@ -31,7 +31,6 @@ class Footer extends Component {
         this.setState({
             value: event.currentTarget.dataset.id
         });
-        console.log(this.state.value);
     }
 
     handleSubmit(event) {
@@ -83,27 +82,9 @@ class Footer extends Component {
         return( 
             <div className="footer">
                 <h2 className="store"> Store </h2>
-                {/* <div className="footer-cards">
-                    <BasicPack onClick={this.handleChange} value={standard}/>
-                    <PlatinumPack onClick={this.handleChange} value={platinum}/>
-                    {/* <LoaderSmall show={this.state.visible}/> 
-                </div> */}
                 <div className="selection">
                     <form className="form" onSubmit= {this.handleSubmit}>
-                        {/* <select className="select-options" id="pack-type" value={this.state.value} onChange={this.handleChange}>
-                            <option> Pick your pack: </option>
-                            <option className="basic-pack-option" value="/purchase/standard"> 
-                                <div>
-                                <BasicPack/>
-                                </div>
-                            </option>
-                            <option className="platinum-pack-option" value="/purchase/platinum">
-                                <PlatinumPack/>
-                            </option>
-                        </select> */}
-                       
-                    
-                       <div>
+                     <div>
                            <ul className="unordered-list-style">
                                 <li onClick={this.handleChange.bind(this)} data-id="/purchase/standard">
                                     <BasicPack/>
@@ -118,7 +99,6 @@ class Footer extends Component {
                     </form>
                 </div>
             </div> 
-            // </div>
         )
     }
 }

@@ -94,19 +94,18 @@ class Card extends Component {
     
         return (
                 <div className="card" style={styles}>
-                    <div style= {shapes[this.props.shape]}
-                ></div>
+                    <div style= {shapes[this.props.shape]}></div>
                 </div>
         )
     }
     render() {
 
         const {connectDragSource, isDragging} = this.props;
-        const opacity = isDragging ? 0 : 1;
+        // const opacity = isDragging ? 0 : 1;
    
         
         return connectDragSource( 
-            <div style={{ opacity }}>
+            <div>
                 {this.renderCard()}
             </div>
         )

@@ -42,6 +42,7 @@ class App extends Component {
                 return this.state.myKards;
             })
 
+            //This is getting rid of the card in the container as you drag it to the trading container
 
         }else if(this.state.joeKards.kards[cardId]) {
             this.setState({
@@ -53,9 +54,11 @@ class App extends Component {
                 delete this.state.joeKards.kards[cardId];
                 return this.state.joeKards;
             })
+              //This is getting rid of the card in the container as you drag it to the trading container
         }
      
      }
+s
 
   emptyTradeCards() {
       this.setState({
@@ -112,10 +115,6 @@ class App extends Component {
             <div>
             <Header etherAmount={this.state.ether}/>
               <div className="square-container">
-                {/* <div className="other-players-cards">
-                <h2>Joe's Cards</h2>
-                  <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>
-                </div> */}  
                 <div className="my-cards">
                     <h2>My Cards</h2>
                        <MyCardsContainer data={this.state.myKards} trade={(card)=>this.collectCards(card)}/>
@@ -127,10 +126,6 @@ class App extends Component {
                         empty={this.emptyTradeCards.bind(this)}
                     />
                 </div>
-                  {/* <div className="my-cards">
-                    <h2>My Cards</h2>
-                       <MyCardsContainer data={this.state.myKards} trade={(card)=>this.collectCards(card)}/>
-                  </div> */}
                   <div className="other-players-cards">
                 <h2>Joe's Cards</h2>
                   <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>

@@ -2,8 +2,11 @@
 
 .footer {
     background-color: white;
+    width:70rem;
     height: 20rem;
     flex-shrink: 0;
+    margin-right:auto;
+    margin-left:auto;
     flex-direction: column;
     display: flex;
     align-items: center;
@@ -65,5 +68,6 @@ h4 {
 
 .store {
     font-family: 'IBM Plex Sans Condensed';
+    margin-top: 1.5rem;
 
 }
