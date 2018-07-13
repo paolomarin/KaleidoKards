@@ -20,7 +20,7 @@ h2 {
     text-align: center;
     color: #202CE0;
     font-size: 1.5rem;
-    margin-top: 1rem;
+    margin-top: -1rem;
     font-family: "IBM Plex Sans Condensed";
 }
 
@@ -38,7 +38,8 @@ my-cards-title {
 .square-container {
     display: flex;
     align-items: center;
-    padding-left: 19rem;
+    margin-right:auto;
+    margin-left:auto;
     border-right: 2rem solid #202CE0;
     border-bottom: 2rem solid #202CE0;
     border-left: 2rem solid #202CE0;
@@ -49,6 +50,7 @@ my-cards-title {
     height: 20rem;
     width: 20rem;
     background-color: white;
+    margin-right:auto;
     margin-left: 1rem;
     overflow: auto;
     padding:2rem;
@@ -70,7 +72,7 @@ my-cards-title {
 .my-cards {
     height: 20rem;
     width: 20rem;
-    margin-left: -18rem;
+    margin-left: auto;
     background-color: white;
     overflow:auto;
     padding:2rem;

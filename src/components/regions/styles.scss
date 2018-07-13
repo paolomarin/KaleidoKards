@@ -1,0 +1,111 @@
+// @import '../styles.scss';
+// @import'~app/components/DesignKit/util-colors.scss'; 
+
+
+
+.region-button-component{
+    // border :2px solid $dk--border-gray;
+    border-radius :4px;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    cursor: pointer;
+    width: 12vw;
+    margin-left:22rem;
+    // color : $dk--body-black;
+    transition : background linear .3s;
+    border-radius: 2px;
+    &.compact{
+      width:100px;
+      font-size: 12px;
+    }
+}
+
+// .region-button-component.selected{
+//     border :2px solid $dk--turqoise;
+//     background :$dk--inactive-blue;
+// }
+
+.region-flag{
+    margin:1vw;
+    margin-left:auto;
+    margin-right:auto;
+    padding:1vw;
+    &.compact { 
+      margin:auto;
+    }
+}
+
+.region-title{
+    margin:auto;
+    margin-bottom:1vh;
+    width:100%;
+    text-align:center;
+}
+
+
+
+.flag-icon {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: .7em;
+    line-height: 1em;
+  }
+  .flag-icon:before {
+    content: "\00a0";
+  }
+  
+  .flag-icon-us {
+    background-image: url(./../flags/us.svg);
+  }
+  // .flag-icon-us.flag-icon-squared {
+  //   background-image: url(./flags/1x1/us.svg);
+  // }
+
+  .flag-icon-kr {
+    background-image: url(./../flags/kr.svg);
+  }
+  // .flag-icon-kr.flag-icon-squared {
+  //   background-image: url(./flags/1x1/kr.svg);
+  // }
+
+  
+
+  .flag-icon-au {
+    background-image: url(./../flags/au.svg);
+  }
+  // .flag-icon-au.flag-icon-squared {
+  //   background-image: url(./flags/1x1/au.svg);
+  // }
+  
+  .flag-icon-eu {
+    background-image: url(./../flags/eu.svg);
+  }
+  // .flag-icon-eu.flag-icon-squared {
+  //   background-image: url(./flags/1x1/eu.svg);
+  // }
+
+  .flag-icon-de {
+    background-image: url(./../flags/de.svg);
+  }
+  // .flag-icon-de.flag-icon-squared {
+  //   background-image: url(./flags/1x1/de.svg);
+  // }
+
+  .flag-icon-ie {
+    background-image: url(./../flags/ie.svg);
+  }
+  // .flag-icon-ie.flag-icon-squared {
+  //   background-image: url(./flags/1x1/ie.svg);
+  // }
+
+  .flag-icon-sg {
+    background-image: url(./../flags/sg.svg);
+  }
+  // .flag-icon-sg.flag-icon-squared {
+  //   background-image: url(./flags/1x1/sg.svg);
+  // }
+
