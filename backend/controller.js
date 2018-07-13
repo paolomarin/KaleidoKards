@@ -58,6 +58,7 @@ class Controller {
         if (this.kaleidoKardsInstance && this.kaleidoKardsInstance.deployed) {
             response.status = 200;
             response.body.contractAddress = this.kaleidoKardsInstance.contractAddress;
+            response.body.status = READY;
             this.launchStatus = READY;
             return response;
         }
@@ -69,6 +70,7 @@ class Controller {
             return await this.kaleidoKardsInstance.deploy().then((contractAddress) => {
                 response.status = 200;
                 response.body.contractAddress = contractAddress;
+                response.body.status = READY;
                 this.launchStatus = READY;
                 return response;
             });
