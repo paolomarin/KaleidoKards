@@ -58,7 +58,7 @@ class App extends Component {
         }
      
      }
-s
+
 
   emptyTradeCards() {
       this.setState({
