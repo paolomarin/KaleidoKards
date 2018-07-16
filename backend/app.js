@@ -5,6 +5,7 @@ var controller = new (require('./controller.js'))();
 controller.checkKeyFile();
 
 app.use('/', express.static(__dirname + '/dist'));
+app.use('/app', express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {

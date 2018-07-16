@@ -18,16 +18,23 @@ class Footer extends Component {
             value: '',
             userCards: {},
             joeCards: {},
-            visible:false
+            visible:false,
+            purchaseLoading: false,
         };
-
-        let url = this.state.value;
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    loading(){
+        this.setState({purchaseLoading: true});
+    }
+
+    notLoading(){
+        this.setState({purchaseLoading: false});
+    }
+
     handleChange(event) {
-        
+
         this.setState({
             value: event.currentTarget.dataset.id
         });
@@ -70,10 +77,11 @@ class Footer extends Component {
     }
 
     clickPurchaseBtn() {
-
-        this.buyKards('user');
-        this.buyKards('joe');
-        // TODO: Need to update shown ether amount
+        this.loading();
+        let buyPromises = Promise.all([
+            this.buyKards('user'),
+            this.buyKards('joe')]);
+        buyPromises.then(() => this.notLoading()); // TODO: not this bc ignores errors
     }
 
 
@@ -95,7 +103,10 @@ class Footer extends Component {
                             </ul>
                         </div>
 
-                        <PurchaseBtn click={this.clickPurchaseBtn.bind(this)} type="submit" value="Submit" onSubmit= {this.handleSubmit} />
+                        <PurchaseBtn loading={this.state.purchaseLoading}
+                                     click={this.clickPurchaseBtn.bind(this)}
+                                     type="submit" value="Submit"
+                                     onSubmit= {this.handleSubmit} />
                     </form>
                 </div>
             </div> 

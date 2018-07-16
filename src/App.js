@@ -30,49 +30,41 @@ class App extends Component {
 
     collectCards(card) {
         let cardId= parseInt(card.id);
-      
 
-        if(this.state.myKards.kards[cardId]) {
+        if (this.state.myKards.kards[cardId]) {
             this.setState({
                 myProposedCard: this.state.myKards.kards[cardId]
-            })
+            });
 
             this.setState(prevState=> {
                 let myCardsNow= prevState.myKards;
                 delete this.state.myKards.kards[cardId];
                 return this.state.myKards;
-            })
-
+            });
             //This is getting rid of the card in the container as you drag it to the trading container
 
-        }else if(this.state.joeKards.kards[cardId]) {
+        } else if (this.state.joeKards.kards[cardId]) {
             this.setState({
                 joeProposedCard: this.state.joeKards.kards[cardId]
-            })
+            });
 
             this.setState(prevState=> {
                 let joeCardsNow= prevState.joeKards;
                 delete this.state.joeKards.kards[cardId];
                 return this.state.joeKards;
-            })
-              //This is getting rid of the card in the container as you drag it to the trading container
+            });
+            //This is getting rid of the card in the container as you drag it to the trading container
         }
-     
-     }
+    }
 
-
-  emptyTradeCards() {
+    emptyTradeCards() {
       this.setState({
         myProposedCard: [],
-        joeProposedCard:[]
+        joeProposedCard: []
       })
-    
-  }
 
+    }
 
-
-
-    
     refreshKards() {
         window.fetch( userGetKards, {
             method: "GET",
@@ -104,7 +96,6 @@ class App extends Component {
         }).then(results => {
             return results.json();
         }).then(resultBody => {
-            // document.getElementById("etherAmount").innerText = resultBody.balance;
             this.setState({ether: resultBody.balance})
         });
     }
