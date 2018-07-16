@@ -10,7 +10,6 @@ class PurchaseBtn extends Component {
     render() {
         return( 
             <button className={this.props.loading ? "purchase-button disabled" : "purchase-button"} onClick={this.props.click}>
-                {/*{this.props.loading ? <LoadingDots/> : "Purchase"}*/}
                 <LoadingDots visible={this.props.loading} text="Purchase"/>
             </button>
         )
