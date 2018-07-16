@@ -11,20 +11,20 @@ $color-input:#202CE0;
 
 .not-radio {
     appearance: none;
-    background-color: $color-accent;
+    background-color: $color-body;
     display: block;
     transition: 300ms ease;
-    border-radius: 7px;
     border: 0;
     max-height: 0;
     margin: 0;
     padding: 0 10px;
     overflow: hidden;
-    width: 28rem;
+    width: 18rem;
     opacity: 0;
-    font-size: 1rem;
+    font-size: .5rem;
     text-align: center;
     outline: 0;
+    visibility:hidden;
 }
 
 //show input based on radio selection
@@ -39,7 +39,7 @@ $color-input:#202CE0;
     border:none;
     display: flex;
     align-items:center;
-    background-color: $color-accent;
+    background-color: $color-body;
 }
 
 //show button text based on radio selection
@@ -56,6 +56,7 @@ label {
     color: $color-accent;
     transition: 100ms ease;
     width: 6rem;
+    margin-right: .5rem;
 
     //pointer arrow
 
@@ -71,20 +72,27 @@ label {
 
 // set active label marker
 
-[id="sign-in"]:checked ~ [htmlFor="sign-in"],
-[id="sign-up"]:checked ~ [htmlFor="sign-up"],
-[id="reset"]:checked ~ [htmlFor="reset"] {
-    color: lighten($color-accent, 10%);
+[id="sign-in"]:checked ~ [for="sign-in"],
+[id="sign-up"]:checked ~ [for="sign-up"],
+[id="reset"]:checked ~ [for="reset"] {
+    color: lighten($color-body, 10%);
     &:after {
-        border-bottom-color: $color-accent;
+        border-bottom-color: $color-body;
     }
 }
+
+[id="sign-in"]:checked ~ .not-radio.sign-in,
+[id="sign-up"]:checked ~ .not-radio.sign-up,
+[id="reset"]:checked ~ .not-radio.reset {
+    visibility: visible;
+}
+
+
 
 //flex does not work well on fieldset-- so we use a styling wrapper
 
 .flex-wrap {
     display: flex;
-    margin-top:2rem;
     margin-right: auto;
     margin-left:auto;
     justify-content: center;
@@ -92,12 +100,12 @@ label {
     flex-wrap: wrap;
     height: 20rem;
     text-align:center;
-    background-color: $color-body;
+    background-color: transparent;
     font-size: 1rem;
 }
 
 .region-text {
-    color:$color-accent;
+    color:darkblue;
     margin-bottom: 1rem;
     margin-right: auto;
     margin-left: auto;
@@ -108,11 +116,10 @@ fieldset {
     border:none;
 }
 form {
-    width: 28rem;
     height: 100%;
 }
 
 .color-text {
-    color: white;
+    color: $color-input;
     font-weight: 700;
 }

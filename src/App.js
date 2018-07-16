@@ -9,6 +9,7 @@ import MyCardsContainer from './components/mycards/MyCardsContainer';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import ProposePopup from './components/modal/proposeTradePopUp';
+import Checkmark from './components/loader/Checkmark';
 
 const userGetKards = `/kards/user`;
 const joeGetKards = `/kards/joe`;
@@ -132,6 +133,7 @@ class App extends Component {
                 </div>
               </div>
             </div>
+            <Checkmark/>
             <Footer refreshKards={this.refreshKards.bind(this)}/>
           </div>
         );

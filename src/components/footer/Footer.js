@@ -37,21 +37,21 @@ class Footer extends Component {
         event.preventDefault();
     }
 
-    // smallLoader() {
-    //     this.setState({
-    //         visible:true
-    //     })
-    // }
+    smallLoader() {
+        this.setState({
+            visible:true
+        })
+    }
 
-    // disappear() {
-    //     this.setState({
-    //         visible:!this.state.visible
-    //     })
-    // }
+    disappear() {
+        this.setState({
+            visible:!this.state.visible
+        })
+    }
 
     buyKards(purchaser) {
 
-        // this.smallLoader();
+        this.smallLoader();
         window.fetch(this.state.value, {
             body: JSON.stringify({purchaser: purchaser}),
             method: "POST",
@@ -62,7 +62,7 @@ class Footer extends Component {
             return results.json();
         }).then(resultBody => {
             if (resultBody && resultBody.receipt && resultBody.receipt.status) {
-                // this.disappear();
+                this.disappear();
                 this.props.refreshKards();
             }
             return resultBody;

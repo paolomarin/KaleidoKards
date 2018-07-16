@@ -57,8 +57,10 @@
 
 .circle-shape-two {
     margin-left: 24rem;
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
+    opacity:.5;
+    animation:  glitter 10s linear 0s infinite normal;
 }
 
 .circle-shape-one {
@@ -73,14 +75,18 @@
 }
 
 .triangle-shape-two {
-    margin-left: -10rem;
-    width:2rem;
-    height:2rem;
+    margin-left: -17rem;
+    width: 3rem;
+    height: 3rem;
+    opacity: .7;
+    animation: glitter 8s linear 0s infinite normal;
 }
 
 .square-shape-five {
     opacity: .4;
-    margin-left:29rem;
+    margin-left:-3rem;
+    width:2rem;
+    height:2rem;
 }
 
 
