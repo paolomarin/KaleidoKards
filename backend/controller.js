@@ -57,7 +57,7 @@ class Controller {
         }
     }
 
-    async startLaunch(apiKey) {
+    async startLaunch(apiKey, locale) {
         let response = {status: 400, body: {}};
         if (this.kaleidoKardsInstance && this.kaleidoKardsInstance.deployed) {
             response.status = 200;
@@ -89,6 +89,11 @@ class Controller {
             response.status = 400;
             response.body.error = "No Api Key in body";
             return response;
+        }
+        // If locale is specified then add a dash for the base url and reassign it
+        if (locale) {
+            locale = '-' + locale;
+            this.kaleidoConfigInstance.baseUrl = "https://console" + locale + ".kaleido.io/api/v1";
         }
 
         try {
