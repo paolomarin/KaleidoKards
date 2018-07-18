@@ -15,7 +15,6 @@ contract KaleidoKards {
     uint8 constant public maxShape  = 4;
     uint8 constant public maxEffect = 4;
 
-    // TODO: change this after development
     // Prices for buying a pack of Kards from the contract
     uint256 constant public standardPackPrice = 25 ether;
     uint256 constant public platinumPackPrice = 50 ether;
@@ -39,7 +38,15 @@ contract KaleidoKards {
     // Mapping of address to array of owned Kards
     mapping(address => uint256[]) internal ownedKards;
 
-    
+
+    /*** Events ***/
+
+    // Event to log when ownership is transferred
+    event Transfer(address indexed from, address indexed to, uint256 indexed kardId);
+
+    // Event to log when a kard is issued
+    event IssueKard(address indexed owner, uint256 indexed kardId);
+
     /**
      * Constructor function
      *
@@ -152,6 +159,8 @@ contract KaleidoKards {
         // Assign Kard to new owner
         kardOwner[kardId] = to;
         ownedKards[to].push(kardId);
+        // Emit the Transfer event
+        emit Transfer(from, to, kardId);
     }
 
     /**
@@ -170,6 +179,7 @@ contract KaleidoKards {
 
             ownedKards[to].push(randomIndex);
             kardOwner[randomIndex] = to;
+            emit IssueKard(to, randomIndex);
             return randomIndex;
         } else {
             // Someone else already owns this Kard at this index so increment it and try again
@@ -199,6 +209,7 @@ contract KaleidoKards {
 
             ownedKards[to].push(randomIndex);
             kardOwner[randomIndex] = to;
+            emit IssueKard(to, randomIndex);
             return randomIndex;
         } else {
             // Someone else already owns this Kard at this index so increment it and try again

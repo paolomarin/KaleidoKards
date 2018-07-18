@@ -31,8 +31,12 @@ class Controller {
         try {
             let data = fs.readFileSync(filepath);
             let keyfile = JSON.parse(data);
+
             // Address of the previous contract deployed to the
             this.contractAddress = keyfile.contractAddress;
+
+            this.kaleidoConfigInstance.consortiaId = keyfile.consortia;
+            this.kaleidoConfigInstance.environmentId = keyfile.environment;
 
             this.kaleidoConfigInstance.userNodeUser = keyfile.user_node.username;
             this.kaleidoConfigInstance.userNodePass = keyfile.user_node.password;
@@ -58,6 +62,8 @@ class Controller {
         if (this.kaleidoKardsInstance && this.kaleidoKardsInstance.deployed) {
             response.status = 200;
             response.body.contractAddress = this.kaleidoKardsInstance.contractAddress;
+            response.body.consortia = this.kaleidoConfigInstance.consortiaId;
+            response.body.environment = this.kaleidoConfigInstance.environmentId;
             response.body.status = READY;
             this.launchStatus = READY;
             return response;
@@ -70,6 +76,8 @@ class Controller {
             return await this.kaleidoKardsInstance.deploy().then((contractAddress) => {
                 response.status = 200;
                 response.body.contractAddress = contractAddress;
+                response.body.consortia = this.kaleidoConfigInstance.consortiaId;
+                response.body.environment = this.kaleidoConfigInstance.environmentId;
                 response.body.status = READY;
                 this.launchStatus = READY;
                 return response;
@@ -145,6 +153,11 @@ class Controller {
         if (this.launchStatus !== CREATING && this.launchStatus !== DEPLOYING && this.launchStatus !== READY) {
             response.status = 500;
             response.body.error = this.launchStatus;
+        } else if (this.launchStatus === READY) {
+            response.body.status = this.launchStatus;
+            response.body.contractAddress = this.contractAddress;
+            response.body.consortia = this.kaleidoConfigInstance.consortiaId;
+            response.body.environment = this.kaleidoConfigInstance.environmentId;
         } else {
             response.body.status = this.launchStatus;
         }
@@ -233,6 +246,21 @@ class Controller {
             this.kaleidoKardsInstance.getBalance(owner + '_node').then((balance) => {
                 response.status = 200;
                 response.body.balance = balance;
+                resolve(response);
+            }).catch((error) => {
+                response.status = 500;
+                response.body.error = error;
+                resolve(response);
+            });
+        })
+    }
+
+    getKardHistory(kardId) {
+        let response = {status: 400, body: {}};
+        return new Promise(resolve => {
+            this.kaleidoKardsInstance.getKardHistory(kardId).then((history) => {
+                response.status = 200;
+                response.body = history;
                 resolve(response);
             }).catch((error) => {
                 response.status = 500;

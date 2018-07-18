@@ -13,6 +13,8 @@ class KaleidoKards {
         // TODO: change these after development
         this.standardPackCost = '25'; // in ether
         this.platinumPackCost = '50'; // in ether
+
+        this.addresses = [];
     }
 
     // Deploy the KaleidoKards Smart Contract
@@ -69,12 +71,17 @@ class KaleidoKards {
     // Returns a promise containing the default address of the node passed in
     getAddress(node){
         console.log("Getting address for: " + node);
+        // cache addresses for faster use
+        if (this.addresses[node]) {
+            return new Promise(resolve => resolve(this.addresses[node]))
+        }
         let config = Promise.all(this.getConfig(node));
         return config.then( response => {
             let web3 = response[0];
             let contract = response[1];
             return web3.eth.getAccounts();
         }).then(accounts => {
+            this.addresses[node] = accounts[0];
             return accounts[0];
         });
     }
@@ -198,6 +205,44 @@ class KaleidoKards {
                     return web3.utils.fromWei(balanceWei, 'ether');
                 })
             })
+        });
+    }
+
+    // Returns an object with issued property containing the issued event
+    // and transferEvents property if issued property is set and kard
+    // has transferred before
+    getKardHistory(kardId) {
+        console.log("Getting kard history for kardId: " + kardId);
+        let node = 'kard_store_node'; //TODO: change me maybe? might not hard code this in future
+        let config = Promise.all(this.getConfig(node));
+        return config.then( response => {
+            let web3 = response[0];
+            let contract = response[1];
+            console.log("Getting past events: IssueKard");
+            return contract.getPastEvents('IssueKard', {fromBlock: 0, filter: {kardId: kardId}}).then((issuedEvent) => {
+                let response = {};
+                if (issuedEvent && issuedEvent.length) {
+                    response.issued = issuedEvent;
+                    // if the kard has been issued then we need to get the addresses and any transfer events
+                    return this.getAddress('user_node').then((userAddress) => {
+                        response.userAddress = userAddress;
+                        return this.getAddress('joe_node').then((joeAddress) => {
+                            response.joeAddress = joeAddress;
+                            console.log("Getting past events: Transfer");
+                            return contract.getPastEvents('Transfer', {
+                                fromBlock: 0,
+                                filter: {kardId: kardId}
+                            }).then((transferEvents) => {
+                                response.transferEvents = transferEvents;
+                                return response;
+                            });
+                        });
+                    });
+                } else {
+                    console.log("Kard has not been issued!");
+                    return response
+                }
+            });
         });
     }
 
