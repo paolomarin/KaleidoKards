@@ -259,8 +259,6 @@ class Controller {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
             this.kaleidoKardsInstance.getKardHistory(kardId).then((history) => {
-                console.log("controller response:");
-                console.log(history);
                 response.status = 200;
                 response.body = history;
                 resolve(response);

@@ -57,7 +57,6 @@ class kaleidoConfig {
         let jsonResponse = JSON.parse(response);
         let consortia = jsonResponse._id;
         this.consortiaId = consortia;
-        //https://explorer.kaleido.io/home?consortia=u0p7en4kx5&environment=u0v4b2fdyp
         console.log("Created consortium with ID: " + consortia);
         console.log("Creating Environment");
         return this.createEnvironment(consortia).then((response) => {

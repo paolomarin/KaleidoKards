@@ -218,32 +218,28 @@ class KaleidoKards {
         return config.then( response => {
             let web3 = response[0];
             let contract = response[1];
-            console.log("getting past events");
+            console.log("Getting past events: IssueKard");
             return contract.getPastEvents('IssueKard', {fromBlock: 0, filter: {kardId: kardId}}).then((issuedEvent) => {
-                console.log("\n\n*****IssueKardEvent*****");
-                console.log(issuedEvent);
                 let response = {};
                 if (issuedEvent && issuedEvent.length) {
                     response.issued = issuedEvent;
                     // if the kard has been issued then we need to get the addresses and any transfer events
                     return this.getAddress('user_node').then((userAddress) => {
-                        console.log("userAddress: ", userAddress);
                         response.userAddress = userAddress;
                         return this.getAddress('joe_node').then((joeAddress) => {
-                            console.log("joeAddress: ", joeAddress);
                             response.joeAddress = joeAddress;
+                            console.log("Getting past events: Transfer");
                             return contract.getPastEvents('Transfer', {
                                 fromBlock: 0,
                                 filter: {kardId: kardId}
                             }).then((transferEvents) => {
-                                console.log("\n\n*****TransferEvents*****");
-                                console.log(transferEvents);
                                 response.transferEvents = transferEvents;
                                 return response;
                             });
                         });
                     });
                 } else {
+                    console.log("Kard has not been issued!");
                     return response
                 }
             });
