@@ -84,6 +84,17 @@ app.get('/balance/:owner', (req, res) => {
     });
 });
 
+app.get('/history/:kardId', (req, res) => {
+    if (!req.params.kardId){
+        res.status(400).send({error: "KardId not specified"});
+        return;
+    }
+
+    controller.getKardHistory(req.params.kardId).then((response) => {
+        res.status(response.status).send(response.body);
+    });
+});
+
 app.listen(3000, () => {
    console.log('listening on port 3000');
 });
