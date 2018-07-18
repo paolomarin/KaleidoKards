@@ -222,17 +222,29 @@ class KaleidoKards {
             return contract.getPastEvents('IssueKard', {fromBlock: 0, filter: {kardId: kardId}}).then((issuedEvent) => {
                 console.log("\n\n*****IssueKardEvent*****");
                 console.log(issuedEvent);
-                let allEvents = {};
+                let response = {};
                 if (issuedEvent && issuedEvent.length) {
-                    allEvents.issued = issuedEvent;
-                    return contract.getPastEvents('Transfer', {fromBlock: 0, filter: {kardId: kardId}}).then((transferEvents) => {
-                        console.log("\n\n*****TransferEvents*****");
-                        console.log(transferEvents);
-                        allEvents.transferEvents = transferEvents;
-                        return allEvents;
+                    response.issued = issuedEvent;
+                    // if the kard has been issued then we need to get the addresses and any transfer events
+                    return this.getAddress('user_node').then((userAddress) => {
+                        console.log("userAddress: ", userAddress);
+                        response.userAddress = userAddress;
+                        return this.getAddress('joe_node').then((joeAddress) => {
+                            console.log("joeAddress: ", joeAddress);
+                            response.joeAddress = joeAddress;
+                            return contract.getPastEvents('Transfer', {
+                                fromBlock: 0,
+                                filter: {kardId: kardId}
+                            }).then((transferEvents) => {
+                                console.log("\n\n*****TransferEvents*****");
+                                console.log(transferEvents);
+                                response.transferEvents = transferEvents;
+                                return response;
+                            });
+                        });
                     });
                 } else {
-                    return allEvents
+                    return response
                 }
             });
         });
