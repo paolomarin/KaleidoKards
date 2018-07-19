@@ -82,13 +82,29 @@ app.get('/balance/:owner', (req, res) => {
     });
 });
 
-app.get('/history/:kardId', (req, res) => {
+// GET call with kardId in the url
+// Returns the event history for a specific kardId and addresses for owners
+app.get('/history/kard/:kardId', (req, res) => {
     if (!req.params.kardId){
         res.status(400).send({error: "KardId not specified"});
         return;
     }
 
     controller.getKardHistory(req.params.kardId).then((response) => {
+        res.status(response.status).send(response.body);
+    });
+});
+
+// Get call with owner in the url
+// Returns all events in history for the contract from the 'owner' node
+// and includes addresses for owners
+app.get('/history/all/:owner', (req, res) => {
+    if (!req.params.owner){
+        res.status(400).send({error: "Owner not specified"});
+        return;
+    }
+
+    controller.getEventHistory(req.params.owner).then((response) => {
         res.status(response.status).send(response.body);
     });
 });

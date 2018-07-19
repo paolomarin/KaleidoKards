@@ -49,15 +49,12 @@ class KaleidoKards {
                     console.log("Successfully deployed at address: " + this.contractAddress);
 
                     this.UserContract = this.USER.then(response => {
-                        // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                         return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
                     });
                     this.JoeContract = this.JOE.then(response => {
-                        // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                         return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
                     });
                     this.StoreContract = this.STORE.then(response => {
-                        // return new response.eth.Contract(KaleidoKardsContract.abi, '0xb7a996f99afff30a8a7c5b95aa9617f0985da9ee');
                         return new response.eth.Contract(KaleidoKardsContract.abi, this.contractAddress);
                     });
                     this.deployed = true;
@@ -158,6 +155,7 @@ class KaleidoKards {
 
     }
 
+    // TODO: use getAddress function here and for platinum instead of get accounts directly
     // Calls buyStandardPack function on solidity contract
     // Returns a tx receipt of the purchase
     buyStandardPack(node) {
@@ -210,7 +208,7 @@ class KaleidoKards {
 
     // Returns an object with issued property containing the issued event
     // and transferEvents property if issued property is set and kard
-    // has transferred before
+    // has transferred before. Also, include addresses to map owner to address
     getKardHistory(kardId) {
         console.log("Getting kard history for kardId: " + kardId);
         let node = 'kard_store_node'; //TODO: change me maybe? might not hard code this in future
@@ -240,6 +238,35 @@ class KaleidoKards {
                     });
                 } else {
                     console.log("Kard has not been issued!");
+                    return response
+                }
+            });
+        });
+    }
+
+    // Returns a promise object with all the past events in chronological order in an array
+    // and includes addresses to map owner to address
+    getEventHistory(node) {
+        console.log("Getting event history from ledger owner: " + node);
+        let config = Promise.all(this.getConfig(node));
+        return config.then( response => {
+            let web3 = response[0];
+            let contract = response[1];
+            return contract.getPastEvents('allEvents', {fromBlock: 0}).then((events) => {
+                let response = {};
+                if (events && events.length) {
+                    response.events = events;
+                    // if there is history then we need to get the addresses so the
+                    // frontend can map address to owner
+                    return this.getAddress('user_node').then((userAddress) => {
+                        response.userAddress = userAddress;
+                        return this.getAddress('joe_node').then((joeAddress) => {
+                            response.joeAddress = joeAddress;
+                            return response;
+                        });
+                    });
+                } else {
+                    console.log("No Event History!");
                     return response
                 }
             });
