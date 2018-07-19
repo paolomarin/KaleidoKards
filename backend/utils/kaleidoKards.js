@@ -10,7 +10,7 @@ class KaleidoKards {
         this.STORE = getWeb3('kard_store_node');
 
         this.targetGasLimit = 4712388; // hardcoded from targetGasLimit set when creating chain
-        // TODO: change these after development
+
         this.standardPackCost = '25'; // in ether
         this.platinumPackCost = '50'; // in ether
 

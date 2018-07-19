@@ -5,7 +5,6 @@ class kaleidoConfig {
 
     // Declare some constants that we need to create kaleido platform
     constructor() {
-        //TODO: determine locale?? console-eu/ap
         this.baseUrl = "https://console.kaleido.io/api/v1";
 
         this.consortiumName = "KaleidoKards-SampleApp";
