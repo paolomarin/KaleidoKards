@@ -1,18 +1,47 @@
 @import './../styles/colors.scss';
+@import './../styles/etherAnimation.scss';
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed');
 
 .dashboard-header {
     background-color: $color-1;
-    width: 100%;
     height: 6rem;
     flex-shrink: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 1.5rem;
 }
 
 .dashboard-text {
     text-align: center;
     font-size: 100px;
     color: white;
-    padding-top: 200px;
 }
+
+.ether-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: darkblue;
+    margin-left: 70rem;
+    font-size: 4rem;
+    color: $color-3;
+    animation: pulsate 10s infinite;
+  
+}
+
+.ether-text {
+    font-size: 1rem;
+    margin-top: 5rem;
+    margin-left: -2.5rem;
+    color: $color-3;
+    font-family: helvetica;
+}
+
+@keyframes pulsate {
+    0%, 50%, 100% {
+        opacity: 1;
+    }
+    25%, 75% {
+        opacity: 0.75;
+    }
+};

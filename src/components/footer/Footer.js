@@ -3,7 +3,6 @@ import './Footer.scss';
 import PurchaseBtn from './../buttons/PurchaseBtn';
 import BasicPack from './../basicPack/BasicPack';
 import PlatinumPack from './../platinumPack/PlatinumPack';
-import LoaderSmall from './../loader/LoaderSmall';
 
 
 const user= 'user';
@@ -18,18 +17,25 @@ class Footer extends Component {
             value: '',
             userCards: {},
             joeCards: {},
-            visible:false
+            visible:false,
+            purchaseLoading: false,
         };
 
-        let url = this.state.value;
-
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    loading(){
+        this.setState({purchaseLoading: true});
+    }
+
+    notLoading(){
+        this.setState({purchaseLoading: false});
+    }
+
     handleChange(event) {
+
         this.setState({
-            value: event.target.value
+            value: event.currentTarget.dataset.id
         });
     }
 
@@ -37,22 +43,11 @@ class Footer extends Component {
         event.preventDefault();
     }
 
-    // smallLoader() {
-    //     this.setState({
-    //         visible:true
-    //     })
-    // }
-
-    // disappear() {
-    //     this.setState({
-    //         visible:!this.state.visible
-    //     })
-    // }
 
     buyKards(purchaser) {
 
         // this.smallLoader();
-        window.fetch(this.state.value, {
+        return window.fetch(this.state.value, {
             body: JSON.stringify({purchaser: purchaser}),
             method: "POST",
             headers: {
@@ -62,7 +57,6 @@ class Footer extends Component {
             return results.json();
         }).then(resultBody => {
             if (resultBody && resultBody.receipt && resultBody.receipt.status) {
-                // this.disappear();
                 this.props.refreshKards();
             }
             return resultBody;
@@ -70,29 +64,36 @@ class Footer extends Component {
     }
 
     clickPurchaseBtn() {
-
-        this.buyKards('user');
-        this.buyKards('joe');
-        // TODO: Need to update shown ether amount
+        this.loading();
+        let buyPromises = Promise.all([
+            this.buyKards('user'),
+            this.buyKards('joe')]);
+        buyPromises.then(() => this.notLoading()); // TODO: not this bc ignores errors
     }
 
 
     render() {
+
         return( 
             <div className="footer">
-                <div className="footer-cards">
-                    <BasicPack/>
-                    <PlatinumPack/>
-                    <LoaderSmall show={this.state.visible}/>
-                </div>
+                <h2 className="store"> Store </h2>
                 <div className="selection">
                     <form className="form" onSubmit= {this.handleSubmit}>
-                        <select className="select-options" id="pack-type" value={this.state.value} onChange={this.handleChange}>
-                            <option> Pick your pack: </option>
-                            <option value="/purchase/standard"> Basic Pack </option>
-                            <option value="/purchase/platinum"> Platinum Pack </option>
-                        </select>
-                        <PurchaseBtn click={this.clickPurchaseBtn.bind(this)} type="submit" value="Submit" />
+                     <div>
+                           <ul className="unordered-list-style">
+                                <li onClick={this.handleChange.bind(this)} data-id="/purchase/standard">
+                                    <BasicPack/>
+                                </li>
+                                <li onClick={this.handleChange.bind(this)} data-id="/purchase/platinum">
+                                    <PlatinumPack/>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <PurchaseBtn loading={this.state.purchaseLoading}
+                                     click={this.clickPurchaseBtn.bind(this)}
+                                     type="submit" value="Submit"
+                                     onSubmit= {this.handleSubmit} />
                     </form>
                 </div>
             </div> 

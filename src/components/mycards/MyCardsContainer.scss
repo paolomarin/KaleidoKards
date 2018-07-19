@@ -10,10 +10,7 @@
 .my-card-container {
     display: flex;
     flex-wrap: wrap;
-    overflow: auto;
     flex-shrink: 0;
-    justify-content: space-around;
-    padding-top:2rem;
-    padding-right: 4rem;
-    padding-left: 4rem;
+    justify-content: space-evenly;
+    padding-top:.4rem;
 }

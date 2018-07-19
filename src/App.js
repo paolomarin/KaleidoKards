@@ -9,6 +9,8 @@ import MyCardsContainer from './components/mycards/MyCardsContainer';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import ProposePopup from './components/modal/proposeTradePopUp';
+import Checkmark from './components/loader/Checkmark';
+import Dashboard from './components/dashboardPopUP/Dashboard';
 
 const userGetKards = `/kards/user`;
 const joeGetKards = `/kards/joe`;
@@ -21,53 +23,50 @@ class App extends Component {
             myKards: {},
             joeKards: {},
             myProposedCard: [],
-            joeProposedCard:[]
+            joeProposedCard:[],
+            ether: '',
+            visible: true
         };
         this.refreshKards();
     }
 
     collectCards(card) {
         let cardId= parseInt(card.id);
-      
 
-        if(this.state.myKards.kards[cardId]) {
+        if (this.state.myKards.kards[cardId]) {
             this.setState({
                 myProposedCard: this.state.myKards.kards[cardId]
-            })
+            });
 
             this.setState(prevState=> {
                 let myCardsNow= prevState.myKards;
                 delete this.state.myKards.kards[cardId];
                 return this.state.myKards;
-            })
+            });
+            //This is getting rid of the card in the container as you drag it to the trading container
 
-
-        }else if(this.state.joeKards.kards[cardId]) {
+        } else if (this.state.joeKards.kards[cardId]) {
             this.setState({
                 joeProposedCard: this.state.joeKards.kards[cardId]
-            })
+            });
 
             this.setState(prevState=> {
                 let joeCardsNow= prevState.joeKards;
                 delete this.state.joeKards.kards[cardId];
                 return this.state.joeKards;
-            })
+            });
+            //This is getting rid of the card in the container as you drag it to the trading container
         }
-     
-     }
+    }
 
-  emptyTradeCards() {
+    emptyTradeCards() {
       this.setState({
         myProposedCard: [],
-        joeProposedCard:[]
+        joeProposedCard: []
       })
-    
-  }
 
+    }
 
-
-
-    
     refreshKards() {
         window.fetch( userGetKards, {
             method: "GET",
@@ -99,36 +98,41 @@ class App extends Component {
         }).then(results => {
             return results.json();
         }).then(resultBody => {
-            document.getElementById("etherAmount").innerText = resultBody.balance;
+            this.setState({ether: resultBody.balance})
         });
+    }
+
+    clickOut() {
+        this.setState({visible:false})
     }
 
     render() {
         //TODO: change h1/h2
         return (
           <div>
+            <Dashboard  visible={this.state.visible} click={this.clickOut.bind(this)}/>
             <div>
-            <Header/>
-            <ProposePopup 
-            myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
-            empty={this.emptyTradeCards.bind(this)}
-            />
+            <Header etherAmount={this.state.ether}/>
               <div className="square-container">
-                <div className="other-players-cards">
-                  <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>
-                </div>
-                <div className="column-container">
-                  <div className="ether">
-                  <p id="etherAmount" className="amount-of-ether"/>
-                  <p className="text-style">Ether</p>
-                  </div>
-                  <div className="my-cards">
-                    <h2 className="my-cards-title header-text">My Cards</h2>
+                <div className="my-cards">
+                    <h2>My Cards</h2>
                        <MyCardsContainer data={this.state.myKards} trade={(card)=>this.collectCards(card)}/>
                   </div>
+
+                <div classname="middle-container">
+                    <ProposePopup 
+                        myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
+                        empty={this.emptyTradeCards.bind(this)}
+                        smartContractAddress={this.props.location.state.ContractAddress}
+                    />
+                </div>
+                  <div className="other-players-cards">
+                <h2>Joe's Cards</h2>
+                  <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>
                 </div>
               </div>
             </div>
+            <Checkmark/>
             <Footer refreshKards={this.refreshKards.bind(this)}/>
           </div>
         );

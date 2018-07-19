@@ -5,6 +5,7 @@ var controller = new (require('./controller.js'))();
 controller.checkKeyFile();
 
 app.use('/', express.static(__dirname + '/dist'));
+app.use('/app', express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
@@ -13,13 +14,17 @@ app.use(function(req, res, next) {
     next();
 });
 
-// POST call with apiKey in body
-// Only returns contract address for now
-// NOTE: this is a long call if setting up new kaleido platform
+// POST call with apiKey in body and optional locale specified [eu, ap, ko] (Defaults to US)
 app.post('/launch', (req, res) => {
-    controller.launchAppEnv(req.body.apiKey).then((response) => {
+    controller.startLaunch(req.body.apiKey, req.body.locale).then((response) => {
         res.status(response.status).send(response.body);
     });
+});
+
+app.get('/launch/status', (req, res) => {
+    // TODO: make new controller function for getting status
+    let response = controller.getLaunchStatus();
+    res.status(response.status).send(response.body);
 });
 
 // POST call with packType in url and purchaser set in body
@@ -73,6 +78,17 @@ app.get('/balance/:owner', (req, res) => {
     }
 
     controller.getBalance(req.params.owner).then((response) => {
+        res.status(response.status).send(response.body);
+    });
+});
+
+app.get('/history/:kardId', (req, res) => {
+    if (!req.params.kardId){
+        res.status(400).send({error: "KardId not specified"});
+        return;
+    }
+
+    controller.getKardHistory(req.params.kardId).then((response) => {
         res.status(response.status).send(response.body);
     });
 });

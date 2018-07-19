@@ -17,6 +17,8 @@
     display: flex;
     justify-content: center;
     align-items:center;
+    background: transparent;
+    margin-right: .5rem;
 
     &:hover {
         transform: scale(1.1);

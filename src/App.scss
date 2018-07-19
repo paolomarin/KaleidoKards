@@ -1,4 +1,5 @@
 @import './components/styles/colors.scss';
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed');
 
 html, body {
     box-sizing:border-box;
@@ -7,7 +8,7 @@ html, body {
     width: 100%;
     display:flex;
     flex-direction: column;
-    background-color: #F5F5F5;
+    background-color: #202CE0;
     font-family: sans-serif;
 }
 #root {
@@ -17,12 +18,16 @@ html, body {
 
 h2 {
     text-align: center;
-    color: lighten($color-1, 10%);
-    font-size:40px;
+    color: #202CE0;
+    font-size: 1.5rem;
+    margin-top: -1rem;
+    font-family: "IBM Plex Sans Condensed";
 }
 
-.my-cards-title {
-    margin-top: 2rem;
+my-cards-title {
+    margin-top:2rem;
+    color:grey;
+    font-size:1rem;
 }
 
 .my-cards-container {
@@ -33,9 +38,11 @@ h2 {
 .square-container {
     display: flex;
     align-items: center;
-    padding-top:2rem;
-    padding-bottom: 2.1rem;
-    padding-left: 20rem
+    margin-right:auto;
+    margin-left:auto;
+    border-right: 2rem solid #202CE0;
+    border-bottom: 2rem solid #202CE0;
+    border-left: 2rem solid #202CE0;
    
 }
 
@@ -43,18 +50,14 @@ h2 {
     height: 20rem;
     width: 20rem;
     background-color: white;
-    /* margin-top: -10rem; */
-    padding: 2rem;
-    margin-left: auto;
+    margin-right:auto;
+    margin-left: 1rem;
     overflow: auto;
+    padding:2rem;
 }
 
-.column-container {
-    display: flex;
-    align-items: stretch;
-    flex-direction: column;
-    margin-left: 1rem;
-    margin-right: auto;
+.middle-container {
+    margin-left:1rem;
 }
 
 .ether {
@@ -67,10 +70,12 @@ h2 {
 }
 
 .my-cards {
-    height: 16rem;
-    width: 31rem;
+    height: 20rem;
+    width: 20rem;
+    margin-left: auto;
     background-color: white;
     overflow:auto;
+    padding:2rem;
 }
 
 
