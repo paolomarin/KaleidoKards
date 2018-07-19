@@ -57,7 +57,6 @@ class Footer extends Component {
             return results.json();
         }).then(resultBody => {
             if (resultBody && resultBody.receipt && resultBody.receipt.status) {
-                this.disappear();
                 this.props.refreshKards();
             }
             return resultBody;
