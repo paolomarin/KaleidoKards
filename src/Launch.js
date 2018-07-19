@@ -64,7 +64,7 @@ class Launch extends Component {
                     if (response.status) {
                         // TODO: check if status changed and show/update something on ui
                         STATUS = response.status;
-                        ContractAddress = response.contractAdress;
+                        ContractAddress = response.contractAddress;
                         if (STATUS === READY) {
                             return;
                         }

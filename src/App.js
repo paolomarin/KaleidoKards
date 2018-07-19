@@ -10,6 +10,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import ProposePopup from './components/modal/proposeTradePopUp';
 import Checkmark from './components/loader/Checkmark';
+import Dashboard from './components/dashboardPopUP/Dashboard';
 
 const userGetKards = `/kards/user`;
 const joeGetKards = `/kards/joe`;
@@ -23,7 +24,8 @@ class App extends Component {
             joeKards: {},
             myProposedCard: [],
             joeProposedCard:[],
-            ether: ''
+            ether: '',
+            visible: true
         };
         this.refreshKards();
     }
@@ -100,10 +102,15 @@ class App extends Component {
         });
     }
 
+    clickOut() {
+        this.setState({visible:false})
+    }
+
     render() {
         //TODO: change h1/h2
         return (
           <div>
+            <Dashboard  visible={this.state.visible} click={this.clickOut.bind(this)}/>
             <div>
             <Header etherAmount={this.state.ether}/>
               <div className="square-container">
