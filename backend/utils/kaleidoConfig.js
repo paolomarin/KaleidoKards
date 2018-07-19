@@ -5,7 +5,6 @@ class kaleidoConfig {
 
     // Declare some constants that we need to create kaleido platform
     constructor() {
-        //TODO: determine locale?? console-eu/ap
         this.baseUrl = "https://console.kaleido.io/api/v1";
 
         this.consortiumName = "KaleidoKards-SampleApp";
@@ -27,6 +26,8 @@ class kaleidoConfig {
 
         this.token = "";
         this.contractAddress = "";
+        this.consortiaId = "";
+        this.environmentId = "";
 
         this.previousInstance = false;
 
@@ -53,19 +54,21 @@ class kaleidoConfig {
         console.log("Creating Consortia");
         return this.createConsortia().then((response) => {
         let jsonResponse = JSON.parse(response);
-        let consortium = jsonResponse._id;
-        console.log("Created consortium with ID: " + consortium);
+        let consortia = jsonResponse._id;
+        this.consortiaId = consortia;
+        console.log("Created consortium with ID: " + consortia);
         console.log("Creating Environment");
-        return this.createEnvironment(consortium).then((response) => {
+        return this.createEnvironment(consortia).then((response) => {
             let jsonResponse = JSON.parse(response);
             let environment = jsonResponse._id;
+            this.environmentId = environment;
             console.log("Created environment with ID: " + environment);
             console.log("Creating Memberships");
             // Create the 3 memberships at once
             return Promise.all([
-                this.createMembership(consortium, this.memberUser),
-                this.createMembership(consortium, this.memberJoe),
-                this.createMembership(consortium, this.memberStore)])
+                this.createMembership(consortia, this.memberUser),
+                this.createMembership(consortia, this.memberJoe),
+                this.createMembership(consortia, this.memberStore)])
                 .then((response) => {
                     // Promise.all returns the responses for each call in an array
                     // console.log(response);
@@ -80,9 +83,9 @@ class kaleidoConfig {
                     console.log("Creating nodes");
                     // Create the 3 nodes at once
                     return Promise.all([
-                        this.createNode(consortium, environment, userMember, this.nodeUser),
-                        this.createNode(consortium, environment, joeMember, this.nodeJoe),
-                        this.createNode(consortium, environment, storeMember, this.nodeStore)])
+                        this.createNode(consortia, environment, userMember, this.nodeUser),
+                        this.createNode(consortia, environment, joeMember, this.nodeJoe),
+                        this.createNode(consortia, environment, storeMember, this.nodeStore)])
                         .then((response) => {
                             let userResponse  = JSON.parse(response[0]);
                             let joeResponse   = JSON.parse(response[1]);
@@ -90,9 +93,9 @@ class kaleidoConfig {
 
                             //Wait on all the nodes to be initialized then get their status
                             return Promise.all([
-                                this.waitForNodeInitialization(consortium, environment, userResponse._id),
-                                this.waitForNodeInitialization(consortium, environment, joeResponse._id),
-                                this.waitForNodeInitialization(consortium, environment, storeResponse._id)])
+                                this.waitForNodeInitialization(consortia, environment, userResponse._id),
+                                this.waitForNodeInitialization(consortia, environment, joeResponse._id),
+                                this.waitForNodeInitialization(consortia, environment, storeResponse._id)])
                                 .then((response) => {
                                     let userNodeStatus  = response[0];
                                     let joeNodeStatus   = response[1];
@@ -105,9 +108,9 @@ class kaleidoConfig {
                                     console.log("Created and Initialized Nodes");
                                     console.log("Generating app credentials");
                                     return Promise.all([
-                                        this.generateAppCredentials(consortium, environment, userMember),
-                                        this.generateAppCredentials(consortium, environment, joeMember),
-                                        this.generateAppCredentials(consortium, environment, storeMember)])
+                                        this.generateAppCredentials(consortia, environment, userMember),
+                                        this.generateAppCredentials(consortia, environment, joeMember),
+                                        this.generateAppCredentials(consortia, environment, storeMember)])
                                         .then((response) => {
                                             let userNodeStatus  = JSON.parse(response[0]);
                                             let joeNodeStatus   = JSON.parse(response[1]);
@@ -125,8 +128,8 @@ class kaleidoConfig {
                                             console.log("Getting Node account addresses for funding");
 
                                             return Promise.all([
-                                                this.getNodeStatus(consortium, environment, userResponse._id),
-                                                this.getNodeStatus(consortium, environment, joeResponse._id)
+                                                this.getNodeStatus(consortia, environment, userResponse._id),
+                                                this.getNodeStatus(consortia, environment, joeResponse._id)
                                             ]).then((response) => {
                                                 userNodeStatus = JSON.parse(response[0]);
                                                 joeNodeStatus = JSON.parse(response[1]);
@@ -136,8 +139,8 @@ class kaleidoConfig {
                                                 console.log("Received account addresses");
                                                 console.log("Funding accounts");
                                                 return Promise.all([
-                                                    this.fundAccount(consortium, environment, userAddress),
-                                                    this.fundAccount(consortium, environment, joeAddress)])
+                                                    this.fundAccount(consortia, environment, userAddress),
+                                                    this.fundAccount(consortia, environment, joeAddress)])
                                                     .then((receipts) => {
                                                         // receipts is the transaction receipts from funding the accounts
                                                         console.log("Accounts funded, Writing keyfile");
@@ -253,6 +256,8 @@ class kaleidoConfig {
         const fs = require("fs");
 
         let keys = {
+            consortia: this.consortiaId,
+            environment: this.environmentId,
             contractAddress: this.contractAddress,
             user_node: {urls: this.userNodeUrls, username: this.userNodeUser, password: this.userNodePass},
             joe_node: {urls: this.joeNodeUrls, username: this.joeNodeUser, password: this.joeNodePass},
