@@ -8,10 +8,10 @@ class RegionButton extends Component{
     }
 
     render(){
-        const { region } = this.props;
+        const { region, title } = this.props;
         return <div className="region-button-component" >
                 <div className={`flag-icon flag-icon-${region} region-flag`}></div>
-                {/* <div className='region-title'>{title}</div> */}
+                <div className='region-title'>{title}</div>
         </div>
     }
 } 

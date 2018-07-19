@@ -6,6 +6,11 @@ import {ItemTypes } from './../card/Constant';
 import { DropTarget } from 'react-dnd';
 import Card from './../card/Card';
 import LoadingDots from "../loading/loadingDots";
+import Checkmark from './../loader/Checkmark';
+import InvokingSmartContract from './../loader/InvokingSmartContract';
+import Deny from './../loader/Deny';
+import './../loader/InvokingSmartContract.scss';
+import JoeDenied from './../loader/JoeDenied';
 require('babel-polyfill');
 
 const ACCEPT = 1;
@@ -33,6 +38,10 @@ class ProposePopup extends Component {
 
         this.state={
             tradeLoading: false,
+            checkmark:false,
+            words: false,
+            ex:false,
+            denied: false
         };
     }
 
@@ -69,7 +78,7 @@ class ProposePopup extends Component {
         userKard= this.props.myKards;
         joeKard= this.props.joeKards;
         //send my kard to joe
-
+        setTimeout(() => this.afterCheckmark(),2000);
         return await Promise.all([
             this.transfer(JOE, USER, joeKard.id),
             this.transfer(USER, JOE, userKard.id),
@@ -120,11 +129,17 @@ class ProposePopup extends Component {
         // TODO: Change notification system (no alert, show text or something)
         let random = this.random();
         if (random === DENY) {
-            alert('Trade denied');
+            this.tradeDenied();
+            this.joeDenied();
+            setInterval(() => this.joeTextDisappear(), 4000);
+            setInterval(() => this.exmarkDisappear(), 4000);
+
             //TODO: return cards to their former spots?
             return await [];
         } else if (random === ACCEPT) {
-            alert('Trade accepted');
+            // alert('Trade accepted')
+            this.tradeAccepted();
+            setInterval(() => this.checkmarkDisappear(), 2000);
             return await this.trade();
         }
     }
@@ -138,6 +153,7 @@ class ProposePopup extends Component {
             this.notLoading();
             this.props.refresh();
             this.props.empty();
+            this.wordsDisappear();
         });
     }
 
@@ -147,6 +163,54 @@ class ProposePopup extends Component {
 
     notLoading(){
         this.setState({tradeLoading: false});
+    }
+
+    tradeAccepted() {
+        this.setState({
+            checkmark:true
+        })
+    }
+
+    tradeDenied() {
+        this.setState({
+            ex:true
+        })
+    }
+
+    joeDenied() {
+        this.setState({
+            denied:true
+        })
+    }
+
+    joeTextDisappear() {
+        this.setState({
+            denied:false
+        })
+    }
+
+    exmarkDisappear() {
+        this.setState({
+            ex:false
+        })
+    }
+
+    afterCheckmark() {
+        this.setState({
+            words:true
+        })
+    }
+
+    wordsDisappear() {
+        this.setState({
+            words:false
+        })
+    }
+
+    checkmarkDisappear() {
+        this.setState({
+            checkmark:false
+        })
     }
 
 
@@ -167,7 +231,11 @@ class ProposePopup extends Component {
 
         return connectDropTarget(
             <div className="propose-background" style={backgroundStyle} kard={this.props.myKards} card={this.props.joeKards}>
+                <InvokingSmartContract visible={this.state.words} contract={this.props.smartContractAddress}/>
+                <JoeDenied visible={this.state.denied}/>
                 {this.showMyCard()}
+                <Checkmark visible={this.state.checkmark}/>
+                <Deny visible={this.state.ex}/>
                 <button className={this.state.tradeLoading ? "propose-button disabled" : "propose-button"} onClick={this.proposeThisTrade.bind(this)}>
                     <LoadingDots visible={this.state.tradeLoading} text="Propose Trade"/>
                 </button>

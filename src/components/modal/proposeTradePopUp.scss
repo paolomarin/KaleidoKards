@@ -32,6 +32,10 @@
 
 }
 
+.propose-button:focus {
+    outline:none;
+}
+
 .card-name {
     margin-bottom:.7rem;
     margin-right: .4rem;
@@ -41,7 +45,7 @@
 
 
 .dashed-card-border {
-    border: 1px dashed lightgrey;
+    border: 1px dashed #202CE0;
     width: 5rem;
     height: 7rem;
     margin-right: 4rem;

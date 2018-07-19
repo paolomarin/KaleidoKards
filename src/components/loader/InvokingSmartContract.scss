@@ -1,0 +1,56 @@
+@keyframes typing {from {
+     width: 0; 
+}to {
+    width:50%
+} }
+
+@keyframes blink-caret { 50% {
+    border-color: transparent; 
+} }
+.smart-contract-container {
+    width:80%;
+    height:6rem;
+    overflow:hidden;
+    contain: content;
+    display:flex;
+    position:absolute;
+    top:2rem;
+    left:2.5rem;
+    
+}
+.smart-contract-text {
+    font:bold 300% Consolas, Monaco, monospace;
+    border-right: .5em solid #202CE0;
+    width: 2rem;
+    width: 36ch;
+    overflow:hidden;
+    letter-spacing: .1em;
+    // margin: 2em -6em;
+    white-space: nowrap;
+    color: #202CE0;
+    position:absolute;
+    top: 3rem;
+    font-size: .8rem;
+    animation: typing 1s steps(21, end),
+               blink-caret .5s step-end infinite alternate; 
+}
+
+.smart-contract {
+    font:bold 300% Consolas, Monaco, monospace;
+    border-right: .2em solid #202CE0;
+    width: 2rem;
+    width: 38ch;
+    overflow:hidden;
+    letter-spacing: .1em;
+    // margin: 2em -6em;
+    white-space: nowrap;
+    color: #202CE0;
+    position:absolute;
+    top: 4rem;
+    font-size: .8rem;
+    animation-delay:10s;
+    animation: typing 5s steps(21,end),
+               blink-caret .5s step-end infinite alternate; 
+}
+
+

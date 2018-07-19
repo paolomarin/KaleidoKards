@@ -116,6 +116,7 @@ class App extends Component {
                     <ProposePopup 
                         myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
                         empty={this.emptyTradeCards.bind(this)}
+                        smartContractAddress={this.props.location.state.ContractAddress}
                     />
                 </div>
                   <div className="other-players-cards">

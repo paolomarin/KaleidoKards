@@ -1,125 +1,35 @@
-$color-body: white;
-$color-accent: darkblue;
-$color-input:#202CE0;
+.region-labels {
+    font-size: 1.6rem;
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 500;
+    margin-right: 2rem;
+    &:hover {
+        cursor:pointer;
+    }
 
-.radio{
-    position: fixed;
-    left: -10rem;
-}
-
-//labels disappear
-
-.not-radio {
-    appearance: none;
-    background-color: $color-body;
-    display: block;
-    transition: 300ms ease;
-    border: 0;
-    max-height: 0;
-    margin: 0;
-    padding: 0 10px;
-    overflow: hidden;
-    width: 18rem;
-    opacity: 0;
-    font-size: .5rem;
-    text-align: center;
-    outline: 0;
-    visibility:hidden;
-}
-
-//show input based on radio selection
-
-[id="sign-in"]:checked ~ div.sign-in,
-[id="sign-up"]:checked ~ div.sign-up,
-[id="reset"]:checked ~ div.reset {
-    max-height: 2rem;
-    padding: 1rem;
-    margin: .8rem 0;
-    opacity:1;
-    border:none;
-    display: flex;
-    align-items:center;
-    background-color: $color-body;
-}
-
-//show button text based on radio selection
-[id="sign-in"]:checked ~ button:before {content: 'Sign In';}
-[id="sign-up"]:checked ~ button:before {content: 'Sign Up';}
-[id="reset"]:checked ~ button:before {content: 'Reset password';}
-
-label {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    font-weight: 700;
-    cursor: pointer;
-    color: $color-accent;
-    transition: 100ms ease;
-    width: 6rem;
-    margin-right: .5rem;
-
-    //pointer arrow
-
-    // &:after {
-    //     content: '';
-    //     border: 1rem solid transparent;
-    //     position: absolute;
-    //     bottom: -1rem;
-    //     right: 1.8rem;
-    //     transition: inherit;
-    // }
-}
-
-// set active label marker
-
-[id="sign-in"]:checked ~ [for="sign-in"],
-[id="sign-up"]:checked ~ [for="sign-up"],
-[id="reset"]:checked ~ [for="reset"] {
-    color: lighten($color-body, 10%);
-    &:after {
-        border-bottom-color: $color-body;
+    &:focus {
+        outline:none;
+        color:darkblue;
     }
 }
 
-[id="sign-in"]:checked ~ .not-radio.sign-in,
-[id="sign-up"]:checked ~ .not-radio.sign-up,
-[id="reset"]:checked ~ .not-radio.reset {
-    visibility: visible;
-}
-
-
-
-//flex does not work well on fieldset-- so we use a styling wrapper
-
-.flex-wrap {
+.region-container {
     display: flex;
-    margin-right: auto;
+    flex-direction: column;
+    margin-right:28rem;
     margin-left:auto;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    height: 20rem;
-    text-align:center;
-    background-color: transparent;
-    font-size: 1rem;
 }
 
-.region-text {
-    color:darkblue;
-    margin-bottom: 1rem;
+.region-buttons-container {
+    margin-top:4rem;
+    display:flex;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+.regions-go-here {
     margin-right: auto;
     margin-left: auto;
-    font-size: 2.4rem;
-}
-
-fieldset {
-    border:none;
-}
-form {
-    height: 100%;
-}
-
-.color-text {
-    color: $color-input;
-    font-weight: 700;
 }

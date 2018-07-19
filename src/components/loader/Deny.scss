@@ -1,16 +1,16 @@
-$color--green: #7ac142;
+$color--red: red;
 $curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
 
-.checkmark__circle {
+.exmark__circle {
     stroke-dasharray: 166;
     stroke-dashoffset: 166;
     stroke-width: 2;
-    stroke: $color--green;
+    stroke: $color--red;
     fill: none;
     animation: stroke .6s $curve forwards;
 }
 
-.checkmark {
+.exmark{
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -19,11 +19,11 @@ $curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
     stroke: #fff;
     stroke-miterlimit: 10;
     margin-left: -21.9rem;
-    box-shadow: inset 0px 0px 0px $color--green;
-    animation: filling .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    box-shadow: inset 0px 0px 0px $color--red;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
 }
 
-.checkmark__check {
+.exmark__check {
     transform-origin: 50% 50%;
     stroke-dasharray: 48;
     stroke-dashoffset: 48;
@@ -45,9 +45,9 @@ $curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
     }
 }
 
-@keyframes filling {
+@keyframes fill {
     100% {
-        box-shadow: inset 0px 0px 0px 30px $color--green;
+        box-shadow: inset 0px 0px 0px 30px $color--red;
     }
 
 }

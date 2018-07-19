@@ -95,9 +95,8 @@
     transition: opacity 0.35s ease-out, width 0.5s ease-out, background 0.25s ease-out;
    
     &:hover {
-        background-color:white;
-        border: 1px solid darkblue;
-        color: darkblue;
+        background-color:#202CE0;
+        color: white;
         cursor: pointer;
         transition: all 0.3s ease-out;
 	}
