@@ -7,6 +7,7 @@ require("babel-polyfill");
 
 let STATUS = "";
 let READY = "Ready";
+let ContractAddress = "";
 
 class Launch extends Component {
 
@@ -26,7 +27,10 @@ class Launch extends Component {
 
     goToDashboard() {
         if (STATUS === READY && !this.state.showIntroVideo) {
-            this.props.history.push('/app');
+            this.props.history.push({
+                pathname:'/app',
+                state: {ContractAddress : ContractAddress}
+            });
         }
     }
     
@@ -44,6 +48,7 @@ class Launch extends Component {
                 throw new Error(resultBody.error.toString())
             } else if (resultBody.status && resultBody.status === READY) {
                 STATUS = READY;
+                ContractAddress = resultBody.contractAddress;
                 // If the first call returns a status of ready then the background has
                 // already ran before and has a platform and contract. So we don't
                 // need to automatically show the video
@@ -59,6 +64,7 @@ class Launch extends Component {
                     if (response.status) {
                         // TODO: check if status changed and show/update something on ui
                         STATUS = response.status;
+                        ContractAddress = response.contractAddress;
                         if (STATUS === READY) {
                             return;
                         }

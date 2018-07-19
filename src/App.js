@@ -9,6 +9,8 @@ import MyCardsContainer from './components/mycards/MyCardsContainer';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import ProposePopup from './components/modal/proposeTradePopUp';
+import Checkmark from './components/loader/Checkmark';
+import Dashboard from './components/dashboardPopUP/Dashboard';
 
 const userGetKards = `/kards/user`;
 const joeGetKards = `/kards/joe`;
@@ -22,7 +24,8 @@ class App extends Component {
             joeKards: {},
             myProposedCard: [],
             joeProposedCard:[],
-            ether: ''
+            ether: '',
+            visible: true
         };
         this.refreshKards();
     }
@@ -99,10 +102,15 @@ class App extends Component {
         });
     }
 
+    clickOut() {
+        this.setState({visible:false})
+    }
+
     render() {
         //TODO: change h1/h2
         return (
           <div>
+            <Dashboard  visible={this.state.visible} click={this.clickOut.bind(this)}/>
             <div>
             <Header etherAmount={this.state.ether}/>
               <div className="square-container">
@@ -115,6 +123,7 @@ class App extends Component {
                     <ProposePopup 
                         myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
                         empty={this.emptyTradeCards.bind(this)}
+                        smartContractAddress={this.props.location.state.ContractAddress}
                     />
                 </div>
                   <div className="other-players-cards">
@@ -123,6 +132,7 @@ class App extends Component {
                 </div>
               </div>
             </div>
+            <Checkmark/>
             <Footer refreshKards={this.refreshKards.bind(this)}/>
           </div>
         );

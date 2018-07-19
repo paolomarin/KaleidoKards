@@ -3,7 +3,6 @@ import './Footer.scss';
 import PurchaseBtn from './../buttons/PurchaseBtn';
 import BasicPack from './../basicPack/BasicPack';
 import PlatinumPack from './../platinumPack/PlatinumPack';
-import LoaderSmall from './../loader/LoaderSmall';
 
 
 const user= 'user';
@@ -58,7 +57,6 @@ class Footer extends Component {
             return results.json();
         }).then(resultBody => {
             if (resultBody && resultBody.receipt && resultBody.receipt.status) {
-                // this.disappear();
                 this.props.refreshKards();
             }
             return resultBody;

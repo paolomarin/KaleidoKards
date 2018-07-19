@@ -60,6 +60,12 @@ class LaunchDesign extends Component {
                     <img src={TriangleShape} className="triangle-shape-one"/>
                 </div> 
 
+
+                <div className="square-five"> 
+                    <img src={SquareShape} className="square-shape-five"/>
+                </div>
+
+
             </div>
         )
     }
