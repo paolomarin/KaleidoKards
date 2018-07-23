@@ -112,7 +112,6 @@ class App extends Component {
           <div>
             <Dashboard  visible={this.state.visible} click={this.clickOut.bind(this)}/>
             <div>
-            {/* <Header etherAmount={this.state.ether}/> */}
               <div className="square-container">
                 <div className="my-cards">
                     <h2>My Cards</h2>
