@@ -1,0 +1,93 @@
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes loading {
+  from {opacity: .25;}
+  to {opacity: .9;}
+}
+
+/* Standard syntax */
+@keyframes loading {
+  from {opacity: .25;}
+  to {opacity: .9;}
+}
+
+%launch-status-item {
+  display: inline-block;
+  //width: 33.33333%;
+  background-size: 757px 296px;
+  background-repeat: no-repeat;
+  height: -webkit-fill-available;
+  height: 300px;
+  width: 256px;
+}
+
+%launch-status-item-loading {
+  opacity: .9;
+  background-image: url("./launch-loading.png");
+}
+
+%launch-status-item-ready {
+  background-image: url("./launch-ready.png");
+}
+
+%kaleido {
+  background-position: 1px 3px;
+}
+
+.kaleido-loading {
+  @extend %launch-status-item;
+  @extend %launch-status-item-loading;
+  @extend %kaleido;
+}
+
+.kaleido-ready {
+  @extend %launch-status-item;
+  @extend %launch-status-item-ready;
+  @extend %kaleido;
+}
+
+%contract {
+  background-position: -255px 3px;
+}
+
+.contract-loading {
+  @extend %launch-status-item;
+  @extend %launch-status-item-loading;
+  @extend %contract;
+}
+
+.contract-ready {
+  @extend %launch-status-item;
+  @extend %launch-status-item-ready;
+  @extend %contract;
+}
+
+%status {
+  background-position: -501px 3px;
+}
+
+.status-loading {
+  @extend %launch-status-item;
+  @extend %launch-status-item-loading;
+  @extend %status;
+}
+
+.status-ready {
+  @extend %launch-status-item;
+  @extend %launch-status-item-ready;
+  @extend %status;
+}
+
+.active-loading {
+  -webkit-animation-name: loading; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+  animation-name: loading;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.status-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 1rem 0;
+}
