@@ -9,8 +9,8 @@
 	background-color:transparent;
 	height: 100vh;
     display: flex;
-    margin-right: auto;
-    margin-left: auto;
+    // margin-right: auto;
+    // margin-left: auto;
 }
 
 .background-wrapper-image {
@@ -28,16 +28,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    // padding: 2rem;
 }
 
 
 // Launch Form +++++++++++++++++++++++++++++++++
 
 .launch-button-form {
-	position: relative;
-	width: 30rem;
-	height: 4rem;
+    position: absolute;
+    top: 16.5rem;
+    left: 21rem;
+    width: 30rem;
+    height: 4rem;
 }
 
 .api-key {

@@ -16,10 +16,15 @@
 }
 
 .region-container {
+    position: absolute;
+    top: 20rem;
+    left: 22rem;
     display: flex;
     flex-direction: column;
-    margin-right:28rem;
-    margin-left:auto;
+    width: 32rem;
+    height: 10rem;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .region-buttons-container {
