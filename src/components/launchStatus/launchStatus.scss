@@ -13,11 +13,11 @@
 %launch-status-item {
   display: inline-block;
   //width: 33.33333%;
-  background-size: 757px 296px;
+  background-size: 13rem 5rem;
   background-repeat: no-repeat;
   height: -webkit-fill-available;
-  height: 300px;
-  width: 256px;
+  height: 14rem;
+  width: 14rem;
 }
 
 %launch-status-item-loading {
@@ -30,7 +30,10 @@
 }
 
 %kaleido {
-  background-position: 1px 3px;
+  // background-position: 1px 3px;
+  position: absolute;
+  top: 10rem;
+  right: 37rem;
 }
 
 .kaleido-loading {
