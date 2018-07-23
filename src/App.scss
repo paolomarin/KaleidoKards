@@ -38,7 +38,9 @@ my-cards-title {
 .square-container {
     display: flex;
     align-items: center;
+    margin-top: 2rem;
     margin-right:auto;
+    margin-bottom:10rem;
     margin-left:auto;
     border-right: 2rem solid #202CE0;
     border-bottom: 2rem solid #202CE0;
@@ -86,4 +88,16 @@ my-cards-title {
 
 .text-style {
     font-size:1.5rem;
+}
+
+.middle-white-container {
+    background: white;
+    border-right: 3rem solid #202CE0;
+    border-left: 3rem solid #202CE0;
+    width: 70rem;
+    height: 8rem;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: -11rem;
+    margin-bottom: 1rem;
 }

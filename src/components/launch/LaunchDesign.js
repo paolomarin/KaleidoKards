@@ -5,6 +5,11 @@ import TriangleShape from './Triangle.svg';
 import CircleShape from './Circle.svg';
 import DiamondShape from './Diamond.svg';
 import SquareShape from './Square.svg';
+import TriangleBlue from './TriangleBlue.png';
+import SquareOrange from './SquareOrange.png';
+import TrianglePink from './TrianglePink.png';
+import SquareGreen from './SquareGreen.png';
+import DiamondPink from './DiamondPink.png';
 
 class LaunchDesign extends Component {
 
@@ -18,7 +23,10 @@ class LaunchDesign extends Component {
                    <img src={StarShape} className="star-shape-image"/>
                 </div>
                 <div className="square-two"> 
-                    <img src={SquareShape} className="square-shape-two"/>
+                    <img src={SquareGreen} className="square-shape-two"/>
+                </div>
+                <div className="square-shape-two">
+                    <img src={DiamondPink} className="star-shape-design square-pink"/>
                 </div>
                 <div>
                     <img src={CircleShape} className="circle-shape-three"/>
@@ -39,10 +47,10 @@ class LaunchDesign extends Component {
                     <img src={SquareShape} className="square-shape-three"/>
                 </div>
                 <div> 
-                    <img src={TriangleShape} className="triangle-shape-two"/>
+                    <img src={TrianglePink} className="triangle-shape-two"/>
                 </div> 
                 <div className="square-four"> 
-                    <img src={SquareShape} className="square-shape-four"/>
+                    <img src={SquareOrange} className="square-shape-four"/>
                 </div>
 
                 <div>
@@ -57,7 +65,7 @@ class LaunchDesign extends Component {
                     <img src={CircleShape} className="circle-shape-two"/>
                 </div>  
                 <div> 
-                    <img src={TriangleShape} className="triangle-shape-one"/>
+                    <img src={TriangleBlue} className="triangle-shape-one"/>
                 </div> 
 
 

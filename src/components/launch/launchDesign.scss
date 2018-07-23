@@ -39,8 +39,10 @@
 }
 
 .diamond-shape-one {
+    position: absolute;
+    top: 25rem;
+    left: 12rem;
     animation: glitter 10s linear 0s infinite normal;
-    margin-left: 8rem;
 }
 
 .circle-shape-three {
@@ -53,13 +55,24 @@
     margin-right: 14rem;
     width: 3rem;
     height: 3rem;
+    opacity: .4;
+}
+
+.square-pink {
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    top: 6rem;
+    left: 8rem;
 }
 
 .circle-shape-two {
-    margin-left: 24rem;
+    position: absolute;
+    top: 36rem;
+    left: 17rem;
     width: 3rem;
     height: 3rem;
-    opacity:.5;
+    opacity: .5;
     animation:  glitter 10s linear 0s infinite normal;
 }
 
@@ -87,6 +100,17 @@
     margin-left:-3rem;
     width:2rem;
     height:2rem;
+    position: absolute;
+    top: 40rem;
+    left: 12rem;
+}
+
+.square-shape-four {
+    width: 3rem;
+    height: 3rem;
+    position:absolute;
+    top:32rem;
+    left:10rem;
 }
 
 

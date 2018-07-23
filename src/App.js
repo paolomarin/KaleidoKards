@@ -112,7 +112,7 @@ class App extends Component {
           <div>
             <Dashboard  visible={this.state.visible} click={this.clickOut.bind(this)}/>
             <div>
-            <Header etherAmount={this.state.ether}/>
+            {/* <Header etherAmount={this.state.ether}/> */}
               <div className="square-container">
                 <div className="my-cards">
                     <h2>My Cards</h2>
@@ -131,6 +131,11 @@ class App extends Component {
                   <TradingContainer moredata={this.state.joeKards} trade={(card) => this.collectCards(card)}/>
                 </div>
               </div>
+            </div>
+            <div className="middle-white-container">
+                <div className="ether-left">{this.state.ether}</div>
+                <h3 className="ether-text"> Ξ </h3>
+
             </div>
             <Checkmark/>
             <Footer refreshKards={this.refreshKards.bind(this)}/>
