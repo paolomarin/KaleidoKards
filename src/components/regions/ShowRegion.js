@@ -4,28 +4,27 @@ import RegionButton from './RegionButton';
 
 const titleMap = {'us': 'Ohio', 'de': 'Frankfurt', 'kr': 'Seoul', 'au': 'Sydney'};
 
-
 class ShowRegion extends Component {
     
     renderRegion() {
         let regionArray=this.props.regions.split(",");
+        let self = this;
         return(
             <div className="region-style">
             {regionArray.map(function(element) {
-                return <RegionButton region={element} title={titleMap[element]}/>
+                return <RegionButton region={element} title={titleMap[element]} value={element} regionClickHandler={self.props.regionClick}/>
             })}
 
             </div>
         )
     }
  
-     render() {
-         if(this.props.visible) {
-         return this.renderRegion()
+    render() {
+        if (this.props.visible) {
+            return this.renderRegion()
+        }
+    return null;
     }
- 
-        return null;
-     }
- }
- 
- export default ShowRegion;
+}
+
+export default ShowRegion;
