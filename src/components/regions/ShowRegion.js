@@ -12,7 +12,7 @@ class ShowRegion extends Component {
         return(
             <div className="region-style">
             {regionArray.map(function(element) {
-                return <RegionButton region={element} title={titleMap[element]} value={element} regionClickHandler={self.props.regionClick}/>
+                return <RegionButton selected={self.props.selected} region={element} title={titleMap[element]} value={element} regionClickHandler={self.props.regionClick}/>
             })}
 
             </div>

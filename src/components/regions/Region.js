@@ -34,7 +34,7 @@ class Region extends Component {
              </div>
 
              <div className="regions-go-here">
-                 <ShowRegion regions={this.state.region} visible={this.state.regionVisible} regionClick={this.props.regionSelect}/>
+                 <ShowRegion selected={this.props.selectedLocale} regions={this.state.region} visible={this.state.regionVisible} regionClick={this.props.regionSelect}/>
              </div>
 
              </div>

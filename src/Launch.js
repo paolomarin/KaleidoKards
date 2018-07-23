@@ -9,6 +9,7 @@ require("babel-polyfill");
 let READY = "Ready";
 let contractAddress = "";
 
+// Map between flag codes and api endpoints
 const regionMap = {"us": "", "de": "eu", "kr": "ko", "au": "ap"};
 
 class Launch extends Component {
@@ -39,8 +40,10 @@ class Launch extends Component {
     }
     
     clickLaunchBtn() {
+        let locale = regionMap[this.state.locale];
+
         window.fetch("/launch", {
-            body: JSON.stringify({apiKey: this.apiKey, locale: this.state.locale}),
+            body: JSON.stringify({apiKey: this.apiKey, locale: locale}),
             method: "POST",
             headers: {
                 'content-type': 'application/json'
@@ -109,7 +112,7 @@ class Launch extends Component {
     }
 
     handleRegionClick(selection) {
-        this.setState({locale: regionMap[selection]});
+        this.setState({locale: selection});
     }
 
     render() {
@@ -123,7 +126,7 @@ class Launch extends Component {
                         <input className="api-key" onChange={this.updateApiKey.bind(this)} type="text" required="" placeholder="Paste Api Key Here"/>
                         <button className="launch-button" onClick={this.clickLaunchBtn.bind(this)}>Launch</button>
                     </label>
-                    <Region regionSelect={this.handleRegionClick.bind(this)}/>
+                    <Region selectedLocale={this.state.locale} regionSelect={this.handleRegionClick.bind(this)}/>
                 </div>
             </div>
         );
