@@ -6,7 +6,6 @@ import IntroVideo from "./components/video/IntroVideo";
 import LaunchStatus from "./components/launchStatus/launchStatus";
 require("babel-polyfill");
 
-// let STATUS = "";
 let READY = "Ready";
 let ContractAddress = "";
 
