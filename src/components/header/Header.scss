@@ -22,7 +22,6 @@
     align-items: center;
     justify-content: center;
     color: darkblue;
-    margin-left: 70rem;
     font-size: 4rem;
     color: $color-3;
     animation: pulsate 10s infinite;
@@ -30,11 +29,10 @@
 }
 
 .ether-text {
-    font-size: 1rem;
-    margin-top: 5rem;
-    margin-left: -2.5rem;
+    font-size: 1.3rem;
     color: $color-3;
     font-family: helvetica;
+    margin-top:0;
 }
 
 @keyframes pulsate {

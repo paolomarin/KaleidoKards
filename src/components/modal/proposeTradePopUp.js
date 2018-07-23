@@ -231,6 +231,7 @@ class ProposePopup extends Component {
 
         return connectDropTarget(
             <div className="propose-background" style={backgroundStyle} kard={this.props.myKards} card={this.props.joeKards}>
+                <h2 className="trade-text"> Trade</h2>
                 <InvokingSmartContract visible={this.state.words} contract={this.props.smartContractAddress}/>
                 <JoeDenied visible={this.state.denied}/>
                 {this.showMyCard()}

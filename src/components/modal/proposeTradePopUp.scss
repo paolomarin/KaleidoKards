@@ -1,4 +1,5 @@
 @import './../styles/colors.scss';
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed');
 
 .close-propose {
     margin-top: -1rem;
@@ -54,4 +55,11 @@
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
+}
+
+.trade-text {
+    font-family: 'IBM Plex Sans Condensed';
+    position: absolute;
+    top: 2.5rem;
+    left: 8rem;
 }
