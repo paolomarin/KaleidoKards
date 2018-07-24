@@ -260,6 +260,7 @@ class Controller {
         })
     }
 
+    // Returns the event history for a given kardId
     getKardHistory(kardId) {
         let response = {status: 400, body: {}};
         return new Promise(resolve => {
@@ -268,6 +269,24 @@ class Controller {
                 response.body = history;
                 resolve(response);
             }).catch((error) => {
+                response.status = 500;
+                response.body.error = error;
+                resolve(response);
+            });
+        })
+    }
+
+    // Returns all events from the contract from the 'owner' node
+    getEventHistory(owner) {
+        let response = {status: 400, body: {}};
+        return new Promise(resolve => {
+            this.kaleidoKardsInstance.getEventHistory(owner + '_node').then((history) => {
+                response.status = 200;
+                response.body = history;
+                resolve(response);
+            }).catch((error) => {
+                console.log("error in controller");
+                console.log(error);
                 response.status = 500;
                 response.body.error = error;
                 resolve(response);
