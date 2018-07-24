@@ -6,7 +6,7 @@ KaleidoKards is a lightweight application using React for frontend browser inter
 
 The application runs on [Glitch](https://glitch.com/about/), a platform providing a free and secure deployment pipeline that also contains an interactive code editor for rapid development and ideation.  Each application instance is provisioned a unique URL, with key files and data stores isolated to that namespace.  
 
-Prior to launching the application, you must visit the [Kaleido console](https://console.kaleido.io) and acquire an administrative API Key.  The application is configured to automatically provision Kaleido network resources (e.g. environment, nodes, security credentials, etc.) and requires this key in order to authenticate with the backend servers.  The provisioned resources will be confined to your Kaleido Organization.
+Prior to launching the application, you must visit the [Kaleido console](https://console.kaleido.io) and acquire an administrative API Key.  The application is configured to automatically provision Kaleido network resources (e.g. environment, nodes, application credentials, etc.) and requires this key in order to authenticate with the backend servers.  The provisioned resources will be confined to your Kaleido Organization.
 
 Note that the default Kaleido resource limitations imposes a threshold of two consortia per Kaleido Org.  As a result, if your organization is already hosting two consortia, then the application will be unable to successfully provision the network resources.  Ensure that you have one or fewer consortia prior to launching the app.
 
