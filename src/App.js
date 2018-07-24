@@ -79,19 +79,25 @@ class App extends Component {
         if (ledger && ledger.events) {
             formattedLedger[ledger.joeAddress] = "Joe";
             formattedLedger[ledger.userAddress] = "Me"; //TODO: determine Me vs You text
-            formattedLedger.blocks = {};
+            formattedLedger.blocks = [];
+            let indexCounter = -1;
+            let currentBlockNumber = -1;
             ledger.events.forEach((element) => {
+                if (element.blockNumber !== currentBlockNumber) {
+                    currentBlockNumber = element.blockNumber;
+                    indexCounter++;
+                }
                 // For each returned event, we want to sort them by block number
                 // If this is the first event in this block, let create a new array
-                // otherwise just push the event into the object with it's block number
-                if (!formattedLedger.blocks[element.blockNumber]) {
-                    formattedLedger.blocks[element.blockNumber] = [];
+                // otherwise just push the event into the array
+                if (!formattedLedger.blocks[indexCounter]) {
+                    formattedLedger.blocks[indexCounter] = [];
                 }
-                formattedLedger.blocks[element.blockNumber].push(element);
+                formattedLedger.blocks[indexCounter].push(element);
             });
         }
 
-        return formattedLedger
+        return formattedLedger;
     }
 
     refreshLedgers() {
