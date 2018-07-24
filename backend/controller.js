@@ -35,6 +35,7 @@ class Controller {
             // Address of the previous contract deployed to the
             this.contractAddress = keyfile.contractAddress;
 
+            this.kaleidoConfigInstance.locale = keyfile.locale;
             this.kaleidoConfigInstance.consortiaId = keyfile.consortia;
             this.kaleidoConfigInstance.environmentId = keyfile.environment;
 
@@ -64,6 +65,7 @@ class Controller {
             response.body.contractAddress = this.kaleidoKardsInstance.contractAddress;
             response.body.consortia = this.kaleidoConfigInstance.consortiaId;
             response.body.environment = this.kaleidoConfigInstance.environmentId;
+            response.body.locale = this.kaleidoConfigInstance.locale;
             response.body.status = READY;
             this.launchStatus = READY;
             return response;
@@ -78,6 +80,7 @@ class Controller {
                 response.body.contractAddress = contractAddress;
                 response.body.consortia = this.kaleidoConfigInstance.consortiaId;
                 response.body.environment = this.kaleidoConfigInstance.environmentId;
+                response.body.locale = this.kaleidoConfigInstance.locale;
                 response.body.status = READY;
                 this.launchStatus = READY;
                 return response;
@@ -93,6 +96,7 @@ class Controller {
         // If locale is specified then add a dash for the base url and reassign it
         if (locale && locale !== "us") {
             locale = '-' + locale;
+            this.kaleidoConfigInstance.locale = locale;
             this.kaleidoConfigInstance.baseUrl = "https://console" + locale + ".kaleido.io/api/v1";
         }
 
@@ -163,6 +167,7 @@ class Controller {
             response.body.contractAddress = this.contractAddress;
             response.body.consortia = this.kaleidoConfigInstance.consortiaId;
             response.body.environment = this.kaleidoConfigInstance.environmentId;
+            response.body.locale = this.kaleidoConfigInstance.locale;
         } else {
             response.body.status = this.launchStatus;
         }

@@ -6,6 +6,7 @@ class kaleidoConfig {
     // Declare some constants that we need to create kaleido platform
     constructor() {
         this.baseUrl = "https://console.kaleido.io/api/v1";
+        this.locale = "";
 
         this.consortiumName = "KaleidoKards-SampleApp";
         this.consortiumDescription = "Sample application for Blockchain 101";
@@ -256,6 +257,7 @@ class kaleidoConfig {
         const fs = require("fs");
 
         let keys = {
+            locale: this.locale,
             consortia: this.consortiaId,
             environment: this.environmentId,
             contractAddress: this.contractAddress,

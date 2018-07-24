@@ -9,6 +9,11 @@ require("babel-polyfill");
 let READY = "Ready";
 let contractAddress = "";
 
+// Variables needed for links to Kaleido console/explorer
+let consortia = "";
+let environment = "";
+let locale = "";
+
 // Map between flag codes and api endpoints
 const regionMap = {"us": "", "de": "eu", "kr": "ko", "au": "ap"};
 
@@ -34,7 +39,10 @@ class Launch extends Component {
         if (this.state.status === READY && !this.state.showIntroVideo) {
             this.props.history.push({
                 pathname:'/app',
-                state: {ContractAddress : contractAddress}
+                state: {contractAddress : contractAddress,
+                    consortia: consortia,
+                    environment: environment,
+                    locale: locale}
             });
         }
     }
@@ -56,6 +64,9 @@ class Launch extends Component {
             } else if (resultBody.status && resultBody.status === READY) {
                 this.setState({status: READY});
                 contractAddress = resultBody.contractAddress;
+                consortia = resultBody.consortia;
+                environment = resultBody.environment;
+                locale = resultBody.locale;
                 // If the first call returns a status of ready then the background has
                 // already ran before and has a platform and contract. So we don't
                 // need to automatically show the video
@@ -71,8 +82,11 @@ class Launch extends Component {
                     if (response.status && response.status !== this.state.status) {
                         // Only update the state when the status changes
                         this.setState({status: response.status});
-                        contractAddress = response.contractAddress;
                         if (this.state.status === READY) {
+                            contractAddress = response.contractAddress;
+                            consortia = resultBody.consortia;
+                            environment = resultBody.environment;
+                            locale = resultBody.locale;
                             return;
                         }
                     }

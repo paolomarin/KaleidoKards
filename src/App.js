@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from './components/header/Header';
 import './components/card/Card.scss';
 import './components/styles/text.scss';
 import './App.scss';
@@ -16,6 +15,11 @@ const userGetKards = `/kards/user`;
 const joeGetKards = `/kards/joe`;
 const getBalance = `/balance/user`; // joe balance should always be the same as the user's
 
+// History endpoints. /user vs /joe determines which node to talk to
+const userLedgerHistory = "/history/all/user";
+const joeLedgerHistory = "history/all/joe";
+
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +29,9 @@ class App extends Component {
             myProposedCard: [],
             joeProposedCard:[],
             ether: '',
-            visible: true
+            visible: true,
+            myLedger: {},
+            joeLedger: {},
         };
         this.refreshKards();
     }
@@ -67,6 +73,52 @@ class App extends Component {
 
     }
 
+    // Formats the ledger event data into a more usable format
+    formatLedger(ledger) {
+        // TODO: check if empty
+        let formattedLedger = {};
+        if (ledger) {
+            formattedLedger[ledger.joeAddress] = "Joe";
+            formattedLedger[ledger.userAddress] = "Me"; //TODO: determine Me vs You text
+            formattedLedger.blocks = {};
+            ledger.events.forEach((element) => {
+                // For each returned event, we want to sort them by block number
+                // If this is the first event in this block, let create a new array
+                // otherwise just push the event into the object with it's block number
+                if (!formattedLedger.blocks[element.blockNumber]) {
+                    formattedLedger.blocks[element.blockNumber] = [];
+                }
+                formattedLedger.blocks[element.blockNumber].push(element);
+            });
+        }
+
+        return formattedLedger
+    }
+
+    refreshLedgers() {
+        window.fetch( userLedgerHistory, {
+            method: "GET",
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(results => {
+            return results.json();
+        }).then(resultBody => {
+            this.setState({myLedger: this.formatLedger(resultBody)});
+        });
+
+        window.fetch( joeLedgerHistory, {
+            method: "GET",
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(results => {
+            return results.json();
+        }).then(resultBody => {
+            this.setState({joeLedger: this.formatLedger(resultBody)});
+        });
+    }
+
     refreshKards() {
         window.fetch( userGetKards, {
             method: "GET",
@@ -100,6 +152,7 @@ class App extends Component {
         }).then(resultBody => {
             this.setState({ether: resultBody.balance})
         });
+        this.refreshLedgers();
     }
 
     clickOut() {
@@ -122,7 +175,7 @@ class App extends Component {
                     <ProposePopup 
                         myKards={this.state.myProposedCard} joeKards={this.state.joeProposedCard} refresh={this.refreshKards.bind(this)}
                         empty={this.emptyTradeCards.bind(this)}
-                        smartContractAddress={this.props.location.state.ContractAddress}
+                        smartContractAddress={this.props.location.state.contractAddress}
                     />
                 </div>
                   <div className="other-players-cards">
