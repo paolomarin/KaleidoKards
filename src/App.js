@@ -129,6 +129,7 @@ class App extends Component {
             return results.json();
         }).then(resultBody => {
             this.setState({myKards: resultBody});
+            this.refreshLedgers();
         });
 
         window.fetch( joeGetKards, {
@@ -140,6 +141,7 @@ class App extends Component {
             return results.json();
         }).then(resultBody => {
             this.setState({joeKards: resultBody});
+            this.refreshLedgers()
         });
 
         window.fetch( getBalance, {
@@ -152,7 +154,6 @@ class App extends Component {
         }).then(resultBody => {
             this.setState({ether: resultBody.balance})
         });
-        this.refreshLedgers();
     }
 
     clickOut() {
