@@ -47,59 +47,64 @@
     display: inline-block;
     width: 1.7em;
     line-height: 1em;
-  }
-  .flag-icon:before {
-    content: "\00a0";
-  }
-  
-  .flag-icon-us {
-    background-image: url(./../flags/us.svg);
-  }
-  // .flag-icon-us.flag-icon-squared {
-  //   background-image: url(./flags/1x1/us.svg);
-  // }
+}
 
-  .flag-icon-kr {
-    background-image: url(./../flags/kr.svg);
-  }
-  // .flag-icon-kr.flag-icon-squared {
-  //   background-image: url(./flags/1x1/kr.svg);
-  // }
+.flag-icon:before {
+  content: "\00a0";
+}
 
-  
+.flag-icon-us {
+  background-image: url(./../flags/us.svg);
+}
+// .flag-icon-us.flag-icon-squared {
+//   background-image: url(./flags/1x1/us.svg);
+// }
 
-  .flag-icon-au {
-    background-image: url(./../flags/au.svg);
-  }
-  // .flag-icon-au.flag-icon-squared {
-  //   background-image: url(./flags/1x1/au.svg);
-  // }
-  
-  .flag-icon-eu {
-    background-image: url(./../flags/eu.svg);
-  }
-  // .flag-icon-eu.flag-icon-squared {
-  //   background-image: url(./flags/1x1/eu.svg);
-  // }
+.flag-icon-kr {
+  background-image: url(./../flags/kr.svg);
+}
+// .flag-icon-kr.flag-icon-squared {
+//   background-image: url(./flags/1x1/kr.svg);
+// }
 
-  .flag-icon-de {
-    background-image: url(./../flags/de.svg);
-  }
-  // .flag-icon-de.flag-icon-squared {
-  //   background-image: url(./flags/1x1/de.svg);
-  // }
 
-  .flag-icon-ie {
-    background-image: url(./../flags/ie.svg);
-  }
-  // .flag-icon-ie.flag-icon-squared {
-  //   background-image: url(./flags/1x1/ie.svg);
-  // }
 
-  .flag-icon-sg {
-    background-image: url(./../flags/sg.svg);
-  }
-  // .flag-icon-sg.flag-icon-squared {
-  //   background-image: url(./flags/1x1/sg.svg);
-  // }
+.flag-icon-au {
+  background-image: url(./../flags/au.svg);
+}
+// .flag-icon-au.flag-icon-squared {
+//   background-image: url(./flags/1x1/au.svg);
+// }
 
+.flag-icon-eu {
+  background-image: url(./../flags/eu.svg);
+}
+// .flag-icon-eu.flag-icon-squared {
+//   background-image: url(./flags/1x1/eu.svg);
+// }
+
+.flag-icon-de {
+  background-image: url(./../flags/de.svg);
+}
+// .flag-icon-de.flag-icon-squared {
+//   background-image: url(./flags/1x1/de.svg);
+// }
+
+.flag-icon-ie {
+  background-image: url(./../flags/ie.svg);
+}
+// .flag-icon-ie.flag-icon-squared {
+//   background-image: url(./flags/1x1/ie.svg);
+// }
+
+.flag-icon-sg {
+  background-image: url(./../flags/sg.svg);
+}
+// .flag-icon-sg.flag-icon-squared {
+//   background-image: url(./flags/1x1/sg.svg);
+// }
+
+.active {
+  border: 10px lightblue solid;
+  border-radius: 5px;
+}

@@ -7,7 +7,10 @@ import LaunchStatus from "./components/launchStatus/launchStatus";
 require("babel-polyfill");
 
 let READY = "Ready";
-let ContractAddress = "";
+let contractAddress = "";
+
+// Map between flag codes and api endpoints
+const regionMap = {"us": "", "de": "eu", "kr": "ko", "au": "ap"};
 
 class Launch extends Component {
 
@@ -16,6 +19,7 @@ class Launch extends Component {
         this.state={
             showIntroVideo: false,
             status: "",
+            locale: "",
         };
         this.apiKey = "";
     }
@@ -30,14 +34,16 @@ class Launch extends Component {
         if (this.state.status === READY && !this.state.showIntroVideo) {
             this.props.history.push({
                 pathname:'/app',
-                state: {ContractAddress : ContractAddress}
+                state: {ContractAddress : contractAddress}
             });
         }
     }
     
     clickLaunchBtn() {
+        let locale = regionMap[this.state.locale];
+
         window.fetch("/launch", {
-            body: JSON.stringify({apiKey: this.apiKey}),
+            body: JSON.stringify({apiKey: this.apiKey, locale: locale}),
             method: "POST",
             headers: {
                 'content-type': 'application/json'
@@ -49,7 +55,7 @@ class Launch extends Component {
                 throw new Error(resultBody.error.toString())
             } else if (resultBody.status && resultBody.status === READY) {
                 this.setState({status: READY});
-                ContractAddress = resultBody.contractAddress;
+                contractAddress = resultBody.contractAddress;
                 // If the first call returns a status of ready then the background has
                 // already ran before and has a platform and contract. So we don't
                 // need to automatically show the video
@@ -65,7 +71,7 @@ class Launch extends Component {
                     if (response.status && response.status !== this.state.status) {
                         // Only update the state when the status changes
                         this.setState({status: response.status});
-                        ContractAddress = response.contractAddress;
+                        contractAddress = response.contractAddress;
                         if (this.state.status === READY) {
                             return;
                         }
@@ -105,6 +111,10 @@ class Launch extends Component {
        this.apiKey = e.target.value;
     }
 
+    handleRegionClick(selection) {
+        this.setState({locale: selection});
+    }
+
     render() {
         return (
             <div className='launch-wrapper'>
@@ -116,7 +126,7 @@ class Launch extends Component {
                         <input className="api-key" onChange={this.updateApiKey.bind(this)} type="text" required="" placeholder="Paste Api Key Here"/>
                         <button className="launch-button" onClick={this.clickLaunchBtn.bind(this)}>Launch</button>
                     </label>
-                    <Region/>
+                    <Region selectedLocale={this.state.locale} regionSelect={this.handleRegionClick.bind(this)}/>
                 </div>
             </div>
         );

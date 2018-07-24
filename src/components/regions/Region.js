@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import './Region.scss';
 import ShowRegion from './ShowRegion';
-import RegionButton from './RegionButton';
 
 class Region extends Component {
     constructor(props) {
         super();
         this.state={
-                regions: {
-                    US: ['us'],
-                    Europe: ['de'],
-                    AsiaPacific: ['au', 'kr']
-                },
+            regions: {
+                US: ['us'],
+                Europe: ['de'],
+                AsiaPacific: ['au', 'kr']
+            },
 
-                region:[]
-            }
-     
+            region:[]
+        }
     }
     
-     clickRegion(event) {
-           this.setState({
-               regionVisible:true,
-               region: event.currentTarget.dataset.id,
-            //    regionName: event.currentTarget.dataset.id,
-           });
-        }
+    clickRegion(event) {
+       this.setState({
+           regionVisible:true,
+           region: event.currentTarget.dataset.id,
+       });
+    }
+
      render() {
          return (
              <div className="region-container">
@@ -36,7 +34,7 @@ class Region extends Component {
              </div>
 
              <div className="regions-go-here">
-                 <ShowRegion regions={this.state.region} visible={this.state.regionVisible}/>
+                 <ShowRegion selected={this.props.selectedLocale} regions={this.state.region} visible={this.state.regionVisible} regionClick={this.props.regionSelect}/>
              </div>
 
              </div>
