@@ -75,9 +75,8 @@ class App extends Component {
 
     // Formats the ledger event data into a more usable format
     formatLedger(ledger) {
-        // TODO: check if empty
         let formattedLedger = {};
-        if (ledger) {
+        if (ledger && ledger.events) {
             formattedLedger[ledger.joeAddress] = "Joe";
             formattedLedger[ledger.userAddress] = "Me"; //TODO: determine Me vs You text
             formattedLedger.blocks = {};
